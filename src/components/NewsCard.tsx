@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { NewsItem } from "@/lib/types";
 import {
-  ExternalLink,
   Sparkles,
   Clock,
   Bookmark,
@@ -55,16 +54,16 @@ export function NewsCard({
   };
 
   return (
-    <article className="social-card relative rounded-2xl overflow-hidden mb-6 flex flex-col bg-[#0e1524]/90 border border-white/[0.08]">
+    <article className="social-card relative rounded-2xl overflow-hidden mb-6 flex flex-col bg-[#0e1524] border border-slate-800 shadow-xl">
       {/* 1. Header: Source Profile & Meta */}
-      <div className="flex items-center justify-between p-4 border-b border-white/[0.06]">
+      <div className="flex items-center justify-between p-4 border-b border-slate-800 bg-[#0b101d]">
         <div className="flex items-center gap-3">
           <a
             href={news.sourceUrl || news.url}
             target="_blank"
             rel="noopener noreferrer"
             title={`Visit ${news.source} website`}
-            className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-emerald-500/20 to-teal-500/30 border border-emerald-500/30 text-emerald-400 hover:border-emerald-400 hover:scale-105 transition group"
+            className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 hover:border-emerald-300 hover:bg-emerald-500/25 hover:scale-105 transition group"
           >
             <CategoryIcon className="h-5 w-5" />
           </a>
@@ -78,14 +77,14 @@ export function NewsCard({
                 className="font-bold text-white text-sm hover:text-emerald-300 transition inline-flex items-center gap-1"
               >
                 {news.source}
-                <ArrowUpRight className="h-3 w-3 text-slate-400" />
+                <ArrowUpRight className="h-3.5 w-3.5 text-slate-400" />
               </a>
-              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 fill-emerald-400/20" />
+              <CheckCircle2 className="h-4 w-4 text-emerald-400 fill-emerald-400/20" />
             </div>
-            <div className="flex items-center gap-2 text-xs text-slate-300">
-              <span className="font-medium text-emerald-400">{news.category}</span>
+            <div className="flex items-center gap-2 text-xs text-slate-200">
+              <span className="font-bold text-emerald-300">{news.category}</span>
               <span className="text-slate-500">•</span>
-              <span className="flex items-center gap-1 text-slate-300">
+              <span className="flex items-center gap-1 text-slate-300 font-medium">
                 <Clock className="h-3 w-3 text-slate-400" />
                 {formatDate(news.publishedAt)}
               </span>
@@ -94,7 +93,7 @@ export function NewsCard({
         </div>
 
         {/* Read Time Tag */}
-        <span className="text-xs font-semibold text-slate-300 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08]">
+        <span className="text-xs font-semibold text-slate-200 px-3 py-1 rounded-full bg-[#111a2e] border border-slate-700 shadow-sm">
           {news.readTimeMinutes} min read
         </span>
       </div>
@@ -118,20 +117,20 @@ export function NewsCard({
       )}
 
       {/* 3. Action Bar (Share & Bookmark) */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06] bg-white/[0.01]">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-800 bg-[#0c1220]">
         <button
           onClick={handleShare}
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-300 hover:text-white transition px-2.5 py-1 rounded-lg hover:bg-white/[0.06]"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-200 hover:text-white transition px-3 py-1.5 rounded-lg bg-[#111a2e] border border-slate-700 hover:bg-[#18233d]"
           title="Copy article link"
         >
           {copied ? (
             <>
               <Check className="h-4 w-4 text-emerald-400" />
-              <span className="text-emerald-400">Copied to Clipboard!</span>
+              <span className="text-emerald-300 font-bold">Copied to Clipboard!</span>
             </>
           ) : (
             <>
-              <Share2 className="h-4 w-4" />
+              <Share2 className="h-4 w-4 text-slate-300" />
               <span>Share Article</span>
             </>
           )}
@@ -139,14 +138,14 @@ export function NewsCard({
 
         <button
           onClick={() => onToggleBookmark && onToggleBookmark(news.id)}
-          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border text-xs font-semibold transition ${
+          className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border text-xs font-bold transition ${
             isBookmarked
-              ? "bg-amber-500/20 border-amber-500/50 text-amber-300 shadow-[0_0_12px_rgba(245,158,11,0.25)]"
-              : "border-white/[0.08] bg-white/[0.02] text-slate-300 hover:text-white hover:bg-white/[0.06]"
+              ? "bg-amber-500/25 border-amber-500/60 text-amber-200 shadow-[0_0_12px_rgba(245,158,11,0.25)]"
+              : "border-slate-700 bg-[#111a2e] text-slate-200 hover:text-white hover:bg-[#18233d]"
           }`}
           title={isBookmarked ? "Remove bookmark" : "Save story"}
         >
-          <Bookmark className={`h-3.5 w-3.5 ${isBookmarked ? "fill-amber-400" : ""}`} />
+          <Bookmark className={`h-3.5 w-3.5 ${isBookmarked ? "fill-amber-400 text-amber-400" : "text-slate-300"}`} />
           <span>{isBookmarked ? "Saved" : "Save"}</span>
         </button>
       </div>
@@ -165,15 +164,15 @@ export function NewsCard({
             </h2>
           </a>
 
-          <p className="text-xs sm:text-sm text-slate-200 leading-relaxed mb-4">
+          <p className="text-xs sm:text-sm text-slate-100 font-normal leading-relaxed mb-4">
             {news.summary}
           </p>
 
           {/* Why It Matters Impact Callout */}
-          <div className="rounded-xl border border-emerald-500/30 bg-emerald-950/30 p-3.5 mb-2">
+          <div className="rounded-xl border border-emerald-500/40 bg-emerald-950/60 p-3.5 mb-2">
             <div className="flex items-start gap-2.5">
               <Sparkles className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-              <p className="text-xs text-emerald-100 leading-relaxed">
+              <p className="text-xs text-emerald-100 leading-relaxed font-normal">
                 <span className="font-bold text-emerald-300">Why It Matters: </span>
                 {news.whyItMatters}
               </p>
@@ -182,12 +181,12 @@ export function NewsCard({
         </div>
 
         {/* Read Full Story Button */}
-        <div className="mt-4 pt-3.5 border-t border-white/[0.06] flex items-center justify-between text-xs">
+        <div className="mt-4 pt-3.5 border-t border-slate-800 flex items-center justify-between text-xs">
           <a
             href={news.sourceUrl || news.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-slate-300 hover:text-emerald-300 font-medium transition flex items-center gap-1"
+            className="text-slate-300 hover:text-emerald-300 font-semibold transition flex items-center gap-1.5"
           >
             <Globe2 className="h-3.5 w-3.5 text-slate-400" />
             <span>Via {news.source}</span>
@@ -197,10 +196,10 @@ export function NewsCard({
             href={news.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 font-bold text-emerald-400 hover:text-emerald-300 transition group/link bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-lg hover:bg-emerald-500/20"
+            className="inline-flex items-center gap-1.5 font-extrabold text-slate-950 bg-emerald-400 hover:bg-emerald-300 transition group/link px-3.5 py-1.5 rounded-lg shadow-sm"
           >
             Read Story
-            <ArrowUpRight className="h-3.5 w-3.5 transition group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+            <ArrowUpRight className="h-3.5 w-3.5 text-slate-950 transition group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
           </a>
         </div>
       </div>
