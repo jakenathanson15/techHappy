@@ -9,6 +9,8 @@ interface RSSItem {
   pubDate?: string;
   "content:encoded"?: string;
   guid?: string | { "#text": string };
+  "media:content"?: { "@_url"?: string } | Array<{ "@_url"?: string }>;
+  enclosure?: { "@_url"?: string };
 }
 
 const RSS_SOURCES = [
@@ -34,13 +36,55 @@ const RSS_SOURCES = [
   },
 ];
 
-const POSITIVE_KEYWORDS = [
-  "breakthrough", "cure", "clean energy", "solar", "wind", "renewable",
-  "restored", "discovered", "saves", "saving", "efficient", "efficiency",
-  "open-source", "accessible", "empowering", "protects", "protecting",
-  "carbon", "emission", "treat", "treatment", "hope", "progress", "solution",
-  "innovation", "free access", "recycled", "biodegradable", "detects"
-];
+// Fallback high-res imagery for tech topics
+const TOPIC_IMAGES = {
+  climate: [
+    "https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=1200&q=80", // Solar farm
+    "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=1200&q=80", // Wind turbines
+    "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80", // Clean water
+  ],
+  health: [
+    "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80", // Medical research
+    "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1200&q=80", // Lab biotech
+    "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=1200&q=80", // Medical scan
+  ],
+  ai: [
+    "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80", // Neural abstract
+    "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80", // AI chip & glow
+    "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80", // Robot assistance
+  ],
+  openSource: [
+    "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80", // Matrix code screen
+    "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80", // Earth digital mesh
+    "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80", // Server infrastructure
+  ],
+  social: [
+    "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80", // Team collaborating
+    "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80", // Tech education
+    "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80", // Coding workshop
+  ]
+};
+
+function getRandomImage(category: NewsItem["category"], index: number): string {
+  switch (category) {
+    case "Climate Tech":
+      return TOPIC_IMAGES.climate[index % TOPIC_IMAGES.climate.length];
+    case "Healthcare & Bio":
+      return TOPIC_IMAGES.health[index % TOPIC_IMAGES.health.length];
+    case "AI for Good":
+      return TOPIC_IMAGES.ai[index % TOPIC_IMAGES.ai.length];
+    case "Open Access & Web":
+      return TOPIC_IMAGES.openSource[index % TOPIC_IMAGES.openSource.length];
+    default:
+      return TOPIC_IMAGES.social[index % TOPIC_IMAGES.social.length];
+  }
+}
+
+function extractImageFromHtml(html: string): string | null {
+  if (!html) return null;
+  const match = html.match(/<img[^>]+src=["'](https?:\/\/[^"'>]+)["']/i);
+  return match ? match[1] : null;
+}
 
 function stripHtml(html: string): string {
   if (!html) return "";
@@ -50,6 +94,10 @@ function stripHtml(html: string): string {
     .replace(/&amp;/g, "&")
     .replace(/&quot;/g, '"')
     .replace(/&#039;/g, "'")
+    .replace(/&#8217;/g, "'")
+    .replace(/&#8216;/g, "'")
+    .replace(/&#8220;/g, '"')
+    .replace(/&#8221;/g, '"')
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/\s+/g, " ")
@@ -60,13 +108,13 @@ function generateWhyItMatters(title: string, summary: string, category: string):
   const lower = (title + " " + summary).toLowerCase();
   
   if (lower.includes("solar") || lower.includes("battery") || lower.includes("energy") || lower.includes("carbon")) {
-    return "Advances the global transition toward scalable, clean energy and reduces dependency on fossil fuels.";
+    return "Accelerates global decarbonization and makes renewable energy accessible and affordable.";
   }
   if (lower.includes("cancer") || lower.includes("disease") || lower.includes("health") || lower.includes("brain") || lower.includes("medical")) {
-    return "Paves the way for earlier clinical intervention, better patient outcomes, and reduced healthcare costs.";
+    return "Paves the way for non-invasive clinical treatments and significantly increased patient survival rates.";
   }
   if (lower.includes("open-source") || lower.includes("open access") || lower.includes("free")) {
-    return "Eliminates gatekeeping, allowing developers and researchers globally to build upon verified open technology.";
+    return "Removes gatekeeping so independent researchers and developers worldwide can build upon open foundations.";
   }
   if (lower.includes("accessibility") || lower.includes("disability") || lower.includes("assistive")) {
     return "Expands digital inclusion and equitable access for people of all physical and sensory abilities.";
@@ -79,13 +127,13 @@ function generateWhyItMatters(title: string, summary: string, category: string):
 
 function categorizeItem(title: string, summary: string, fallback: NewsItem["category"]): NewsItem["category"] {
   const text = (title + " " + summary).toLowerCase();
-  if (text.includes("solar") || text.includes("climate") || text.includes("emission") || text.includes("plastic") || text.includes("energy")) {
+  if (text.includes("solar") || text.includes("climate") || text.includes("emission") || text.includes("plastic") || text.includes("energy") || text.includes("fusion")) {
     return "Climate Tech";
   }
-  if (text.includes("cancer") || text.includes("patient") || text.includes("brain") || text.includes("medical") || text.includes("disease") || text.includes("biology")) {
+  if (text.includes("cancer") || text.includes("patient") || text.includes("brain") || text.includes("medical") || text.includes("disease") || text.includes("biology") || text.includes("aging")) {
     return "Healthcare & Bio";
   }
-  if (text.includes("ai") || text.includes("neural") || text.includes("algorithm") || text.includes("machine learning") || text.includes("robot")) {
+  if (text.includes("ai") || text.includes("neural") || text.includes("algorithm") || text.includes("machine learning") || text.includes("robot") || text.includes("quantum")) {
     return "AI for Good";
   }
   if (text.includes("open source") || text.includes("library") || text.includes("open access") || text.includes("internet") || text.includes("commons")) {
@@ -104,7 +152,9 @@ const CURATED_FALLBACKS: NewsItem[] = [
     source: "MIT Technology Review",
     publishedAt: new Date(Date.now() - 3600000 * 4).toISOString(),
     category: "Healthcare & Bio",
-    sentimentScore: 0.96,
+    imageUrl: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80",
+    likes: 342,
+    readTimeMinutes: 3,
   },
   {
     id: "perovskite-solar-efficiency",
@@ -115,7 +165,9 @@ const CURATED_FALLBACKS: NewsItem[] = [
     source: "Nature Energy",
     publishedAt: new Date(Date.now() - 3600000 * 12).toISOString(),
     category: "Climate Tech",
-    sentimentScore: 0.94,
+    imageUrl: "https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=1200&q=80",
+    likes: 518,
+    readTimeMinutes: 4,
   },
   {
     id: "open-source-prosthetics-bionic",
@@ -126,7 +178,9 @@ const CURATED_FALLBACKS: NewsItem[] = [
     source: "Open Source Hardware Assoc",
     publishedAt: new Date(Date.now() - 3600000 * 24).toISOString(),
     category: "Healthcare & Bio",
-    sentimentScore: 0.98,
+    imageUrl: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=1200&q=80",
+    likes: 891,
+    readTimeMinutes: 3,
   },
   {
     id: "ocean-cleanup-ai-robotics",
@@ -137,7 +191,9 @@ const CURATED_FALLBACKS: NewsItem[] = [
     source: "The Ocean Cleanup",
     publishedAt: new Date(Date.now() - 3600000 * 36).toISOString(),
     category: "Climate Tech",
-    sentimentScore: 0.92,
+    imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
+    likes: 724,
+    readTimeMinutes: 2,
   },
   {
     id: "open-access-scientific-publishing",
@@ -148,12 +204,14 @@ const CURATED_FALLBACKS: NewsItem[] = [
     source: "cOAlition S",
     publishedAt: new Date(Date.now() - 3600000 * 60).toISOString(),
     category: "Open Access & Web",
-    sentimentScore: 0.95,
+    imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
+    likes: 610,
+    readTimeMinutes: 3,
   }
 ];
 
 let cachedFeed: { data: NewsItem[]; timestamp: number } | null = null;
-const CACHE_TTL_MS = 1000 * 60 * 60; // 1 Hour Cache Window (Auto-Refreshes hourly with zero cost)
+const CACHE_TTL_MS = 1000 * 60 * 60; // 1 Hour Cache Window
 
 export async function fetchUpliftNews(): Promise<NewsItem[]> {
   const now = Date.now();
@@ -168,10 +226,10 @@ export async function fetchUpliftNews(): Promise<NewsItem[]> {
 
   const fetchedItems: NewsItem[] = [];
 
-  for (const src of RSS_SOURCES) {
+  for (const [srcIndex, src] of RSS_SOURCES.entries()) {
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3500); // 3.5s per source
+      const timeoutId = setTimeout(() => controller.abort(), 3500);
 
       const res = await fetch(src.url, {
         signal: controller.signal,
@@ -188,18 +246,29 @@ export async function fetchUpliftNews(): Promise<NewsItem[]> {
       const rawItems: RSSItem[] = jsonObj?.rss?.channel?.item || jsonObj?.feed?.entry || [];
       const itemArray = Array.isArray(rawItems) ? rawItems : [rawItems];
 
-      for (const item of itemArray.slice(0, 5)) {
+      for (const [itemIndex, item] of itemArray.slice(0, 5).entries()) {
         if (!item || !item.title) continue;
 
         const rawTitle = stripHtml(item.title);
-        const rawDesc = stripHtml(item["content:encoded"] || item.description || item.summary || "");
+        const rawContent = item["content:encoded"] || item.description || item.summary || "";
+        const rawDesc = stripHtml(rawContent);
         const link = item.link || (typeof item.guid === "object" ? item.guid["#text"] : item.guid) || "#";
         const pubDate = item.pubDate ? new Date(item.pubDate).toISOString() : new Date().toISOString();
 
-        // Check positive keywords or filter
+        // Extract image from media tag or fallback
+        const mediaUrl =
+          (typeof item["media:content"] === "object"
+            ? Array.isArray(item["media:content"])
+              ? item["media:content"][0]?.["@_url"]
+              : item["media:content"]?.["@_url"]
+            : undefined) ||
+          item.enclosure?.["@_url"] ||
+          extractImageFromHtml(rawContent);
+
         const category = categorizeItem(rawTitle, rawDesc, src.defaultCategory);
-        const snippet = rawDesc.length > 200 ? rawDesc.slice(0, 197) + "..." : rawDesc || rawTitle;
+        const snippet = rawDesc.length > 220 ? rawDesc.slice(0, 217) + "..." : rawDesc || rawTitle;
         const whyItMatters = generateWhyItMatters(rawTitle, snippet, category);
+        const finalImage = mediaUrl || getRandomImage(category, srcIndex * 5 + itemIndex);
 
         fetchedItems.push({
           id: Buffer.from(rawTitle).toString("base64").slice(0, 16),
@@ -210,11 +279,13 @@ export async function fetchUpliftNews(): Promise<NewsItem[]> {
           source: src.name,
           publishedAt: pubDate,
           category,
-          sentimentScore: 0.9,
+          imageUrl: finalImage,
+          likes: 120 + Math.floor((rawTitle.length * 17) % 450),
+          readTimeMinutes: Math.max(2, Math.ceil(snippet.split(" ").length / 60)),
         });
       }
     } catch {
-      // Continue to next source gracefully
+      // Continue gracefully
     }
   }
 

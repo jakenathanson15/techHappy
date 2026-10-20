@@ -14,6 +14,7 @@ export type GivingType =
 export interface Charity {
   id: string;
   name: string;
+  shortName: string;
   tagline: string;
   description: string;
   category: CauseCategory;
@@ -21,9 +22,9 @@ export interface Charity {
   websiteUrl: string;
   donateUrl: string;
   volunteerUrl?: string;
-  logoEmoji: string;
+  iconName: string;
   impactMetrics: string;
-  rating: string; // e.g. "Charity Navigator 100%", "GuideStar Platinum"
+  rating: string;
   tags: string[];
 }
 
@@ -36,7 +37,9 @@ export interface NewsItem {
   source: string;
   publishedAt: string;
   category: "AI for Good" | "Climate Tech" | "Healthcare & Bio" | "Open Access & Web" | "Social Impact";
-  sentimentScore?: number;
+  imageUrl?: string;
+  likes: number;
+  readTimeMinutes: number;
 }
 
 export interface QuizAnswers {
