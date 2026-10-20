@@ -25,7 +25,7 @@ A modern software application built with reliability, speed, and happiness in mi
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/<owner>/techHappy.git
+git clone git@github.com:jakenathanson15/techHappy.git
 cd techHappy
 
 # Install dependencies (once initialized)
