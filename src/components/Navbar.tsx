@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { HeartHandshake, Newspaper, ArrowRight, Github } from "lucide-react";
+import { ArrowRight, Github } from "lucide-react";
 import { TechHappyEmblem } from "./Logo";
 
 export function Navbar() {
@@ -11,63 +11,63 @@ export function Navbar() {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-800 bg-[#080c14]/90 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        {/* Brand Logo */}
+    <header className="sticky top-0 z-50 w-full border-b border-neutral-800/80 bg-[#080c12]/95 backdrop-blur-md">
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
+        {/* Brand Logo & Wordmark */}
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-teal-400 text-slate-950 font-black shadow-[0_0_20px_rgba(52,211,153,0.3)] transition duration-300 group-hover:scale-105 group-hover:shadow-[0_0_25px_rgba(52,211,153,0.5)]">
-            <TechHappyEmblem className="h-5 w-5" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-neutral-900 border border-neutral-700/80 text-emerald-400 transition duration-150 group-hover:border-emerald-500/50 group-hover:bg-neutral-850">
+            <TechHappyEmblem className="h-4 w-4" />
           </div>
-          <span className="text-lg font-bold tracking-tight text-white">
+          <span className="font-sans font-bold text-sm tracking-tight text-white">
             techHappy
           </span>
         </Link>
 
-        {/* Center Nav Links */}
-        <nav className="flex items-center gap-1 sm:gap-2 rounded-full border border-slate-800 bg-[#0d1424] p-1 shadow-sm">
+        {/* Center Nav Links with Monospaced Section Markers */}
+        <nav className="flex items-center gap-1 sm:gap-2">
           <Link
             href="/feed"
-            className={`flex items-center gap-2 px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-full transition duration-200 ${
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition duration-150 ${
               isActive("/feed")
-                ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold"
-                : "text-slate-200 hover:text-white hover:bg-slate-800"
+                ? "bg-neutral-800/90 text-white border border-neutral-700 font-semibold"
+                : "text-neutral-400 hover:text-white hover:bg-neutral-900/60"
             }`}
           >
-            <Newspaper className="h-3.5 w-3.5" />
-            <span>Feed</span>
+            <span className="font-mono text-[10px] text-emerald-400 font-semibold">01</span>
+            <span>Wire Feed</span>
           </Link>
 
           <Link
             href="/match"
-            className={`flex items-center gap-2 px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-full transition duration-200 ${
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition duration-150 ${
               isActive("/match")
-                ? "bg-teal-500/20 text-teal-300 border border-teal-500/40 font-bold"
-                : "text-slate-200 hover:text-white hover:bg-slate-800"
+                ? "bg-neutral-800/90 text-white border border-neutral-700 font-semibold"
+                : "text-neutral-400 hover:text-white hover:bg-neutral-900/60"
             }`}
           >
-            <HeartHandshake className="h-3.5 w-3.5" />
+            <span className="font-mono text-[10px] text-teal-400 font-semibold">02</span>
             <span>Impact Matcher</span>
           </Link>
         </nav>
 
-        {/* Right Action */}
-        <div className="flex items-center gap-3">
+        {/* Right Actions */}
+        <div className="flex items-center gap-2.5">
           <a
             href="https://github.com/jakenathanson15/techHappy"
             target="_blank"
             rel="noreferrer"
-            className="hidden md:flex items-center justify-center h-8 w-8 rounded-lg border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 transition"
+            className="flex items-center justify-center h-8 w-8 rounded-md border border-neutral-800 bg-neutral-900/50 text-neutral-400 hover:text-white hover:border-neutral-700 transition duration-150"
             title="GitHub Repository"
           >
-            <Github className="h-4 w-4" />
+            <Github className="h-3.5 w-3.5" />
           </a>
 
           <Link
             href="/match"
-            className="inline-flex items-center gap-1.5 rounded-full bg-emerald-400 px-4 py-1.5 text-xs sm:text-sm font-extrabold text-slate-950 shadow-[0_0_20px_rgba(16,185,129,0.3)] transition hover:bg-emerald-300 hover:shadow-[0_0_25px_rgba(16,185,129,0.5)] active:scale-95"
+            className="inline-flex items-center gap-1.5 rounded-md bg-emerald-500 px-3.5 py-1.5 text-xs font-semibold text-neutral-950 transition duration-150 hover:bg-emerald-400 active:bg-emerald-600 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400"
           >
-            Find a Cause
-            <ArrowRight className="h-3.5 w-3.5" />
+            <span>Match Causes</span>
+            <ArrowRight className="h-3 w-3" />
           </Link>
         </div>
       </div>

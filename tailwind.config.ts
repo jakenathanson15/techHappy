@@ -8,20 +8,26 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        serif: ["var(--font-serif)", "Newsreader", "Georgia", "serif"],
+        display: ["var(--font-serif)", "Newsreader", "Georgia", "serif"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "JetBrains Mono", "monospace"],
+      },
       colors: {
-        brand: {
-          50: "#f0fdf4",
-          100: "#dcfce7",
-          200: "#bbf7d0",
-          500: "#22c55e",
-          600: "#16a34a",
-          700: "#15803d",
+        ink: {
+          950: "#06080c",
+          900: "#0a0e14",
+          850: "#0f141c",
+          800: "#141a24",
+          700: "#1e2634",
+          600: "#2c3647",
         },
-        uplift: {
-          sun: "#f59e0b",
-          sky: "#0284c7",
-          teal: "#0d9488",
-        }
+        emerald: {
+          400: "#34d399",
+          500: "#10b981",
+          600: "#059669",
+        },
       },
     },
   },

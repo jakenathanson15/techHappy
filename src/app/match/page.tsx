@@ -4,26 +4,26 @@ import { useState } from "react";
 import { Charity, CauseCategory, GivingType } from "@/lib/types";
 import charitiesData from "@/data/charities.json";
 import {
-  Sparkles,
   Shield,
   Heart,
   Globe2,
   Code2,
   GraduationCap,
-  Library,
   DollarSign,
   Laptop,
-  CheckCircle2,
+  Check,
   ArrowRight,
   ArrowLeft,
   ArrowUpRight,
   RefreshCcw,
   Bookmark,
   LucideIcon,
-  Activity,
   HeartHandshake,
   Megaphone,
   Compass,
+  Cpu,
+  Layers,
+  Sparkles,
 } from "lucide-react";
 import { useBookmarks } from "@/lib/useBookmarks";
 import { IconMap } from "@/components/Icons";
@@ -38,32 +38,32 @@ interface QuizState {
 const CAUSE_OPTIONS: { id: CauseCategory; label: string; desc: string; icon: LucideIcon }[] = [
   {
     id: "digital-rights-privacy",
-    label: "Digital Privacy & Human Rights",
-    desc: "Protect encryption, fight surveillance, and defend free speech online.",
+    label: "Digital Privacy & Cryptographic Rights",
+    desc: "Protect end-to-end encryption, challenge systemic surveillance, and safeguard civil liberties across networks.",
     icon: Shield,
   },
   {
     id: "education-diversity",
-    label: "Tech Diversity & Education",
-    desc: "Empower underrepresented groups with high-quality coding and tech training.",
+    label: "Engineering Education & Access",
+    desc: "Fund technical curriculum, hardware labs, and mentorship for historically underrepresented software builders.",
     icon: GraduationCap,
   },
   {
     id: "climate-sustainability",
-    label: "Climate Tech & Clean Earth",
-    desc: "Support clean-energy modeling, satellite emissions tracking, and ocean cleanup.",
+    label: "Climate Computation & Earth Science",
+    desc: "Support open satellite emissions telemetry, renewable grid models, and conservation data infrastructure.",
     icon: Globe2,
   },
   {
     id: "open-source-public-goods",
-    label: "Open Source & Public Goods",
-    desc: "Support public digital infrastructure, open-hardware prosthetics, and digital libraries.",
+    label: "Open Source & Public Digital Commons",
+    desc: "Sustain foundational open source protocols, decentralized archives, and assistive hardware blueprints.",
     icon: Code2,
   },
   {
     id: "healthcare-accessibility",
-    label: "Assistive Tech & Accessibility",
-    desc: "Build accessible open-source tools and speech devices for non-verbal and disabled users.",
+    label: "Assistive Technology & Neural Access",
+    desc: "Develop open synthetic speech tools, low-cost prosthetics, and accessibility layers for non-verbal users.",
     icon: Heart,
   },
 ];
@@ -71,26 +71,26 @@ const CAUSE_OPTIONS: { id: CauseCategory; label: string; desc: string; icon: Luc
 const GIVING_OPTIONS: { id: GivingType; label: string; desc: string; icon: LucideIcon }[] = [
   {
     id: "direct-donation",
-    label: "Direct Financial Support",
-    desc: "Tax-deductible 501(c)(3) donations with 100% Charity Navigator ratings.",
+    label: "Direct Capital Allocation",
+    desc: "Direct tax-exempt 501(c)(3) funding deployed with verified fiscal transparency and zero middleman overhead.",
     icon: DollarSign,
   },
   {
     id: "mentorship-volunteering",
-    label: "Code & Skill Mentorship",
-    desc: "Contribute to open repositories, code reviews, or mentor emerging engineers.",
+    label: "Engineering Mentorship & Code Review",
+    desc: "Contribute code reviews, architectural advisory, or direct mentorship to non-profit development teams.",
     icon: HeartHandshake,
   },
   {
     id: "equipment-donation",
-    label: "Device & Hardware Giving",
-    desc: "Donate working laptops, tablets, or fabrication tools to students and refugees.",
+    label: "Hardware & Device Provisioning",
+    desc: "Donate refurbished developer workstations, microcontrollers, or lab equipment to community workshops.",
     icon: Laptop,
   },
   {
     id: "advocacy",
-    label: "Policy Advocacy & Campaigning",
-    desc: "Sign amicus briefs, organize developer coalitions, and educate policymakers.",
+    label: "Policy Architecture & Amicus Briefs",
+    desc: "Join technical working groups filing open regulatory comments and defending protocol decentralization.",
     icon: Megaphone,
   },
 ];
@@ -98,27 +98,27 @@ const GIVING_OPTIONS: { id: GivingType; label: string; desc: string; icon: Lucid
 const SCOPE_OPTIONS: { id: "global" | "local-community" | "open-web" | "any"; label: string; desc: string; icon: LucideIcon }[] = [
   {
     id: "global",
-    label: "Global Reach",
-    desc: "Worldwide initiatives spanning across continents, developing nations, and crisis zones.",
+    label: "Planetary & Transnational",
+    desc: "Initiatives operating across continents, developing infrastructure hubs, and international treaties.",
     icon: Globe2,
   },
   {
     id: "open-web",
-    label: "The Open Web & Digital Commons",
-    desc: "Preserving decentralized internet infrastructure and free public digital archives.",
+    label: "Internet Commons & Protocols",
+    desc: "Universal public infrastructure, open internet standards, and decentralized archival repositories.",
     icon: Compass,
   },
   {
     id: "local-community",
-    label: "Local Communities & Classrooms",
-    desc: "Direct grassroots impact in schools, bootcamps, and local community tech centers.",
+    label: "Regional Labs & Classrooms",
+    desc: "Grassroots engineering bootcamps, municipal repair collectives, and neighborhood STEM programs.",
     icon: GraduationCap,
   },
   {
     id: "any",
-    label: "Any / Highest Need",
-    desc: "Prioritize organizations where funding or technical help is most critically needed.",
-    icon: Sparkles,
+    label: "Highest Marginal Need",
+    desc: "Algorithmic routing to whichever verified organization has the most acute immediate capital deficit.",
+    icon: Layers,
   },
 ];
 
@@ -166,16 +166,23 @@ export default function MatcherPage() {
 
   return (
     <div className="relative min-h-screen pb-24">
-      {/* Background ambient glow */}
-      <div className="ambient-glow-emerald pointer-events-none absolute inset-0 -z-10 h-[500px] w-full" />
+      {/* Background wire grid */}
+      <div className="wire-grid pointer-events-none fixed inset-0 opacity-40 -z-10" />
 
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 pt-12 sm:pt-16">
-        {/* Top Bar with Bookmarks shortcut */}
-        <div className="flex items-center justify-between mb-8 border-b border-slate-800 pb-4">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
-              Impact Engine
-            </span>
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 pt-10 sm:pt-14">
+        {/* Section Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-neutral-800 pb-6 mb-8">
+          <div>
+            <div className="flex items-center gap-2 mb-2 font-mono text-[11px] uppercase tracking-widest text-emerald-400">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              <span>02 // DECISION TERMINAL & CAUSE MATCHER</span>
+            </div>
+            <h1 className="font-serif text-2xl sm:text-4xl font-normal tracking-tight text-neutral-100">
+              Impact Allocation Terminal
+            </h1>
+            <p className="mt-1 font-sans text-xs sm:text-sm text-neutral-400">
+              Configure parameters to calculate verified non-profit alignments across public technical goods.
+            </p>
           </div>
 
           {bookmarkedCharityIds.length > 0 && (
@@ -184,51 +191,78 @@ export default function MatcherPage() {
                 setViewSavedOnly(!viewSavedOnly);
                 if (!viewSavedOnly) setStep(4);
               }}
-              className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold border transition-all duration-200 ${
+              className={`inline-flex items-center gap-2 rounded-sm px-3 py-1.5 font-mono text-xs border transition ${
                 viewSavedOnly
-                  ? "bg-amber-500/25 border-amber-500/60 text-amber-200 shadow-[0_0_12px_rgba(245,158,11,0.25)]"
-                  : "border-slate-700 bg-[#111a2e] text-slate-200 hover:text-white hover:bg-[#18233d]"
+                  ? "bg-amber-400/10 border-amber-400/40 text-amber-300"
+                  : "border-neutral-800 bg-[#0c1017] text-neutral-300 hover:border-neutral-700 hover:text-white"
               }`}
             >
-              <Bookmark className={`h-3.5 w-3.5 ${viewSavedOnly ? "fill-amber-400 text-amber-400" : "text-slate-300"}`} />
-              <span>Saved Causes ({bookmarkedCharityIds.length})</span>
+              <Bookmark className={`h-3.5 w-3.5 ${viewSavedOnly ? "fill-amber-400 text-amber-400" : "text-neutral-400"}`} />
+              <span>Saved Ledger ({bookmarkedCharityIds.length})</span>
             </button>
           )}
         </div>
 
-        {/* Questionnaire Glass Card */}
-        <div className="rounded-3xl border border-slate-800 bg-[#0c1220] p-6 sm:p-10 shadow-2xl">
+        {/* Step Matrix Header */}
+        {step < 4 && !viewSavedOnly && (
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-8 font-mono text-[11px]">
+            <div
+              className={`p-3 border rounded-sm transition ${
+                step === 1
+                  ? "border-emerald-500/60 bg-emerald-950/20 text-emerald-300"
+                  : step > 1
+                  ? "border-neutral-800 bg-[#0c1017] text-neutral-400"
+                  : "border-neutral-800/60 bg-neutral-900/20 text-neutral-600"
+              }`}
+            >
+              <div className="text-[10px] text-neutral-500">STAGE 01</div>
+              <div className="font-bold text-neutral-200 mt-0.5 truncate">CAUSE DOMAIN</div>
+            </div>
+
+            <div
+              className={`p-3 border rounded-sm transition ${
+                step === 2
+                  ? "border-emerald-500/60 bg-emerald-950/20 text-emerald-300"
+                  : step > 2
+                  ? "border-neutral-800 bg-[#0c1017] text-neutral-400"
+                  : "border-neutral-800/60 bg-neutral-900/20 text-neutral-600"
+              }`}
+            >
+              <div className="text-[10px] text-neutral-500">STAGE 02</div>
+              <div className="font-bold text-neutral-200 mt-0.5 truncate">DEPLOYMENT MODE</div>
+            </div>
+
+            <div
+              className={`p-3 border rounded-sm transition ${
+                step === 3
+                  ? "border-emerald-500/60 bg-emerald-950/20 text-emerald-300"
+                  : "border-neutral-800/60 bg-neutral-900/20 text-neutral-600"
+              }`}
+            >
+              <div className="text-[10px] text-neutral-500">STAGE 03</div>
+              <div className="font-bold text-neutral-200 mt-0.5 truncate">REACH SCOPE</div>
+            </div>
+          </div>
+        )}
+
+        {/* Main Terminal Frame */}
+        <div className="rounded-sm border border-neutral-800 bg-[#0c1017] p-6 sm:p-8">
           {step < 4 && !viewSavedOnly ? (
             <div>
-              {/* Step Progress Bar */}
-              <div className="mb-8">
-                <div className="flex items-center justify-between text-xs font-semibold text-slate-200 mb-2.5">
-                  <span className="uppercase tracking-wider text-xs text-emerald-300 font-bold">
-                    Step {step} of 3
-                  </span>
-                  <span className="text-white font-medium">
-                    {step === 1 ? "Cause Selection" : step === 2 ? "Contribution Type" : "Impact Target"}
-                  </span>
-                </div>
-                <div className="h-2 w-full bg-[#111a2e] border border-slate-700/60 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-emerald-400 to-teal-400 transition-all duration-300 shadow-[0_0_10px_rgba(52,211,153,0.5)]"
-                    style={{ width: `${(step / 3) * 100}%` }}
-                  />
-                </div>
-              </div>
-
               {/* Step 1: Cause */}
               {step === 1 && (
                 <div>
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-2">
-                    What tech cause inspires you?
+                  <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-emerald-400">
+                    <span>SELECTION 01 / 03</span>
+                  </div>
+                  <h2 className="font-serif text-xl sm:text-2xl font-normal text-neutral-100 mb-2">
+                    Primary Impact Discipline
                   </h2>
-                  <p className="text-xs sm:text-sm text-slate-200 mb-6 font-medium">
-                    Choose the mission area where you want your support to make a difference.
+                  <p className="font-sans text-xs sm:text-sm text-neutral-400 mb-6">
+                    Identify the structural domain where your capital or engineering contribution should be deployed.
                   </p>
 
-                  <div className="space-y-3">
+                  <div className="space-y-2.5">
                     {CAUSE_OPTIONS.map((opt) => {
                       const Icon = opt.icon;
                       const isSelected = answers.primaryCause === opt.id;
@@ -236,24 +270,38 @@ export default function MatcherPage() {
                         <button
                           key={opt.id}
                           onClick={() => setAnswers({ ...answers, primaryCause: opt.id })}
-                          className={`w-full flex items-start gap-4 p-4 rounded-2xl border text-left transition-all duration-200 ${
+                          className={`w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition ${
                             isSelected
-                              ? "border-emerald-500/60 bg-emerald-500/15 shadow-[0_0_20px_rgba(16,185,129,0.15)] ring-1 ring-emerald-500/40"
-                              : "border-slate-800 bg-[#111a2e]/60 hover:border-slate-700 hover:bg-[#111a2e]"
+                              ? "border-emerald-500/70 bg-emerald-950/20 shadow-sm ring-1 ring-emerald-500/30"
+                              : "border-neutral-800 bg-[#080c12]/80 hover:border-neutral-700 hover:bg-[#0f141e]"
                           }`}
                         >
-                          <div className={`p-2.5 rounded-xl border mt-0.5 ${
-                            isSelected ? "border-emerald-500/50 bg-emerald-500/20 text-emerald-300" : "border-slate-700 bg-slate-900 text-slate-300"
-                          }`}>
-                            <Icon className="h-5 w-5" />
+                          <div
+                            className={`p-2 rounded-sm border mt-0.5 flex-shrink-0 ${
+                              isSelected
+                                ? "border-emerald-500/50 bg-emerald-500/20 text-emerald-300"
+                                : "border-neutral-800 bg-neutral-900 text-neutral-400"
+                            }`}
+                          >
+                            <Icon className="h-4 w-4" />
                           </div>
-                          <div className="flex-1">
-                            <div className="font-bold text-white text-sm sm:text-base">{opt.label}</div>
-                            <div className="text-xs text-slate-200 mt-0.5 leading-relaxed font-normal">{opt.desc}</div>
+                          <div className="flex-1 min-w-0">
+                            <div className="font-sans font-semibold text-neutral-200 text-sm">{opt.label}</div>
+                            <div className="font-sans text-xs text-neutral-400 mt-1 leading-relaxed font-normal">
+                              {opt.desc}
+                            </div>
                           </div>
-                          {isSelected && (
-                            <CheckCircle2 className="h-5 w-5 text-emerald-400 mt-1 flex-shrink-0" />
-                          )}
+                          <div className="flex-shrink-0 pt-1">
+                            <div
+                              className={`h-4 w-4 rounded-sm border flex items-center justify-center ${
+                                isSelected
+                                  ? "border-emerald-400 bg-emerald-400 text-neutral-950"
+                                  : "border-neutral-700 bg-neutral-900"
+                              }`}
+                            >
+                              {isSelected && <Check className="h-3 w-3 stroke-[3]" />}
+                            </div>
+                          </div>
                         </button>
                       );
                     })}
@@ -264,14 +312,17 @@ export default function MatcherPage() {
               {/* Step 2: Giving Style */}
               {step === 2 && (
                 <div>
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-2">
-                    How would you prefer to contribute?
+                  <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-emerald-400">
+                    <span>SELECTION 02 / 03</span>
+                  </div>
+                  <h2 className="font-serif text-xl sm:text-2xl font-normal text-neutral-100 mb-2">
+                    Contribution Methodology
                   </h2>
-                  <p className="text-xs sm:text-sm text-slate-200 mb-6 font-medium">
-                    Select your preferred giving channel.
+                  <p className="font-sans text-xs sm:text-sm text-neutral-400 mb-6">
+                    Determine whether your engagement is purely capital allocation, open source engineering, or policy advocacy.
                   </p>
 
-                  <div className="space-y-3">
+                  <div className="space-y-2.5">
                     {GIVING_OPTIONS.map((opt) => {
                       const Icon = opt.icon;
                       const isSelected = answers.givingPreference === opt.id;
@@ -279,24 +330,38 @@ export default function MatcherPage() {
                         <button
                           key={opt.id}
                           onClick={() => setAnswers({ ...answers, givingPreference: opt.id })}
-                          className={`w-full flex items-start gap-4 p-4 rounded-2xl border text-left transition-all duration-200 ${
+                          className={`w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition ${
                             isSelected
-                              ? "border-teal-500/60 bg-teal-500/15 shadow-[0_0_20px_rgba(20,184,166,0.15)] ring-1 ring-teal-500/40"
-                              : "border-slate-800 bg-[#111a2e]/60 hover:border-slate-700 hover:bg-[#111a2e]"
+                              ? "border-emerald-500/70 bg-emerald-950/20 shadow-sm ring-1 ring-emerald-500/30"
+                              : "border-neutral-800 bg-[#080c12]/80 hover:border-neutral-700 hover:bg-[#0f141e]"
                           }`}
                         >
-                          <div className={`p-2.5 rounded-xl border mt-0.5 ${
-                            isSelected ? "border-teal-500/50 bg-teal-500/20 text-teal-300" : "border-slate-700 bg-slate-900 text-slate-300"
-                          }`}>
-                            <Icon className="h-5 w-5" />
+                          <div
+                            className={`p-2 rounded-sm border mt-0.5 flex-shrink-0 ${
+                              isSelected
+                                ? "border-emerald-500/50 bg-emerald-500/20 text-emerald-300"
+                                : "border-neutral-800 bg-neutral-900 text-neutral-400"
+                            }`}
+                          >
+                            <Icon className="h-4 w-4" />
                           </div>
-                          <div className="flex-1">
-                            <div className="font-bold text-white text-sm sm:text-base">{opt.label}</div>
-                            <div className="text-xs text-slate-200 mt-0.5 leading-relaxed font-normal">{opt.desc}</div>
+                          <div className="flex-1 min-w-0">
+                            <div className="font-sans font-semibold text-neutral-200 text-sm">{opt.label}</div>
+                            <div className="font-sans text-xs text-neutral-400 mt-1 leading-relaxed font-normal">
+                              {opt.desc}
+                            </div>
                           </div>
-                          {isSelected && (
-                            <CheckCircle2 className="h-5 w-5 text-teal-400 mt-1 flex-shrink-0" />
-                          )}
+                          <div className="flex-shrink-0 pt-1">
+                            <div
+                              className={`h-4 w-4 rounded-sm border flex items-center justify-center ${
+                                isSelected
+                                  ? "border-emerald-400 bg-emerald-400 text-neutral-950"
+                                  : "border-neutral-700 bg-neutral-900"
+                              }`}
+                            >
+                              {isSelected && <Check className="h-3 w-3 stroke-[3]" />}
+                            </div>
+                          </div>
                         </button>
                       );
                     })}
@@ -307,14 +372,17 @@ export default function MatcherPage() {
               {/* Step 3: Scope */}
               {step === 3 && (
                 <div>
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-2">
-                    What scope of impact matters most?
+                  <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-emerald-400">
+                    <span>SELECTION 03 / 03</span>
+                  </div>
+                  <h2 className="font-serif text-xl sm:text-2xl font-normal text-neutral-100 mb-2">
+                    Target Geographic & Protocol Scope
                   </h2>
-                  <p className="text-xs sm:text-sm text-slate-200 mb-6 font-medium">
-                    Determine where the primary benefit should land.
+                  <p className="font-sans text-xs sm:text-sm text-neutral-400 mb-6">
+                    Specify whether deployment should focus on international policy, web standards, or local lab initiatives.
                   </p>
 
-                  <div className="space-y-3">
+                  <div className="space-y-2.5">
                     {SCOPE_OPTIONS.map((opt) => {
                       const Icon = opt.icon;
                       const isSelected = answers.impactScope === opt.id;
@@ -322,24 +390,38 @@ export default function MatcherPage() {
                         <button
                           key={opt.id}
                           onClick={() => setAnswers({ ...answers, impactScope: opt.id })}
-                          className={`w-full flex items-start gap-4 p-4 rounded-2xl border text-left transition-all duration-200 ${
+                          className={`w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition ${
                             isSelected
-                              ? "border-emerald-500/60 bg-emerald-500/15 shadow-[0_0_20px_rgba(16,185,129,0.15)] ring-1 ring-emerald-500/40"
-                              : "border-slate-800 bg-[#111a2e]/60 hover:border-slate-700 hover:bg-[#111a2e]"
+                              ? "border-emerald-500/70 bg-emerald-950/20 shadow-sm ring-1 ring-emerald-500/30"
+                              : "border-neutral-800 bg-[#080c12]/80 hover:border-neutral-700 hover:bg-[#0f141e]"
                           }`}
                         >
-                          <div className={`p-2.5 rounded-xl border mt-0.5 ${
-                            isSelected ? "border-emerald-500/50 bg-emerald-500/20 text-emerald-300" : "border-slate-700 bg-slate-900 text-slate-300"
-                          }`}>
-                            <Icon className="h-5 w-5" />
+                          <div
+                            className={`p-2 rounded-sm border mt-0.5 flex-shrink-0 ${
+                              isSelected
+                                ? "border-emerald-500/50 bg-emerald-500/20 text-emerald-300"
+                                : "border-neutral-800 bg-neutral-900 text-neutral-400"
+                            }`}
+                          >
+                            <Icon className="h-4 w-4" />
                           </div>
-                          <div className="flex-1">
-                            <div className="font-bold text-white text-sm sm:text-base">{opt.label}</div>
-                            <div className="text-xs text-slate-200 mt-0.5 leading-relaxed font-normal">{opt.desc}</div>
+                          <div className="flex-1 min-w-0">
+                            <div className="font-sans font-semibold text-neutral-200 text-sm">{opt.label}</div>
+                            <div className="font-sans text-xs text-neutral-400 mt-1 leading-relaxed font-normal">
+                              {opt.desc}
+                            </div>
                           </div>
-                          {isSelected && (
-                            <CheckCircle2 className="h-5 w-5 text-emerald-400 mt-1 flex-shrink-0" />
-                          )}
+                          <div className="flex-shrink-0 pt-1">
+                            <div
+                              className={`h-4 w-4 rounded-sm border flex items-center justify-center ${
+                                isSelected
+                                  ? "border-emerald-400 bg-emerald-400 text-neutral-950"
+                                  : "border-neutral-700 bg-neutral-900"
+                              }`}
+                            >
+                              {isSelected && <Check className="h-3 w-3 stroke-[3]" />}
+                            </div>
+                          </div>
                         </button>
                       );
                     })}
@@ -347,14 +429,14 @@ export default function MatcherPage() {
                 </div>
               )}
 
-              {/* Navigation buttons */}
-              <div className="flex items-center justify-between border-t border-slate-800 pt-6 mt-8">
+              {/* Navigation controls */}
+              <div className="flex items-center justify-between border-t border-neutral-800 pt-6 mt-8 font-mono text-xs">
                 {step > 1 ? (
                   <button
                     onClick={() => setStep(step - 1)}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 text-xs sm:text-sm font-semibold text-slate-200 hover:text-white transition"
+                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-sm border border-neutral-800 bg-[#080c12] text-neutral-300 hover:border-neutral-700 hover:text-white transition"
                   >
-                    <ArrowLeft className="h-4 w-4" /> Back
+                    <ArrowLeft className="h-3.5 w-3.5" /> STAGE_PREV
                   </button>
                 ) : (
                   <div />
@@ -363,149 +445,177 @@ export default function MatcherPage() {
                 {step < 3 ? (
                   <button
                     onClick={() => setStep(step + 1)}
-                    className="inline-flex items-center gap-2 rounded-xl bg-emerald-400 px-6 py-2.5 text-xs sm:text-sm font-extrabold text-slate-950 shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:bg-emerald-300 transition active:scale-95"
+                    className="inline-flex items-center gap-2 rounded-sm bg-neutral-100 px-5 py-2 font-semibold text-neutral-950 hover:bg-white transition active:scale-[0.98]"
                   >
-                    Continue <ArrowRight className="h-4 w-4" />
+                    <span>NEXT_STAGE</span>
+                    <ArrowRight className="h-3.5 w-3.5" />
                   </button>
                 ) : (
                   <button
                     onClick={handleSubmit}
                     disabled={isSubmitting}
-                    className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-400 px-6 py-2.5 text-xs sm:text-sm font-extrabold text-slate-950 shadow-[0_0_25px_rgba(16,185,129,0.4)] hover:scale-[1.02] transition active:scale-95 disabled:opacity-50"
+                    className="inline-flex items-center gap-2 rounded-sm bg-emerald-400 px-5 py-2 font-semibold text-neutral-950 hover:bg-emerald-300 transition active:scale-[0.98] disabled:opacity-50"
                   >
-                    {isSubmitting ? "Calculating Matches..." : "View Recommendations"}
-                    <Sparkles className="h-4 w-4" />
+                    <span>{isSubmitting ? "CALCULATING_MATRIX..." : "EXECUTE_ALIGNMENT"}</span>
+                    <ArrowRight className="h-3.5 w-3.5" />
                   </button>
                 )}
               </div>
             </div>
           ) : (
-            /* Results View */
+            /* Results Evaluation Matrix */
             <div>
-              <div className="text-center mb-8">
-                <div className="inline-flex items-center justify-center h-12 w-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 mb-3 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
-                  <Heart className="h-6 w-6" />
+              <div className="border-b border-neutral-800 pb-6 mb-6">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="font-mono text-[11px] uppercase tracking-wider text-emerald-400">
+                    {viewSavedOnly ? "LOCAL BOOKMARKS LEDGER" : "EVALUATION MATRIX RESULTS"}
+                  </div>
+                  <button
+                    onClick={restartQuiz}
+                    className="inline-flex items-center gap-1.5 font-mono text-xs text-neutral-400 hover:text-white transition"
+                  >
+                    <RefreshCcw className="h-3 w-3" /> RETAKE_MATRIX
+                  </button>
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-2">
-                  {viewSavedOnly ? "Saved Causes" : "Recommended Organizations"}
+                <h2 className="font-serif text-2xl sm:text-3xl font-normal text-neutral-100">
+                  {viewSavedOnly ? "Saved Causes" : "Matched Technical Initiatives"}
                 </h2>
-                <p className="text-xs sm:text-sm text-slate-200 max-w-lg mx-auto font-medium">
+                <p className="font-sans text-xs sm:text-sm text-neutral-400 mt-1">
                   {viewSavedOnly
-                    ? "Your locally bookmarked non-profits and causes."
-                    : `High-impact non-profits matching your focus on ${answers.primaryCause.replace(
+                    ? "Locally saved organizations from your evaluation history."
+                    : `Verified non-profit organizations aligned with your focus on ${answers.primaryCause.replace(
                         /-/g,
                         " "
                       )}.`}
                 </p>
               </div>
 
-              <div className="space-y-5 mb-8">
-                {(viewSavedOnly ? savedCharitiesList : results || [])?.map((charity) => {
-                  const bookmarked = isCharityBookmarked(charity.id);
-                  const IconComp = IconMap[charity.iconName] || Shield;
+              {((viewSavedOnly ? savedCharitiesList : results) || []).length === 0 ? (
+                <div className="p-8 text-center border border-dashed border-neutral-800 rounded-sm">
+                  <p className="font-mono text-xs text-neutral-400">No organizations found in this ledger query.</p>
+                  <button
+                    onClick={restartQuiz}
+                    className="mt-4 inline-flex items-center gap-1.5 rounded-sm bg-neutral-100 px-4 py-2 font-mono text-xs font-semibold text-neutral-950 hover:bg-white transition"
+                  >
+                    RUN NEW EVALUATION
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-4 mb-8">
+                  {(viewSavedOnly ? savedCharitiesList : results || []).map((charity) => {
+                    const bookmarked = isCharityBookmarked(charity.id);
+                    const IconComp = IconMap[charity.iconName] || Shield;
 
-                  return (
-                    <div
-                      key={charity.id}
-                      className="relative rounded-2xl border border-slate-800 bg-[#111a2d] p-6 flex flex-col justify-between transition-all duration-300 hover:border-emerald-500/50 shadow-lg"
-                    >
-                      <div>
+                    return (
+                      <div
+                        key={charity.id}
+                        className="rounded-sm border border-neutral-800 bg-[#080c12] p-5 sm:p-6 transition hover:border-neutral-700"
+                      >
                         <div className="flex items-start justify-between gap-4 mb-3">
                           <div className="flex items-center gap-3">
-                            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-400">
-                              <IconComp className="h-5 w-5" />
+                            <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-neutral-900 border border-neutral-800 text-neutral-300">
+                              <IconComp className="h-4 w-4" />
                             </div>
                             <div>
-                              <h3 className="font-bold text-white text-base sm:text-lg leading-tight">
-                                {charity.name}
-                              </h3>
-                              <span className="text-[10px] font-bold text-emerald-300 bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-0.5 rounded-full mt-1 inline-block">
-                                {charity.rating}
-                              </span>
+                              <div className="flex items-center gap-2">
+                                <h3 className="font-serif text-lg font-normal text-neutral-100 leading-tight">
+                                  {charity.name}
+                                </h3>
+                                <span className="font-mono text-[10px] text-emerald-400 bg-emerald-950/40 border border-emerald-800/50 px-1.5 py-0.5 rounded-sm">
+                                  {charity.rating}
+                                </span>
+                              </div>
+                              <div className="font-mono text-[11px] text-neutral-500 mt-0.5">
+                                {charity.category.replace(/-/g, " ")}
+                              </div>
                             </div>
                           </div>
 
                           <button
                             onClick={() => toggleCharityBookmark(charity.id)}
                             title={bookmarked ? "Remove bookmark" : "Save cause"}
-                            className={`p-1.5 rounded-lg border transition ${
+                            className={`p-1.5 rounded-sm border transition ${
                               bookmarked
-                                ? "bg-amber-500/25 border-amber-500/60 text-amber-200 shadow-[0_0_12px_rgba(245,158,11,0.2)]"
-                                : "border-slate-700 bg-slate-900 text-slate-200 hover:text-white hover:border-slate-500"
+                                ? "bg-amber-400/10 border-amber-400/40 text-amber-300"
+                                : "border-neutral-800 bg-neutral-900 text-neutral-400 hover:text-white hover:border-neutral-700"
                             }`}
                           >
-                            <Bookmark className={`h-4 w-4 ${bookmarked ? "fill-amber-400 text-amber-400" : "text-slate-300"}`} />
+                            <Bookmark className={`h-3.5 w-3.5 ${bookmarked ? "fill-amber-400 text-amber-400" : "text-neutral-400"}`} />
                           </button>
                         </div>
 
-                        <p className="text-xs font-semibold text-emerald-300 italic mb-2">
+                        <p className="font-sans text-xs italic text-neutral-300 mb-2">
                           &ldquo;{charity.tagline}&rdquo;
                         </p>
 
-                        <p className="text-xs sm:text-sm text-slate-200 leading-relaxed mb-4 font-normal">
+                        <p className="font-sans text-xs sm:text-sm text-neutral-400 leading-relaxed mb-4">
                           {charity.description}
                         </p>
 
-                        <div className="rounded-xl border border-slate-700/80 bg-slate-900/80 p-3 mb-4 text-xs">
-                          <span className="font-bold text-white">Verified Impact: </span>
-                          <span className="text-slate-200">{charity.impactMetrics}</span>
-                        </div>
-                      </div>
-
-                      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-800 pt-4">
-                        <div className="flex flex-wrap gap-1.5">
-                          {charity.tags.map((t) => (
-                            <span
-                              key={t}
-                              className="rounded-md border border-slate-700 bg-slate-900/90 px-2 py-0.5 text-[10px] font-semibold text-slate-200"
-                            >
-                              #{t}
-                            </span>
-                          ))}
+                        {/* Verified Impact Ledger Box */}
+                        <div className="rounded-sm border border-neutral-800/80 bg-neutral-900/40 p-3 mb-4 font-mono text-xs">
+                          <span className="text-neutral-400 uppercase tracking-wider text-[10px] block mb-1">
+                            VERIFIED IMPACT LEDGER
+                          </span>
+                          <span className="text-neutral-200 font-sans text-xs leading-relaxed block">
+                            {charity.impactMetrics}
+                          </span>
                         </div>
 
-                        <div className="flex items-center gap-2">
-                          {charity.volunteerUrl && (
+                        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-neutral-800/80 pt-4">
+                          <div className="flex flex-wrap gap-1.5">
+                            {charity.tags.map((t) => (
+                              <span
+                                key={t}
+                                className="font-mono text-[10px] rounded-sm border border-neutral-800 bg-neutral-900/60 px-2 py-0.5 text-neutral-400"
+                              >
+                                #{t}
+                              </span>
+                            ))}
+                          </div>
+
+                          <div className="flex items-center gap-2 font-mono text-xs">
+                            {charity.volunteerUrl && (
+                              <a
+                                href={charity.volunteerUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1 rounded-sm border border-neutral-800 bg-neutral-900 px-3 py-1.5 text-neutral-300 hover:bg-neutral-800 hover:text-white transition"
+                              >
+                                Volunteer
+                                <ArrowUpRight className="h-3 w-3" />
+                              </a>
+                            )}
                             <a
-                              href={charity.volunteerUrl}
+                              href={charity.donateUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 rounded-lg border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs font-bold text-slate-200 hover:bg-slate-800 hover:text-white transition"
+                              className="inline-flex items-center gap-1 rounded-sm bg-neutral-100 px-3 py-1.5 font-semibold text-neutral-950 hover:bg-white transition"
                             >
-                              Volunteer
-                              <ArrowUpRight className="h-3.5 w-3.5" />
+                              Direct Support
+                              <ArrowUpRight className="h-3 w-3 text-neutral-950" />
                             </a>
-                          )}
-                          <a
-                            href={charity.donateUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 rounded-lg bg-emerald-400 px-3.5 py-1.5 text-xs font-extrabold text-slate-950 shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:bg-emerald-300 transition"
-                          >
-                            Support Directly
-                            <ArrowUpRight className="h-3.5 w-3.5 text-slate-950" />
-                          </a>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
+                    );
+                  })}
+                </div>
+              )}
 
-              <div className="text-center pt-4 border-t border-slate-800 flex items-center justify-center gap-4">
-                <button
-                  onClick={restartQuiz}
-                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-slate-200 hover:text-white transition"
-                >
-                  <RefreshCcw className="h-3.5 w-3.5" /> Retake Questionnaire
-                </button>
-                <span className="text-slate-600">|</span>
+              <div className="border-t border-neutral-800 pt-6 flex items-center justify-between font-mono text-xs">
                 <Link
                   href="/feed"
-                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-emerald-400 hover:text-emerald-300 transition"
+                  className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition"
                 >
-                  Browse Uplift Feed <ArrowRight className="h-3.5 w-3.5" />
+                  <ArrowLeft className="h-3.5 w-3.5" /> Back to Wire Feed
                 </Link>
+                <button
+                  onClick={restartQuiz}
+                  className="inline-flex items-center gap-1.5 text-neutral-300 hover:text-white transition"
+                >
+                  <RefreshCcw className="h-3.5 w-3.5" /> New Evaluation
+                </button>
               </div>
             </div>
           )}

@@ -4,82 +4,61 @@
 
 @layer base {
   :root {
-    --bg-base: #080c14;
-    --bg-surface: #0e1524;
-    --bg-card: #121b2d;
-    --border-color: rgba(255, 255, 255, 0.07);
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
+    --bg-base: #080c12;
+    --bg-surface: #0e131b;
+    --bg-panel: #131a24;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-subtle: rgba(255, 255, 255, 0.14);
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-muted: #808c9e;
   }
 
   body {
     background-color: var(--bg-base);
     color: var(--text-primary);
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
   }
+
+  h1, h2, h3, h4 {
+    letter-spacing: -0.02em;
+  }
 }
 
-/* Ambient glow backdrops */
-.ambient-glow-emerald {
-  background: radial-gradient(700px circle at 50% 0%, rgba(16, 185, 129, 0.12), transparent 80%);
+/* Crisp grid & architectural utilities */
+.wire-grid-bg {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
 }
 
-.ambient-glow-cyan {
-  background: radial-gradient(600px circle at 80% 20%, rgba(6, 182, 212, 0.08), transparent 75%);
+.wire-card {
+  background-color: #0c1017;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 
-/* Animations */
-@keyframes like-bounce {
-  0% { transform: scale(1); }
-  40% { transform: scale(1.35); }
-  70% { transform: scale(0.9); }
-  100% { transform: scale(1); }
-}
-
-.animate-like {
-  animation: like-bounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@keyframes shine {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(200%); }
-}
-
-.animate-shine {
-  animation: shine 2.5s infinite linear;
-}
-
-/* Glass & Card Micro-Interactions */
-.social-card {
-  background: rgba(14, 21, 36, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.social-card:hover {
-  border-color: rgba(52, 211, 153, 0.35);
-  box-shadow: 0 16px 40px -15px rgba(16, 185, 129, 0.15);
-  transform: translateY(-2px);
+.wire-card:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  background-color: #0f141d;
 }
 
 /* Custom sleek scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #080c14;
+  background: #080c12;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 9999px;
+  background: #1e2837;
+  border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #2d3b4e;
 }

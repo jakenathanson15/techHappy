@@ -1,264 +1,227 @@
 import Link from "next/link";
 import {
   HeartHandshake,
-  Newspaper,
   ArrowRight,
   Shield,
-  Zap,
-  Globe2,
-  Lock,
   ArrowUpRight,
-  TrendingUp,
+  Clock,
 } from "lucide-react";
-import { TechHappyEmblem } from "@/components/Logo";
 import charitiesData from "@/data/charities.json";
 import { fetchUpliftNews } from "@/lib/rss";
 import { NewsCard } from "@/components/NewsCard";
 import { IconMap } from "@/components/Icons";
 
 export default async function HomePage() {
-  const latestNews = (await fetchUpliftNews()).slice(0, 2);
-  const featuredCharities = charitiesData.slice(0, 3);
+  const latestNews = await fetchUpliftNews();
+  const topDispatches = latestNews.slice(0, 3);
+  const featuredCharities = charitiesData.slice(0, 6);
 
   return (
-    <div className="relative overflow-hidden pb-24">
-      {/* Ambient background glows */}
-      <div className="ambient-glow-emerald pointer-events-none absolute inset-0 -z-10 h-[650px] w-full" />
-      <div className="ambient-glow-cyan pointer-events-none absolute right-0 top-40 -z-10 h-[500px] w-1/2" />
+    <div className="relative pb-20 wire-grid-bg min-h-screen">
+      {/* 1. Asymmetric Hero Section */}
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 pt-12 sm:pt-16 pb-12 border-b border-neutral-800/80">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Left Hero (Col 7 / 60%) */}
+          <div className="lg:col-span-7 space-y-6">
+            <div className="inline-flex items-center gap-2 font-mono text-xs text-emerald-400 font-medium">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>01 // INDEPENDENT NEWS WIRE & PHILANTHROPY REGISTRY</span>
+            </div>
 
-      {/* Hero Section */}
-      <section className="relative mx-auto max-w-5xl px-4 pt-14 sm:pt-20 pb-16 text-center">
-        {/* Pill Badge */}
-        <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-950/60 px-4 py-1.5 text-xs font-bold text-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.2)] mb-8">
-          <TechHappyEmblem className="h-4 w-4 text-emerald-400" />
-          <span>Engineering Breakthroughs & High-Impact Giving</span>
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight text-neutral-100 leading-[1.08]">
+              Engineering for human flourishing.
+            </h1>
+
+            <p className="font-sans text-sm sm:text-base text-neutral-300 leading-relaxed max-w-xl">
+              An independent news wire tracking peer-reviewed breakthroughs across clean energy, biotechnology, and public digital goods — paired with a vetted charity directory for technical workers.
+            </p>
+
+            {/* Action Bar */}
+            <div className="pt-2 flex flex-wrap items-center gap-3">
+              <Link
+                href="/feed"
+                className="inline-flex items-center gap-2 rounded-md bg-emerald-500 px-4 py-2.5 text-xs font-semibold text-neutral-950 transition duration-150 hover:bg-emerald-400 active:bg-emerald-600 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400"
+              >
+                <span className="font-mono text-[10px] text-neutral-950/70 font-bold">[01]</span>
+                <span>Explore Wire Feed</span>
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+
+              <Link
+                href="/match"
+                className="inline-flex items-center gap-2 rounded-md border border-neutral-700 bg-neutral-900/80 px-4 py-2.5 text-xs font-semibold text-neutral-200 transition duration-150 hover:bg-neutral-800 hover:text-white hover:border-neutral-600"
+              >
+                <span className="font-mono text-[10px] text-teal-400 font-bold">[02]</span>
+                <span>Take Matcher Quiz</span>
+                <HeartHandshake className="h-3.5 w-3.5 text-teal-400" />
+              </Link>
+            </div>
+
+            {/* Key Specs Telemetry Strip */}
+            <div className="grid grid-cols-3 gap-3 pt-6 border-t border-neutral-800/80 max-w-lg">
+              <div>
+                <div className="font-mono text-base font-bold text-white">13 Wires</div>
+                <div className="font-mono text-[11px] text-neutral-400">Institutional RSS Feeds</div>
+              </div>
+              <div>
+                <div className="font-mono text-base font-bold text-white">100% Vetted</div>
+                <div className="font-mono text-[11px] text-neutral-400">4-Star Charity Navigator</div>
+              </div>
+              <div>
+                <div className="font-mono text-base font-bold text-white">Zero Trackers</div>
+                <div className="font-mono text-[11px] text-neutral-400">Privacy Preserved</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Hero (Col 5 / 40%): Live Ledger Terminal */}
+          <div className="lg:col-span-5 wire-card rounded-md p-4 sm:p-5">
+            <div className="flex items-center justify-between pb-3 mb-3 border-b border-neutral-800">
+              <div className="flex items-center gap-2 font-mono text-xs font-semibold text-neutral-300">
+                <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                <span>LIVE WIRE INGESTION</span>
+              </div>
+              <span className="font-mono text-[11px] text-neutral-400">225 Stories Stored</span>
+            </div>
+
+            <div className="space-y-3">
+              {latestNews.slice(0, 4).map((item, idx) => (
+                <a
+                  key={item.id}
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block p-2.5 rounded-sm bg-neutral-900/60 border border-neutral-800/70 hover:border-neutral-700 hover:bg-neutral-850 transition duration-150 group"
+                >
+                  <div className="flex items-center justify-between text-[11px] font-mono text-neutral-400 mb-1">
+                    <span className="text-emerald-400 font-semibold">{item.source}</span>
+                    <span className="flex items-center gap-1">
+                      <Clock className="h-2.5 w-2.5" />
+                      #{idx + 1}
+                    </span>
+                  </div>
+                  <h2 className="font-sans text-xs font-semibold text-neutral-200 group-hover:text-emerald-300 transition line-clamp-2 leading-snug">
+                    {item.title}
+                  </h2>
+                </a>
+              ))}
+            </div>
+
+            <div className="mt-4 pt-3 border-t border-neutral-800 flex items-center justify-between text-xs font-mono">
+              <span className="text-neutral-400">Protocol: Fast-XML Multi-Feed</span>
+              <Link
+                href="/feed"
+                className="text-emerald-400 hover:text-emerald-300 font-semibold inline-flex items-center gap-1"
+              >
+                <span>View Full Stream</span>
+                <ArrowRight className="h-3 w-3" />
+              </Link>
+            </div>
+          </div>
         </div>
+      </section>
 
-        {/* Main Headline */}
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.08] mb-6">
-          Technology for <br />
-          <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent drop-shadow-sm">
-            Human Progress.
-          </span>
-        </h1>
+      {/* 2. Structured Section: Vetted Charity Registry Matrix */}
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 py-12 border-b border-neutral-800/80">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+          <div>
+            <div className="font-mono text-xs text-teal-400 font-semibold mb-1">
+              02 // HIGH-LEVERAGE CHARITY REGISTRY
+            </div>
+            <h2 className="font-display text-2xl sm:text-3xl font-medium text-white">
+              Vetted Non-Profit Index
+            </h2>
+            <p className="text-xs sm:text-sm text-neutral-400 mt-1 max-w-xl">
+              Strictly selected for transparent governance, 4-star Charity Navigator evaluation, and direct technical leverage.
+            </p>
+          </div>
 
-        {/* Subtitle */}
-        <p className="mx-auto max-w-2xl text-base sm:text-lg text-slate-100 font-medium leading-relaxed mb-10">
-          Reclaim your optimism. techHappy curates automated, verified breakthroughs across clean energy, biotech, and open access — and connects technologists directly with vetted non-profits.
-        </p>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
           <Link
             href="/match"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-400 px-7 py-3.5 text-sm font-extrabold text-slate-950 shadow-[0_0_25px_rgba(16,185,129,0.35)] transition-all duration-200 hover:scale-[1.02] hover:shadow-[0_0_35px_rgba(16,185,129,0.5)] active:scale-95"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-400 hover:text-teal-300 transition font-mono"
           >
-            <HeartHandshake className="h-4 w-4 text-slate-950" />
-            Take Impact Matcher Quiz
-            <ArrowRight className="h-4 w-4 text-slate-950" />
-          </Link>
-
-          <Link
-            href="/feed"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-900/90 px-7 py-3.5 text-sm font-bold text-white shadow-lg backdrop-blur-md transition-all duration-200 hover:bg-slate-800 hover:border-emerald-500/50 active:scale-95"
-          >
-            <Newspaper className="h-4 w-4 text-emerald-400" />
-            Explore Live Feed
+            <span>Match by Skills or Cause</span>
+            <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
 
-        {/* Trust Badges Bar */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-4xl mx-auto border-t border-slate-800/80 pt-10 text-left">
-          <div className="flex items-center gap-3 rounded-xl border border-slate-800 bg-[#0d1424] p-3.5 shadow-sm">
-            <Zap className="h-5 w-5 text-emerald-400 flex-shrink-0" />
-            <div>
-              <div className="text-xs font-bold text-white">Auto-Refreshing</div>
-              <div className="text-xs font-medium text-slate-200">Hourly RSS ingestion</div>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3 rounded-xl border border-slate-800 bg-[#0d1424] p-3.5 shadow-sm">
-            <Shield className="h-5 w-5 text-teal-400 flex-shrink-0" />
-            <div>
-              <div className="text-xs font-bold text-white">Vetted Non-Profits</div>
-              <div className="text-xs font-medium text-slate-200">Charity Navigator 100%</div>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3 rounded-xl border border-slate-800 bg-[#0d1424] p-3.5 shadow-sm">
-            <Lock className="h-5 w-5 text-cyan-400 flex-shrink-0" />
-            <div>
-              <div className="text-xs font-bold text-white">Zero Tracking</div>
-              <div className="text-xs font-medium text-slate-200">100% private & open</div>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3 rounded-xl border border-slate-800 bg-[#0d1424] p-3.5 shadow-sm">
-            <Globe2 className="h-5 w-5 text-indigo-400 flex-shrink-0" />
-            <div>
-              <div className="text-xs font-bold text-white">Global Reach</div>
-              <div className="text-xs font-medium text-slate-200">High-impact causes</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Two Pillars Grid */}
-      <section className="mx-auto max-w-5xl px-4 sm:px-6 mb-20">
-        <div className="grid gap-6 md:grid-cols-2">
-          {/* Pillar 1 */}
-          <div className="group relative overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-b from-[#111a2d] to-[#0b101c] p-8 transition-all duration-300 hover:border-emerald-500/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.15)]">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 mb-6">
-              <Newspaper className="h-6 w-6" />
-            </div>
-
-            <span className="text-xs font-bold tracking-wider uppercase text-emerald-400 mb-1 block">
-              Autonomous Stream
-            </span>
-            <h2 className="text-2xl font-bold text-white mb-3">
-              The Uplift Feed
-            </h2>
-            <p className="text-sm font-normal text-slate-200 leading-relaxed mb-6">
-              Algorithmic curation of verified scientific milestones, renewable energy records, cancer detection breakthroughs, and open-source victories.
-            </p>
-
-            <div className="flex flex-wrap gap-2 mb-8">
-              <span className="rounded-lg bg-[#142038] border border-slate-700/80 px-2.5 py-1 text-xs font-medium text-slate-100">
-                Climate Tech
-              </span>
-              <span className="rounded-lg bg-[#142038] border border-slate-700/80 px-2.5 py-1 text-xs font-medium text-slate-100">
-                Biotech & Health
-              </span>
-              <span className="rounded-lg bg-[#142038] border border-slate-700/80 px-2.5 py-1 text-xs font-medium text-slate-100">
-                Open Web
-              </span>
-            </div>
-
-            <Link
-              href="/feed"
-              className="inline-flex items-center gap-2 text-sm font-bold text-emerald-400 hover:text-emerald-300 transition group/link"
-            >
-              Browse live feed
-              <ArrowRight className="h-4 w-4 transition group-hover/link:translate-x-1" />
-            </Link>
-          </div>
-
-          {/* Pillar 2 */}
-          <div className="group relative overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-b from-[#111a2d] to-[#0b101c] p-8 transition-all duration-300 hover:border-teal-500/50 hover:shadow-[0_0_30px_rgba(20,184,166,0.15)]">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-500/10 border border-teal-500/30 text-teal-400 mb-6">
-              <HeartHandshake className="h-6 w-6" />
-            </div>
-
-            <span className="text-xs font-bold tracking-wider uppercase text-teal-400 mb-1 block">
-              Direct Social Action
-            </span>
-            <h2 className="text-2xl font-bold text-white mb-3">
-              Impact Matcher
-            </h2>
-            <p className="text-sm font-normal text-slate-200 leading-relaxed mb-6">
-              Direct your time, skills, or financial resources toward verified non-profits protecting privacy, closing the diversity gap, and building accessible software.
-            </p>
-
-            <div className="flex flex-wrap gap-2 mb-8">
-              <span className="rounded-lg bg-[#142038] border border-slate-700/80 px-2.5 py-1 text-xs font-medium text-slate-100">
-                Code Mentorship
-              </span>
-              <span className="rounded-lg bg-[#142038] border border-slate-700/80 px-2.5 py-1 text-xs font-medium text-slate-100">
-                Hardware Giving
-              </span>
-              <span className="rounded-lg bg-[#142038] border border-slate-700/80 px-2.5 py-1 text-xs font-medium text-slate-100">
-                Direct Giving
-              </span>
-            </div>
-
-            <Link
-              href="/match"
-              className="inline-flex items-center gap-2 text-sm font-bold text-teal-400 hover:text-teal-300 transition group/link"
-            >
-              Start 3-step questionnaire
-              <ArrowRight className="h-4 w-4 transition group-hover/link:translate-x-1" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Feed Preview */}
-      <section className="mx-auto max-w-2xl px-4 sm:px-6 mb-20">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <div className="flex items-center gap-2 text-xs font-bold text-emerald-400 uppercase tracking-wider mb-1">
-              <TrendingUp className="h-4 w-4" /> Live Stream
-            </div>
-            <h2 className="text-2xl font-bold text-white">Recent Uplift Stories</h2>
-          </div>
-          <Link
-            href="/feed"
-            className="text-xs sm:text-sm font-bold text-emerald-400 hover:text-emerald-300 inline-flex items-center gap-1 transition"
-          >
-            View full stream <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-
-        <div className="space-y-6">
-          {latestNews.map((item) => (
-            <NewsCard key={item.id} news={item} />
-          ))}
-        </div>
-      </section>
-
-      {/* Featured Vetted Causes */}
-      <section className="mx-auto max-w-5xl px-4 sm:px-6">
-        <div className="rounded-3xl border border-slate-800 bg-[#0b101c] p-8 sm:p-10 shadow-xl">
-          <div className="max-w-xl mb-8">
-            <span className="text-xs font-bold tracking-wider uppercase text-teal-400 mb-1 block">
-              Curated Directory
-            </span>
-            <h2 className="text-2xl font-bold text-white mb-2">Featured Tech Non-Profits</h2>
-            <p className="text-xs sm:text-sm text-slate-200">
-              Vetted organizations using engineering and policy to protect fundamental human rights and empower global communities.
-            </p>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-3">
-            {featuredCharities.map((charity) => {
-              const IconComp = IconMap[charity.iconName] || Shield;
-              return (
-                <div
-                  key={charity.id}
-                  className="rounded-2xl border border-slate-800 bg-[#111a2d] p-6 flex flex-col justify-between transition duration-200 hover:border-emerald-500/40"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
-                        <IconComp className="h-5 w-5" />
+        {/* High-Density Registry Table / Card Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {featuredCharities.map((charity) => {
+            const IconComp = IconMap[charity.iconName] || Shield;
+            return (
+              <div
+                key={charity.id}
+                className="wire-card rounded-md p-4 flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-neutral-800">
+                    <div className="flex items-center gap-2">
+                      <div className="flex h-7 w-7 items-center justify-center rounded-sm bg-neutral-900 border border-neutral-800 text-teal-400">
+                        <IconComp className="h-3.5 w-3.5" />
                       </div>
-                      <span className="text-[10px] font-bold text-emerald-300 bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
-                        {charity.rating}
+                      <span className="font-mono text-[11px] text-neutral-400 font-semibold">
+                        {charity.shortName}
                       </span>
                     </div>
-
-                    <h3 className="font-bold text-white text-base mb-1.5">{charity.name}</h3>
-                    <p className="text-xs text-slate-200 mb-4 line-clamp-2 leading-relaxed">
-                      {charity.tagline}
-                    </p>
+                    <span className="font-mono text-[10px] text-emerald-400 bg-emerald-950/80 border border-emerald-800/60 px-2 py-0.5 rounded-sm">
+                      {charity.rating}
+                    </span>
                   </div>
 
-                  <div className="border-t border-slate-800/80 pt-4 flex items-center justify-between text-xs">
-                    <span className="text-[11px] text-slate-300 font-semibold">{charity.shortName}</span>
-                    <a
-                      href={charity.donateUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 font-bold text-emerald-400 hover:text-emerald-300 transition"
-                    >
-                      Support
-                      <ArrowUpRight className="h-3.5 w-3.5" />
-                    </a>
-                  </div>
+                  <h3 className="font-sans font-bold text-sm text-neutral-100 mb-1">
+                    {charity.name}
+                  </h3>
+                  <p className="text-xs text-neutral-400 line-clamp-2 leading-relaxed mb-3">
+                    {charity.tagline}
+                  </p>
                 </div>
-              );
-            })}
+
+                <div className="pt-2.5 border-t border-neutral-800/80 flex items-center justify-between text-xs font-mono">
+                  <span className="text-[11px] text-neutral-400">
+                    {charity.category.replace("-", " ")}
+                  </span>
+                  <a
+                    href={charity.donateUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-emerald-400 hover:text-emerald-300 font-semibold"
+                  >
+                    <span>Direct Action</span>
+                    <ArrowUpRight className="h-3 w-3" />
+                  </a>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* 3. Section: Recent Wire Dispatches Preview */}
+      <section className="mx-auto max-w-4xl px-4 sm:px-6 pt-12">
+        <div className="flex items-center justify-between mb-6 pb-3 border-b border-neutral-800">
+          <div>
+            <div className="font-mono text-xs text-emerald-400 font-semibold mb-1">
+              03 // RECENT DISPATCHES
+            </div>
+            <h2 className="font-display text-2xl font-medium text-white">
+              Selected Breakthrough Stream
+            </h2>
           </div>
+
+          <Link
+            href="/feed"
+            className="text-xs font-mono text-emerald-400 hover:text-emerald-300 font-semibold inline-flex items-center gap-1"
+          >
+            <span>Full Wire (225 items)</span>
+            <ArrowRight className="h-3 w-3" />
+          </Link>
+        </div>
+
+        <div className="space-y-4">
+          {topDispatches.map((item) => (
+            <NewsCard key={item.id} news={item} />
+          ))}
         </div>
       </section>
     </div>
