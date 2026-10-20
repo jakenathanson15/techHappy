@@ -42,7 +42,7 @@ const RSS_SOURCES = [
 
 const TOPIC_IMAGES = {
   climate: [
-    "https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=1200&q=80",
     "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=1200&q=80",
     "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
   ],
@@ -169,7 +169,7 @@ const CURATED_FALLBACKS: NewsItem[] = [
     sourceUrl: "https://www.nature.com",
     publishedAt: new Date(Date.now() - 3600000 * 12).toISOString(),
     category: "Climate Tech",
-    imageUrl: "https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=1200&q=80",
     readTimeMinutes: 4,
   },
   {
