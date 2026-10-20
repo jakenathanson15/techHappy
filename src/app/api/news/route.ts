@@ -7,8 +7,9 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const category = searchParams.get("category");
+    const refresh = searchParams.get("refresh") === "true";
 
-    let news = await fetchUpliftNews();
+    let news = await fetchUpliftNews(refresh);
 
     if (category && category !== "all" && category !== "All") {
       news = news.filter((item) => item.category.toLowerCase() === category.toLowerCase());
@@ -23,7 +24,9 @@ export async function GET(request: NextRequest) {
       },
       {
         headers: {
-          "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=7200",
+          "Cache-Control": refresh
+            ? "no-cache, no-store, must-revalidate"
+            : "public, s-maxage=3600, stale-while-revalidate=7200",
         },
       }
     );

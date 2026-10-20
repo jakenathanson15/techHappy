@@ -216,9 +216,9 @@ const CURATED_FALLBACKS: NewsItem[] = [
 let cachedFeed: { data: NewsItem[]; timestamp: number } | null = null;
 const CACHE_TTL_MS = 1000 * 60 * 60; // 1 Hour Cache Window
 
-export async function fetchUpliftNews(): Promise<NewsItem[]> {
+export async function fetchUpliftNews(bypassCache: boolean = false): Promise<NewsItem[]> {
   const now = Date.now();
-  if (cachedFeed && now - cachedFeed.timestamp < CACHE_TTL_MS) {
+  if (!bypassCache && cachedFeed && now - cachedFeed.timestamp < CACHE_TTL_MS) {
     return cachedFeed.data;
   }
 
@@ -249,7 +249,7 @@ export async function fetchUpliftNews(): Promise<NewsItem[]> {
       const rawItems: RSSItem[] = jsonObj?.rss?.channel?.item || jsonObj?.feed?.entry || [];
       const itemArray = Array.isArray(rawItems) ? rawItems : [rawItems];
 
-      for (const [itemIndex, item] of itemArray.slice(0, 5).entries()) {
+      for (const [itemIndex, item] of itemArray.slice(0, 8).entries()) {
         if (!item || !item.title) continue;
 
         const rawTitle = stripHtml(item.title);
