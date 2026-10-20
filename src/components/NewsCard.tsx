@@ -14,6 +14,14 @@ import {
 } from "lucide-react";
 import { getCategoryIcon } from "./Icons";
 
+const CATEGORY_FALLBACK_IMAGES: Record<string, string> = {
+  "Climate Tech": "https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=1200&q=80",
+  "Healthcare & Bio": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80",
+  "AI for Good": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
+  "Open Access & Web": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
+  "Social Impact": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80",
+};
+
 interface NewsCardProps {
   news: NewsItem;
   isBookmarked?: boolean;
@@ -26,6 +34,11 @@ export function NewsCard({
   onToggleBookmark,
 }: NewsCardProps) {
   const [copied, setCopied] = useState(false);
+  const [imgSrc, setImgSrc] = useState<string>(
+    news.imageUrl || CATEGORY_FALLBACK_IMAGES[news.category] || CATEGORY_FALLBACK_IMAGES["Social Impact"]
+  );
+  const [imgFailed, setImgFailed] = useState(false);
+
   const CategoryIcon = getCategoryIcon(news.category);
 
   const handleShare = async (e: React.MouseEvent) => {
@@ -38,6 +51,15 @@ export function NewsCard({
       }
     } catch {
       // Fallback
+    }
+  };
+
+  const handleImageError = () => {
+    const fallback = CATEGORY_FALLBACK_IMAGES[news.category] || CATEGORY_FALLBACK_IMAGES["Social Impact"];
+    if (imgSrc !== fallback) {
+      setImgSrc(fallback);
+    } else {
+      setImgFailed(true);
     }
   };
 
@@ -98,8 +120,8 @@ export function NewsCard({
         </span>
       </div>
 
-      {/* 2. Media Image */}
-      {news.imageUrl && (
+      {/* 2. Media Image / Banner */}
+      {!imgFailed ? (
         <a
           href={news.url}
           target="_blank"
@@ -107,12 +129,27 @@ export function NewsCard({
           className="relative w-full aspect-[16/9] sm:aspect-[2/1] overflow-hidden bg-slate-950 block group/img"
         >
           <img
-            src={news.imageUrl}
+            src={imgSrc}
             alt={news.title}
+            onError={handleImageError}
             className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105"
             loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0e1524] via-transparent to-transparent opacity-60" />
+        </a>
+      ) : (
+        <a
+          href={news.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative w-full h-40 bg-gradient-to-r from-emerald-950/40 via-slate-900 to-[#0e1524] border-b border-slate-800 flex items-center justify-center group/banner"
+        >
+          <div className="flex items-center gap-3 text-emerald-400/80 group-hover/banner:text-emerald-300 transition">
+            <CategoryIcon className="h-8 w-8" />
+            <span className="text-sm font-bold tracking-wide uppercase text-slate-300">
+              {news.category}
+            </span>
+          </div>
         </a>
       )}
 
