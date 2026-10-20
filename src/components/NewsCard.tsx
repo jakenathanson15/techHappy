@@ -7,34 +7,27 @@ import {
   Sparkles,
   Clock,
   Bookmark,
-  Heart,
   Share2,
   Check,
   CheckCircle2,
   ArrowUpRight,
-  Layers,
+  Globe2,
 } from "lucide-react";
 import { getCategoryIcon } from "./Icons";
 
 interface NewsCardProps {
   news: NewsItem;
   isBookmarked?: boolean;
-  isLiked?: boolean;
   onToggleBookmark?: (id: string) => void;
-  onToggleLike?: (id: string) => void;
 }
 
 export function NewsCard({
   news,
   isBookmarked = false,
-  isLiked = false,
   onToggleBookmark,
-  onToggleLike,
 }: NewsCardProps) {
   const [copied, setCopied] = useState(false);
   const CategoryIcon = getCategoryIcon(news.category);
-
-  const displayLikes = news.likes + (isLiked ? 1 : 0);
 
   const handleShare = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -62,23 +55,38 @@ export function NewsCard({
   };
 
   return (
-    <article className="social-card relative rounded-2xl overflow-hidden mb-6 flex flex-col">
+    <article className="social-card relative rounded-2xl overflow-hidden mb-6 flex flex-col bg-[#0e1524]/90 border border-white/[0.08]">
       {/* 1. Header: Source Profile & Meta */}
-      <div className="flex items-center justify-between p-4 border-b border-white/[0.05]">
+      <div className="flex items-center justify-between p-4 border-b border-white/[0.06]">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-tr from-emerald-500/20 to-teal-500/30 border border-emerald-500/30 text-emerald-400">
-            <CategoryIcon className="h-4 w-4" />
-          </div>
+          <a
+            href={news.sourceUrl || news.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={`Visit ${news.source} website`}
+            className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-emerald-500/20 to-teal-500/30 border border-emerald-500/30 text-emerald-400 hover:border-emerald-400 hover:scale-105 transition group"
+          >
+            <CategoryIcon className="h-5 w-5" />
+          </a>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="font-bold text-white text-sm">{news.source}</span>
+              <a
+                href={news.sourceUrl || news.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={`Visit ${news.source} homepage`}
+                className="font-bold text-white text-sm hover:text-emerald-300 transition inline-flex items-center gap-1"
+              >
+                {news.source}
+                <ArrowUpRight className="h-3 w-3 text-slate-400" />
+              </a>
               <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 fill-emerald-400/20" />
             </div>
-            <div className="flex items-center gap-2 text-[11px] text-slate-400">
-              <span>{news.category}</span>
-              <span>•</span>
-              <span className="flex items-center gap-1">
-                <Clock className="h-3 w-3" />
+            <div className="flex items-center gap-2 text-xs text-slate-300">
+              <span className="font-medium text-emerald-400">{news.category}</span>
+              <span className="text-slate-500">•</span>
+              <span className="flex items-center gap-1 text-slate-300">
+                <Clock className="h-3 w-3 text-slate-400" />
                 {formatDate(news.publishedAt)}
               </span>
             </div>
@@ -86,73 +94,60 @@ export function NewsCard({
         </div>
 
         {/* Read Time Tag */}
-        <span className="text-[11px] font-medium text-slate-400 px-2.5 py-1 rounded-full bg-white/[0.03] border border-white/[0.06]">
+        <span className="text-xs font-semibold text-slate-300 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08]">
           {news.readTimeMinutes} min read
         </span>
       </div>
 
-      {/* 2. Media Image with Subtle Zoom */}
+      {/* 2. Media Image */}
       {news.imageUrl && (
-        <div className="relative w-full aspect-[16/9] sm:aspect-[2/1] overflow-hidden bg-slate-950">
+        <a
+          href={news.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative w-full aspect-[16/9] sm:aspect-[2/1] overflow-hidden bg-slate-950 block group/img"
+        >
           <img
             src={news.imageUrl}
             alt={news.title}
-            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105"
             loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0e1524] via-transparent to-transparent opacity-60" />
-        </div>
+        </a>
       )}
 
-      {/* 3. Social Interaction Bar */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.05]">
-        <div className="flex items-center gap-4">
-          {/* Like Button */}
-          <button
-            onClick={() => onToggleLike && onToggleLike(news.id)}
-            className={`flex items-center gap-1.5 text-xs font-semibold transition active:scale-90 ${
-              isLiked ? "text-rose-400" : "text-slate-400 hover:text-white"
-            }`}
-          >
-            <Heart
-              className={`h-5 w-5 ${
-                isLiked ? "fill-rose-500 text-rose-500 animate-like" : ""
-              }`}
-            />
-            <span>{displayLikes}</span>
-          </button>
+      {/* 3. Action Bar (Share & Bookmark) */}
+      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06] bg-white/[0.01]">
+        <button
+          onClick={handleShare}
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-300 hover:text-white transition px-2.5 py-1 rounded-lg hover:bg-white/[0.06]"
+          title="Copy article link"
+        >
+          {copied ? (
+            <>
+              <Check className="h-4 w-4 text-emerald-400" />
+              <span className="text-emerald-400">Copied to Clipboard!</span>
+            </>
+          ) : (
+            <>
+              <Share2 className="h-4 w-4" />
+              <span>Share Article</span>
+            </>
+          )}
+        </button>
 
-          {/* Share Button */}
-          <button
-            onClick={handleShare}
-            className="flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-white transition"
-            title="Copy story link"
-          >
-            {copied ? (
-              <>
-                <Check className="h-4 w-4 text-emerald-400" />
-                <span className="text-emerald-400 font-semibold">Copied!</span>
-              </>
-            ) : (
-              <>
-                <Share2 className="h-4 w-4" />
-                <span>Share</span>
-              </>
-            )}
-          </button>
-        </div>
-
-        {/* Bookmark Button */}
         <button
           onClick={() => onToggleBookmark && onToggleBookmark(news.id)}
-          className={`p-1.5 rounded-lg border transition ${
+          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border text-xs font-semibold transition ${
             isBookmarked
-              ? "bg-amber-500/20 border-amber-500/40 text-amber-400"
-              : "border-transparent text-slate-400 hover:text-white hover:bg-white/[0.05]"
+              ? "bg-amber-500/20 border-amber-500/50 text-amber-300 shadow-[0_0_12px_rgba(245,158,11,0.25)]"
+              : "border-white/[0.08] bg-white/[0.02] text-slate-300 hover:text-white hover:bg-white/[0.06]"
           }`}
           title={isBookmarked ? "Remove bookmark" : "Save story"}
         >
-          <Bookmark className={`h-4 w-4 ${isBookmarked ? "fill-amber-400" : ""}`} />
+          <Bookmark className={`h-3.5 w-3.5 ${isBookmarked ? "fill-amber-400" : ""}`} />
+          <span>{isBookmarked ? "Saved" : "Save"}</span>
         </button>
       </div>
 
@@ -163,22 +158,22 @@ export function NewsCard({
             href={news.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="group/title inline-block mb-2"
+            className="group/title inline-block mb-3"
           >
             <h2 className="text-base sm:text-lg font-bold text-white group-hover/title:text-emerald-300 transition-colors leading-snug">
               {news.title}
             </h2>
           </a>
 
-          <p className="text-xs sm:text-sm text-slate-300/90 leading-relaxed mb-4">
+          <p className="text-xs sm:text-sm text-slate-200 leading-relaxed mb-4">
             {news.summary}
           </p>
 
           {/* Why It Matters Impact Callout */}
-          <div className="rounded-xl border border-emerald-500/20 bg-emerald-950/20 p-3.5 mb-2">
+          <div className="rounded-xl border border-emerald-500/30 bg-emerald-950/30 p-3.5 mb-2">
             <div className="flex items-start gap-2.5">
               <Sparkles className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-              <p className="text-xs text-emerald-200/90 leading-relaxed">
+              <p className="text-xs text-emerald-100 leading-relaxed">
                 <span className="font-bold text-emerald-300">Why It Matters: </span>
                 {news.whyItMatters}
               </p>
@@ -187,15 +182,24 @@ export function NewsCard({
         </div>
 
         {/* Read Full Story Button */}
-        <div className="mt-4 pt-3 border-t border-white/[0.04] flex items-center justify-between text-xs">
-          <span className="text-slate-500">Verified Positive Impact</span>
+        <div className="mt-4 pt-3.5 border-t border-white/[0.06] flex items-center justify-between text-xs">
+          <a
+            href={news.sourceUrl || news.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-slate-300 hover:text-emerald-300 font-medium transition flex items-center gap-1"
+          >
+            <Globe2 className="h-3.5 w-3.5 text-slate-400" />
+            <span>Via {news.source}</span>
+          </a>
+
           <a
             href={news.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 font-semibold text-emerald-400 hover:text-emerald-300 transition group/link"
+            className="inline-flex items-center gap-1.5 font-bold text-emerald-400 hover:text-emerald-300 transition group/link bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-lg hover:bg-emerald-500/20"
           >
-            Read Original Source
+            Read Story
             <ArrowUpRight className="h-3.5 w-3.5 transition group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
           </a>
         </div>

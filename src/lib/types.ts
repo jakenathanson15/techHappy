@@ -35,10 +35,10 @@ export interface NewsItem {
   whyItMatters: string;
   url: string;
   source: string;
+  sourceUrl: string;
   publishedAt: string;
   category: "AI for Good" | "Climate Tech" | "Healthcare & Bio" | "Open Access & Web" | "Social Impact";
   imageUrl?: string;
-  likes: number;
   readTimeMinutes: number;
 }
 

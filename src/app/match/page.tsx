@@ -221,7 +221,7 @@ export default function MatcherPage() {
                   <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-2">
                     What tech cause inspires you?
                   </h2>
-                  <p className="text-xs sm:text-sm text-slate-400 mb-6">
+                  <p className="text-xs sm:text-sm text-slate-300 mb-6">
                     Choose the mission area where you want your support to make a difference.
                   </p>
 
@@ -246,7 +246,7 @@ export default function MatcherPage() {
                           </div>
                           <div className="flex-1">
                             <div className="font-bold text-white text-sm sm:text-base">{opt.label}</div>
-                            <div className="text-xs text-slate-400 mt-0.5 leading-relaxed">{opt.desc}</div>
+                            <div className="text-xs text-slate-300 mt-0.5 leading-relaxed">{opt.desc}</div>
                           </div>
                           {isSelected && (
                             <CheckCircle2 className="h-5 w-5 text-emerald-400 mt-1 flex-shrink-0" />
@@ -264,7 +264,7 @@ export default function MatcherPage() {
                   <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-2">
                     How would you prefer to contribute?
                   </h2>
-                  <p className="text-xs sm:text-sm text-slate-400 mb-6">
+                  <p className="text-xs sm:text-sm text-slate-300 mb-6">
                     Select your preferred giving channel.
                   </p>
 
@@ -289,7 +289,7 @@ export default function MatcherPage() {
                           </div>
                           <div className="flex-1">
                             <div className="font-bold text-white text-sm sm:text-base">{opt.label}</div>
-                            <div className="text-xs text-slate-400 mt-0.5 leading-relaxed">{opt.desc}</div>
+                            <div className="text-xs text-slate-300 mt-0.5 leading-relaxed">{opt.desc}</div>
                           </div>
                           {isSelected && (
                             <CheckCircle2 className="h-5 w-5 text-teal-400 mt-1 flex-shrink-0" />
@@ -307,7 +307,7 @@ export default function MatcherPage() {
                   <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-2">
                     What scope of impact matters most?
                   </h2>
-                  <p className="text-xs sm:text-sm text-slate-400 mb-6">
+                  <p className="text-xs sm:text-sm text-slate-300 mb-6">
                     Determine where the primary benefit should land.
                   </p>
 
@@ -332,7 +332,7 @@ export default function MatcherPage() {
                           </div>
                           <div className="flex-1">
                             <div className="font-bold text-white text-sm sm:text-base">{opt.label}</div>
-                            <div className="text-xs text-slate-400 mt-0.5 leading-relaxed">{opt.desc}</div>
+                            <div className="text-xs text-slate-300 mt-0.5 leading-relaxed">{opt.desc}</div>
                           </div>
                           {isSelected && (
                             <CheckCircle2 className="h-5 w-5 text-emerald-400 mt-1 flex-shrink-0" />
@@ -386,7 +386,7 @@ export default function MatcherPage() {
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-2">
                   {viewSavedOnly ? "Saved Causes" : "Recommended Organizations"}
                 </h2>
-                <p className="text-xs sm:text-sm text-slate-400 max-w-lg mx-auto">
+                <p className="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto">
                   {viewSavedOnly
                     ? "Your locally bookmarked non-profits and causes."
                     : `High-impact non-profits matching your focus on ${answers.primaryCause.replace(
@@ -428,24 +428,24 @@ export default function MatcherPage() {
                             className={`p-1.5 rounded-lg border transition ${
                               bookmarked
                                 ? "bg-amber-500/20 border-amber-500/50 text-amber-300 shadow-[0_0_12px_rgba(245,158,11,0.2)]"
-                                : "border-white/[0.06] bg-white/[0.02] text-slate-400 hover:text-white hover:border-white/20"
+                                : "border-white/[0.06] bg-white/[0.02] text-slate-300 hover:text-white hover:border-white/20"
                             }`}
                           >
                             <Bookmark className={`h-4 w-4 ${bookmarked ? "fill-amber-400" : ""}`} />
                           </button>
                         </div>
 
-                        <p className="text-xs font-medium text-emerald-300/90 italic mb-2">
+                        <p className="text-xs font-medium text-emerald-300 italic mb-2">
                           &ldquo;{charity.tagline}&rdquo;
                         </p>
 
-                        <p className="text-xs text-slate-300 leading-relaxed mb-4">
+                        <p className="text-xs text-slate-200 leading-relaxed mb-4">
                           {charity.description}
                         </p>
 
                         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 mb-4 text-xs">
                           <span className="font-bold text-slate-200">Verified Impact: </span>
-                          <span className="text-slate-400">{charity.impactMetrics}</span>
+                          <span className="text-slate-300">{charity.impactMetrics}</span>
                         </div>
                       </div>
 
@@ -454,7 +454,7 @@ export default function MatcherPage() {
                           {charity.tags.map((t) => (
                             <span
                               key={t}
-                              className="rounded-md border border-white/[0.06] bg-white/[0.02] px-2 py-0.5 text-[10px] font-medium text-slate-400"
+                              className="rounded-md border border-white/[0.06] bg-white/[0.02] px-2 py-0.5 text-[10px] font-medium text-slate-300"
                             >
                               #{t}
                             </span>

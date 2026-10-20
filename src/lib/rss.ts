@@ -17,51 +17,54 @@ const RSS_SOURCES = [
   {
     name: "Good News Network",
     url: "https://www.goodnewsnetwork.org/category/news/science/feed/",
+    sourceUrl: "https://www.goodnewsnetwork.org",
     defaultCategory: "Social Impact" as const,
   },
   {
     name: "MIT News",
     url: "https://news.mit.edu/rss/feed",
+    sourceUrl: "https://news.mit.edu",
     defaultCategory: "Healthcare & Bio" as const,
   },
   {
     name: "ScienceDaily Clean Energy",
     url: "https://www.sciencedaily.com/rss/matter_energy/solar_energy.xml",
+    sourceUrl: "https://www.sciencedaily.com",
     defaultCategory: "Climate Tech" as const,
   },
   {
     name: "ScienceDaily AI & Tech",
     url: "https://www.sciencedaily.com/rss/computers_math/artificial_intelligence.xml",
+    sourceUrl: "https://www.sciencedaily.com",
     defaultCategory: "AI for Good" as const,
   },
 ];
 
-// Fallback high-res imagery for tech topics
 const TOPIC_IMAGES = {
   climate: [
-    "https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=1200&q=80", // Solar farm
-    "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=1200&q=80", // Wind turbines
-    "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80", // Clean water
+    "https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
   ],
   health: [
-    "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80", // Medical research
-    "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1200&q=80", // Lab biotech
-    "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=1200&q=80", // Medical scan
+    "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=1200&q=80",
   ],
   ai: [
-    "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80", // Neural abstract
-    "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80", // AI chip & glow
-    "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80", // Robot assistance
+    "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80",
   ],
   openSource: [
-    "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80", // Matrix code screen
-    "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80", // Earth digital mesh
-    "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80", // Server infrastructure
+    "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
   ],
   social: [
-    "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80", // Team collaborating
-    "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80", // Tech education
-    "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80", // Coding workshop
+    "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80",
   ]
 };
 
@@ -107,10 +110,10 @@ function stripHtml(html: string): string {
 function generateWhyItMatters(title: string, summary: string, category: string): string {
   const lower = (title + " " + summary).toLowerCase();
   
-  if (lower.includes("solar") || lower.includes("battery") || lower.includes("energy") || lower.includes("carbon")) {
+  if (lower.includes("solar") || lower.includes("battery") || lower.includes("energy") || lower.includes("carbon") || lower.includes("fusion")) {
     return "Accelerates global decarbonization and makes renewable energy accessible and affordable.";
   }
-  if (lower.includes("cancer") || lower.includes("disease") || lower.includes("health") || lower.includes("brain") || lower.includes("medical")) {
+  if (lower.includes("cancer") || lower.includes("disease") || lower.includes("health") || lower.includes("brain") || lower.includes("medical") || lower.includes("aging")) {
     return "Paves the way for non-invasive clinical treatments and significantly increased patient survival rates.";
   }
   if (lower.includes("open-source") || lower.includes("open access") || lower.includes("free")) {
@@ -119,8 +122,8 @@ function generateWhyItMatters(title: string, summary: string, category: string):
   if (lower.includes("accessibility") || lower.includes("disability") || lower.includes("assistive")) {
     return "Expands digital inclusion and equitable access for people of all physical and sensory abilities.";
   }
-  if (lower.includes("ai") || lower.includes("model") || lower.includes("algorithm")) {
-    return "Demonstrates how artificial intelligence can be responsibly engineered to solve real-world human challenges.";
+  if (lower.includes("ai") || lower.includes("model") || lower.includes("algorithm") || lower.includes("quantum")) {
+    return "Demonstrates how artificial intelligence and advanced computing can be responsibly engineered to solve real-world challenges.";
   }
   return `Delivers high-impact technological progress in ${category.toLowerCase()} that benefits the broader public interest.`;
 }
@@ -150,10 +153,10 @@ const CURATED_FALLBACKS: NewsItem[] = [
     whyItMatters: "Early detection changes cancer from an untreatable condition to a manageable and operable one, saving tens of thousands of lives globally.",
     url: "https://news.mit.edu",
     source: "MIT Technology Review",
+    sourceUrl: "https://news.mit.edu",
     publishedAt: new Date(Date.now() - 3600000 * 4).toISOString(),
     category: "Healthcare & Bio",
     imageUrl: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80",
-    likes: 342,
     readTimeMinutes: 3,
   },
   {
@@ -163,10 +166,10 @@ const CURATED_FALLBACKS: NewsItem[] = [
     whyItMatters: "Accelerates grid parity for residential and commercial solar, making zero-carbon energy dramatically cheaper than fossil fuels.",
     url: "https://www.nature.com",
     source: "Nature Energy",
+    sourceUrl: "https://www.nature.com",
     publishedAt: new Date(Date.now() - 3600000 * 12).toISOString(),
     category: "Climate Tech",
     imageUrl: "https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=1200&q=80",
-    likes: 518,
     readTimeMinutes: 4,
   },
   {
@@ -176,10 +179,10 @@ const CURATED_FALLBACKS: NewsItem[] = [
     whyItMatters: "Dismantles the $30,000+ medical equipment barrier, bringing high-dexterity prosthetics to underserved communities worldwide.",
     url: "https://openbionics.com",
     source: "Open Source Hardware Assoc",
+    sourceUrl: "https://www.oshwa.org",
     publishedAt: new Date(Date.now() - 3600000 * 24).toISOString(),
     category: "Healthcare & Bio",
     imageUrl: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=1200&q=80",
-    likes: 891,
     readTimeMinutes: 3,
   },
   {
@@ -189,10 +192,10 @@ const CURATED_FALLBACKS: NewsItem[] = [
     whyItMatters: "Intercepting plastics at river bottlenecks stops marine destruction at the source with zero fossil fuel expenditure.",
     url: "https://theoceancleanup.com",
     source: "The Ocean Cleanup",
+    sourceUrl: "https://theoceancleanup.com",
     publishedAt: new Date(Date.now() - 3600000 * 36).toISOString(),
     category: "Climate Tech",
     imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
-    likes: 724,
     readTimeMinutes: 2,
   },
   {
@@ -202,10 +205,10 @@ const CURATED_FALLBACKS: NewsItem[] = [
     whyItMatters: "Removes gatekeeping so independent researchers and developing nations can immediately build on the latest human discoveries.",
     url: "https://www.coalition-s.org",
     source: "cOAlition S",
+    sourceUrl: "https://www.coalition-s.org",
     publishedAt: new Date(Date.now() - 3600000 * 60).toISOString(),
     category: "Open Access & Web",
     imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
-    likes: 610,
     readTimeMinutes: 3,
   }
 ];
@@ -277,10 +280,10 @@ export async function fetchUpliftNews(): Promise<NewsItem[]> {
           whyItMatters,
           url: link,
           source: src.name,
+          sourceUrl: src.sourceUrl,
           publishedAt: pubDate,
           category,
           imageUrl: finalImage,
-          likes: 120 + Math.floor((rawTitle.length * 17) % 450),
           readTimeMinutes: Math.max(2, Math.ceil(snippet.split(" ").length / 60)),
         });
       }

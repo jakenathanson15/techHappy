@@ -73,7 +73,7 @@ export default async function HomePage() {
             <Zap className="h-5 w-5 text-emerald-400 flex-shrink-0" />
             <div>
               <div className="text-xs font-bold text-white">Auto-Refreshing</div>
-              <div className="text-[11px] text-slate-400">Hourly RSS ingestion</div>
+              <div className="text-[11px] text-slate-300">Hourly RSS ingestion</div>
             </div>
           </div>
 
@@ -81,7 +81,7 @@ export default async function HomePage() {
             <Shield className="h-5 w-5 text-teal-400 flex-shrink-0" />
             <div>
               <div className="text-xs font-bold text-white">Vetted Non-Profits</div>
-              <div className="text-[11px] text-slate-400">Charity Navigator 100%</div>
+              <div className="text-[11px] text-slate-300">Charity Navigator 100%</div>
             </div>
           </div>
 
@@ -89,7 +89,7 @@ export default async function HomePage() {
             <Lock className="h-5 w-5 text-cyan-400 flex-shrink-0" />
             <div>
               <div className="text-xs font-bold text-white">Zero Tracking</div>
-              <div className="text-[11px] text-slate-400">100% private & open</div>
+              <div className="text-[11px] text-slate-300">100% private & open</div>
             </div>
           </div>
 
@@ -97,7 +97,7 @@ export default async function HomePage() {
             <Globe2 className="h-5 w-5 text-indigo-400 flex-shrink-0" />
             <div>
               <div className="text-xs font-bold text-white">Global Reach</div>
-              <div className="text-[11px] text-slate-400">High-impact causes</div>
+              <div className="text-[11px] text-slate-300">High-impact causes</div>
             </div>
           </div>
         </div>
@@ -214,7 +214,7 @@ export default async function HomePage() {
               Curated Directory
             </span>
             <h2 className="text-2xl font-bold text-white mb-2">Featured Tech Non-Profits</h2>
-            <p className="text-xs sm:text-sm text-slate-400">
+            <p className="text-xs sm:text-sm text-slate-300">
               Vetted organizations using engineering and policy to protect fundamental human rights and empower global communities.
             </p>
           </div>
@@ -238,13 +238,13 @@ export default async function HomePage() {
                     </div>
 
                     <h3 className="font-bold text-white text-base mb-1.5">{charity.name}</h3>
-                    <p className="text-xs text-slate-400 mb-4 line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-slate-300 mb-4 line-clamp-2 leading-relaxed">
                       {charity.tagline}
                     </p>
                   </div>
 
                   <div className="border-t border-white/[0.06] pt-4 flex items-center justify-between text-xs">
-                    <span className="text-[11px] text-slate-500 font-medium">{charity.shortName}</span>
+                    <span className="text-[11px] text-slate-400 font-medium">{charity.shortName}</span>
                     <a
                       href={charity.donateUrl}
                       target="_blank"
