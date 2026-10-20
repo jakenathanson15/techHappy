@@ -1,26 +1,43 @@
-# techHappy
+# ✨ techHappy
 
-A modern software application built with reliability, speed, and happiness in mind.
+> **Tech optimism in action.** Automated positive tech news meets a smart giving matcher connecting tech workers with vetted causes and non-profits.
 
-## Table of Contents
-- [About](#about)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-- [Project Structure](#project-structure)
-- [Development Workflow](#development-workflow)
-- [License](#license)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
 
-## About
-`techHappy` is currently in the initial design and setup phase. Detailed specifications, feature requirements, and architecture plans are being drafted.
+---
 
-## Tech Stack
-*(Stack details will be documented once finalized)*
+## 🚀 Key Features
 
-## Getting Started
+### 1. ☀️ The Uplift Feed
+Automated, positive-sentiment tech news focusing on:
+- AI for good & social impact
+- Clean energy & climate technology breakthroughs
+- Open source & digital public goods
+- Healthcare, biotech & accessibility innovations
+- Bite-sized *"Why This Matters"* summaries
+
+### 2. 🤝 Tech Impact Matcher
+A 3-step interactive questionnaire that guides you to impactful, vetted tech charities and volunteer initiatives tailored to:
+- **Causes**: Education & diversity, digital human rights, climate, open web, accessibility
+- **Ways to Help**: Direct giving, mentor/volunteer coding, equipment donation, advocacy
+
+---
+
+## 🛠️ Tech Stack
+- **Framework**: Next.js App Router (React 19 / TypeScript)
+- **Styling**: Tailwind CSS + Lucide Icons
+- **AI Integration**: Lightweight OpenAI/Claude summarization with fallback heuristics
+- **Data**: Curated static datasets & server-side RSS feed aggregators
+
+---
+
+## 💻 Getting Started
 
 ### Prerequisites
-- Node.js (v20+ recommended)
-- Package manager (e.g., `npm`, `pnpm`, or `yarn`)
+- Node.js (v20+)
+- npm, pnpm, or yarn
 
 ### Installation
 ```bash
@@ -28,20 +45,19 @@ A modern software application built with reliability, speed, and happiness in mi
 git clone git@github.com:jakenathanson15/techHappy.git
 cd techHappy
 
-# Install dependencies (once initialized)
+# Install dependencies
 npm install
-```
 
-### Running Locally
-```bash
+# Run the development server
 npm run dev
 ```
 
-## Project Structure
-Refer to [`AGENTS.md`](AGENTS.md) for architectural guidance and directory layout.
+Open [http://localhost:3000](http://localhost:3000) to see the application.
 
-## Development Workflow
-Refer to [`.bob/rules/project.md`](.bob/rules/project.md) for coding conventions, error handling guidelines, and commit standards.
+---
 
-## License
-MIT (or TBD)
+## 📖 Architecture & Agent Guidelines
+For agent guidelines, architectural decisions, and directory layout, see [`AGENTS.md`](AGENTS.md).
+
+## 📄 License
+MIT © [Jake Nathanson](https://github.com/jakenathanson15)
