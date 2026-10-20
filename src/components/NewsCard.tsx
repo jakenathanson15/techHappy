@@ -1,11 +1,15 @@
+"use client";
+
 import { NewsItem } from "@/lib/types";
-import { ExternalLink, Sparkles, Clock, Tag } from "lucide-react";
+import { ExternalLink, Sparkles, Clock, Tag, Bookmark } from "lucide-react";
 
 interface NewsCardProps {
   news: NewsItem;
+  isBookmarked?: boolean;
+  onToggleBookmark?: (id: string) => void;
 }
 
-export function NewsCard({ news }: NewsCardProps) {
+export function NewsCard({ news, isBookmarked = false, onToggleBookmark }: NewsCardProps) {
   const getBadgeColor = (category: string) => {
     switch (category) {
       case "Climate Tech":
@@ -31,7 +35,7 @@ export function NewsCard({ news }: NewsCardProps) {
   };
 
   return (
-    <article className="group flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-6 shadow-sm transition hover:border-emerald-300 hover:shadow-md">
+    <article className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-6 shadow-sm transition hover:border-emerald-300 hover:shadow-md">
       <div>
         <div className="flex items-center justify-between gap-2 mb-3">
           <span
@@ -43,9 +47,25 @@ export function NewsCard({ news }: NewsCardProps) {
             {news.category}
           </span>
 
-          <div className="flex items-center gap-1 text-xs text-slate-400">
-            <Clock className="h-3 w-3" />
-            <span>{formatDate(news.publishedAt)}</span>
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 text-xs text-slate-400">
+              <Clock className="h-3 w-3" />
+              <span>{formatDate(news.publishedAt)}</span>
+            </div>
+
+            {onToggleBookmark && (
+              <button
+                onClick={() => onToggleBookmark(news.id)}
+                title={isBookmarked ? "Remove bookmark" : "Save story"}
+                className={`p-1 rounded-lg border transition ${
+                  isBookmarked
+                    ? "bg-amber-50 border-amber-300 text-amber-600"
+                    : "border-transparent text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+                }`}
+              >
+                <Bookmark className={`h-4 w-4 ${isBookmarked ? "fill-amber-500" : ""}`} />
+              </button>
+            )}
           </div>
         </div>
 
