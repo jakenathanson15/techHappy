@@ -1,42 +1,124 @@
 import { XMLParser } from "fast-xml-parser";
+import crypto from "crypto";
 import { NewsItem } from "./types";
 
-interface RSSItem {
-  title?: string;
-  description?: string;
-  summary?: string;
-  link?: string;
-  pubDate?: string;
+interface RawFeedEntry {
+  title?: string | { "#text": string };
+  description?: string | { "#text": string };
+  summary?: string | { "#text": string };
+  content?: string | { "#text": string };
   "content:encoded"?: string;
+  link?: string | { "@_href"?: string; "#text"?: string } | Array<{ "@_href"?: string; "@_rel"?: string; "#text"?: string }>;
+  pubDate?: string;
+  published?: string;
+  updated?: string;
+  "dc:date"?: string;
   guid?: string | { "#text": string };
+  id?: string;
   "media:content"?: { "@_url"?: string } | Array<{ "@_url"?: string }>;
+  "media:thumbnail"?: { "@_url"?: string } | Array<{ "@_url"?: string }>;
   enclosure?: { "@_url"?: string };
 }
 
-const RSS_SOURCES = [
-  {
-    name: "Good News Network",
-    url: "https://www.goodnewsnetwork.org/category/news/science/feed/",
-    sourceUrl: "https://www.goodnewsnetwork.org",
-    defaultCategory: "Social Impact" as const,
-  },
+export interface RSSSourceConfig {
+  name: string;
+  url: string;
+  sourceUrl: string;
+  defaultCategory: NewsItem["category"];
+  description?: string;
+}
+
+export const RSS_SOURCES: RSSSourceConfig[] = [
   {
     name: "MIT News",
     url: "https://news.mit.edu/rss/feed",
     sourceUrl: "https://news.mit.edu",
-    defaultCategory: "Healthcare & Bio" as const,
+    defaultCategory: "Healthcare & Bio",
+    description: "Cutting-edge breakthroughs in medicine, robotics, materials, and sustainable engineering.",
+  },
+  {
+    name: "Our World in Data",
+    url: "https://ourworldindata.org/atom.xml",
+    sourceUrl: "https://ourworldindata.org",
+    defaultCategory: "Social Impact",
+    description: "Empirical research and data showing global progress against disease, poverty, and energy transitions.",
+  },
+  {
+    name: "Nature Research",
+    url: "https://www.nature.com/nature.rss",
+    sourceUrl: "https://www.nature.com",
+    defaultCategory: "Healthcare & Bio",
+    description: "Peer-reviewed scientific discoveries across biotechnology, physics, and ecology.",
+  },
+  {
+    name: "CleanTechnica",
+    url: "https://cleantechnica.com/feed/",
+    sourceUrl: "https://cleantechnica.com",
+    defaultCategory: "Climate Tech",
+    description: "Global advances in solar power, grid batteries, electric mobility, and clean technology.",
   },
   {
     name: "ScienceDaily Clean Energy",
     url: "https://www.sciencedaily.com/rss/matter_energy/solar_energy.xml",
     sourceUrl: "https://www.sciencedaily.com",
-    defaultCategory: "Climate Tech" as const,
+    defaultCategory: "Climate Tech",
+    description: "Laboratory research on next-generation photovoltaics, fusion, and hydrogen power.",
   },
   {
     name: "ScienceDaily AI & Tech",
     url: "https://www.sciencedaily.com/rss/computers_math/artificial_intelligence.xml",
     sourceUrl: "https://www.sciencedaily.com",
-    defaultCategory: "AI for Good" as const,
+    defaultCategory: "AI for Good",
+    description: "Breakthrough machine intelligence and computational science applications.",
+  },
+  {
+    name: "Positive News",
+    url: "https://www.positive.news/category/environment/feed/",
+    sourceUrl: "https://www.positive.news",
+    defaultCategory: "Climate Tech",
+    description: "Rigorous solutions journalism focused on environmental progress and human innovation.",
+  },
+  {
+    name: "Good News Network",
+    url: "https://www.goodnewsnetwork.org/category/news/science/feed/",
+    sourceUrl: "https://www.goodnewsnetwork.org",
+    defaultCategory: "Social Impact",
+    description: "Uplifting science and technological progress advancing humanity.",
+  },
+  {
+    name: "NASA Science & Tech",
+    url: "https://www.nasa.gov/feed/",
+    sourceUrl: "https://www.nasa.gov",
+    defaultCategory: "Climate Tech",
+    description: "Space exploration, planetary climate monitoring, and advanced aeronautics.",
+  },
+  {
+    name: "Phys.org Technology",
+    url: "https://phys.org/rss-feed/technology-news/",
+    sourceUrl: "https://phys.org",
+    defaultCategory: "AI for Good",
+    description: "Emerging engineering innovations, smart materials, and computing advancements.",
+  },
+  {
+    name: "UC Berkeley Research",
+    url: "https://news.berkeley.edu/feed/",
+    sourceUrl: "https://news.berkeley.edu",
+    defaultCategory: "AI for Good",
+    description: "Pioneering academic discoveries from world-class university labs.",
+  },
+  {
+    name: "Mozilla Blog",
+    url: "https://blog.mozilla.org/feed/",
+    sourceUrl: "https://blog.mozilla.org",
+    defaultCategory: "Open Access & Web",
+    description: "Championing open web standards, privacy-preserving tools, and responsible technology.",
+  },
+  {
+    name: "Electronic Frontier Foundation",
+    url: "https://www.eff.org/rss/updates.xml",
+    sourceUrl: "https://www.eff.org",
+    defaultCategory: "Open Access & Web",
+    description: "Defending digital rights, cryptography, privacy, and public-interest innovation.",
   },
 ];
 
@@ -89,57 +171,157 @@ function extractImageFromHtml(html: string): string | null {
   return match ? match[1] : null;
 }
 
-function stripHtml(html: string): string {
-  if (!html) return "";
-  return html
-    .replace(/<[^>]*>?/gm, "")
-    .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
-    .replace(/&quot;/g, '"')
+function stripHtml(input: string): string {
+  if (!input) return "";
+  let text = String(input);
+
+  // 1. Unwrap CDATA sections
+  text = text.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/gi, "$1");
+
+  // 2. Strip standard HTML tags (pass 1)
+  text = text.replace(/<[^>]+>/g, " ");
+
+  // 3. Decode escaped HTML/XML entities
+  text = text
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
     .replace(/&#039;/g, "'")
+    .replace(/&apos;/gi, "'")
     .replace(/&#8217;/g, "'")
     .replace(/&#8216;/g, "'")
     .replace(/&#8220;/g, '"')
     .replace(/&#8221;/g, '"')
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/\s+/g, " ")
-    .trim();
+    .replace(/&#x27;/gi, "'")
+    .replace(/&#x2F;/gi, "/")
+    .replace(/&nbsp;/gi, " ");
+
+  // 4. Strip any decoded HTML tags (pass 2 - catches tags like &lt;p&gt; -> <p>)
+  text = text.replace(/<[^>]+>/g, " ");
+
+  // 5. Clean extra whitespace
+  return text.replace(/\s+/g, " ").trim();
+}
+
+function extractLink(item: RawFeedEntry): string {
+  if (!item) return "#";
+  if (typeof item.link === "string") return item.link;
+  if (item.link && typeof item.link === "object") {
+    if (Array.isArray(item.link)) {
+      const alt = item.link.find((l) => l["@_rel"] === "alternate") || item.link[0];
+      return alt?.["@_href"] || alt?.["#text"] || "#";
+    }
+    if (item.link["@_href"]) return item.link["@_href"];
+    if (item.link["#text"]) return item.link["#text"];
+  }
+  if (typeof item.guid === "string" && item.guid.startsWith("http")) return item.guid;
+  if (item.guid && typeof item.guid === "object" && typeof item.guid["#text"] === "string" && item.guid["#text"].startsWith("http")) {
+    return item.guid["#text"];
+  }
+  if (typeof item.id === "string" && item.id.startsWith("http")) return item.id;
+  return "#";
+}
+
+function extractDate(item: RawFeedEntry): string {
+  const rawDate = item.pubDate || item.published || item.updated || item["dc:date"];
+  if (rawDate) {
+    const parsed = new Date(rawDate);
+    if (!isNaN(parsed.getTime())) {
+      return parsed.toISOString();
+    }
+  }
+  return new Date().toISOString();
 }
 
 function generateWhyItMatters(title: string, summary: string, category: string): string {
   const lower = (title + " " + summary).toLowerCase();
   
-  if (lower.includes("solar") || lower.includes("battery") || lower.includes("energy") || lower.includes("carbon") || lower.includes("fusion")) {
-    return "Accelerates global decarbonization and makes renewable energy accessible and affordable.";
+  if (lower.includes("solar") || lower.includes("battery") || lower.includes("energy") || lower.includes("carbon") || lower.includes("fusion") || lower.includes("wind") || lower.includes("grid")) {
+    return "Accelerates global decarbonization and makes renewable clean energy accessible, resilient, and affordable.";
   }
-  if (lower.includes("cancer") || lower.includes("disease") || lower.includes("health") || lower.includes("brain") || lower.includes("medical") || lower.includes("aging")) {
-    return "Paves the way for non-invasive clinical treatments and significantly increased patient survival rates.";
+  if (lower.includes("cancer") || lower.includes("disease") || lower.includes("health") || lower.includes("brain") || lower.includes("medical") || lower.includes("aging") || lower.includes("vaccine") || lower.includes("cellular")) {
+    return "Paves the way for non-invasive clinical treatments, early diagnoses, and significantly improved global patient survival.";
   }
-  if (lower.includes("open-source") || lower.includes("open access") || lower.includes("free")) {
-    return "Removes gatekeeping so independent researchers and developers worldwide can build upon open foundations.";
+  if (lower.includes("open-source") || lower.includes("open access") || lower.includes("free") || lower.includes("privacy") || lower.includes("crypto") || lower.includes("rights") || lower.includes("browser") || lower.includes("web")) {
+    return "Safeguards open digital commons, transparent governance, and user privacy against monopolistic gatekeeping.";
   }
-  if (lower.includes("accessibility") || lower.includes("disability") || lower.includes("assistive")) {
-    return "Expands digital inclusion and equitable access for people of all physical and sensory abilities.";
+  if (lower.includes("accessibility") || lower.includes("disability") || lower.includes("assistive") || lower.includes("inclusion")) {
+    return "Expands digital inclusion and equitable access for people of all physical, cognitive, and sensory abilities.";
   }
-  if (lower.includes("ai") || lower.includes("model") || lower.includes("algorithm") || lower.includes("quantum")) {
-    return "Demonstrates how artificial intelligence and advanced computing can be responsibly engineered to solve real-world challenges.";
+  if (lower.includes("space") || lower.includes("nasa") || lower.includes("mars") || lower.includes("telescope") || lower.includes("astronomy") || lower.includes("satellite")) {
+    return "Expands human scientific knowledge of our universe and improves Earth environmental monitoring from orbit.";
   }
-  return `Delivers high-impact technological progress in ${category.toLowerCase()} that benefits the broader public interest.`;
+  if (lower.includes("ai") || lower.includes("model") || lower.includes("algorithm") || lower.includes("quantum") || lower.includes("robot") || lower.includes("machine learning")) {
+    return "Demonstrates how responsible artificial intelligence and computing engineering can solve complex human challenges.";
+  }
+  return `Delivers verified technological progress in ${category.toLowerCase()} that directly advances public well-being.`;
 }
 
 function categorizeItem(title: string, summary: string, fallback: NewsItem["category"]): NewsItem["category"] {
   const text = (title + " " + summary).toLowerCase();
-  if (text.includes("solar") || text.includes("climate") || text.includes("emission") || text.includes("plastic") || text.includes("energy") || text.includes("fusion")) {
+  if (
+    text.includes("solar") ||
+    text.includes("climate") ||
+    text.includes("emission") ||
+    text.includes("plastic") ||
+    text.includes("energy") ||
+    text.includes("fusion") ||
+    text.includes("carbon") ||
+    text.includes("battery") ||
+    text.includes("water") ||
+    text.includes("recycl") ||
+    text.includes("green") ||
+    text.includes("wind power") ||
+    text.includes("satellite") ||
+    text.includes("nasa")
+  ) {
     return "Climate Tech";
   }
-  if (text.includes("cancer") || text.includes("patient") || text.includes("brain") || text.includes("medical") || text.includes("disease") || text.includes("biology") || text.includes("aging")) {
+  if (
+    text.includes("cancer") ||
+    text.includes("patient") ||
+    text.includes("brain") ||
+    text.includes("medical") ||
+    text.includes("disease") ||
+    text.includes("biology") ||
+    text.includes("aging") ||
+    text.includes("health") ||
+    text.includes("vaccine") ||
+    text.includes("cellular") ||
+    text.includes("dna") ||
+    text.includes("prosthetic")
+  ) {
     return "Healthcare & Bio";
   }
-  if (text.includes("ai") || text.includes("neural") || text.includes("algorithm") || text.includes("machine learning") || text.includes("robot") || text.includes("quantum")) {
+  if (
+    text.includes("ai") ||
+    text.includes("neural") ||
+    text.includes("algorithm") ||
+    text.includes("machine learning") ||
+    text.includes("robot") ||
+    text.includes("quantum") ||
+    text.includes("deep learning") ||
+    text.includes("computing") ||
+    text.includes("chip")
+  ) {
     return "AI for Good";
   }
-  if (text.includes("open source") || text.includes("library") || text.includes("open access") || text.includes("internet") || text.includes("commons")) {
+  if (
+    text.includes("open source") ||
+    text.includes("library") ||
+    text.includes("open access") ||
+    text.includes("internet") ||
+    text.includes("commons") ||
+    text.includes("privacy") ||
+    text.includes("encryption") ||
+    text.includes("firefox") ||
+    text.includes("mozilla") ||
+    text.includes("eff") ||
+    text.includes("digital rights") ||
+    text.includes("cma") ||
+    text.includes("warrant")
+  ) {
     return "Open Access & Web";
   }
   return fallback;
@@ -225,92 +407,174 @@ export async function fetchUpliftNews(bypassCache: boolean = false): Promise<New
   const parser = new XMLParser({
     ignoreAttributes: false,
     attributeNamePrefix: "@_",
+    processEntities: false,
   });
 
-  const fetchedItems: NewsItem[] = [];
-
-  for (const [srcIndex, src] of RSS_SOURCES.entries()) {
-    try {
+  const results = await Promise.allSettled(
+    RSS_SOURCES.map(async (src, srcIndex) => {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3500);
+      const timeoutId = setTimeout(() => controller.abort(), 4000);
 
-      const res = await fetch(src.url, {
-        signal: controller.signal,
-        headers: {
-          "User-Agent": "techHappy-Optimism-Bot/1.0 (+https://techhappy.vercel.app)",
-        },
-      });
-      clearTimeout(timeoutId);
-
-      if (!res.ok) continue;
-
-      const xmlText = await res.text();
-      const jsonObj = parser.parse(xmlText);
-      const rawItems: RSSItem[] = jsonObj?.rss?.channel?.item || jsonObj?.feed?.entry || [];
-      const itemArray = Array.isArray(rawItems) ? rawItems : [rawItems];
-
-      for (const [itemIndex, item] of itemArray.slice(0, 8).entries()) {
-        if (!item || !item.title) continue;
-
-        const rawTitle = stripHtml(item.title);
-        const rawContent = item["content:encoded"] || item.description || item.summary || "";
-        const rawDesc = stripHtml(rawContent);
-        const link = item.link || (typeof item.guid === "object" ? item.guid["#text"] : item.guid) || "#";
-        const pubDate = item.pubDate ? new Date(item.pubDate).toISOString() : new Date().toISOString();
-
-        // Extract image from media tag or fallback
-        const mediaUrl =
-          (typeof item["media:content"] === "object"
-            ? Array.isArray(item["media:content"])
-              ? item["media:content"][0]?.["@_url"]
-              : item["media:content"]?.["@_url"]
-            : undefined) ||
-          item.enclosure?.["@_url"] ||
-          extractImageFromHtml(rawContent);
-
-        const category = categorizeItem(rawTitle, rawDesc, src.defaultCategory);
-        const snippet = rawDesc.length > 220 ? rawDesc.slice(0, 217) + "..." : rawDesc || rawTitle;
-        const whyItMatters = generateWhyItMatters(rawTitle, snippet, category);
-        const finalImage = mediaUrl || getRandomImage(category, srcIndex * 5 + itemIndex);
-
-        fetchedItems.push({
-          id: Buffer.from(rawTitle).toString("base64").slice(0, 16),
-          title: rawTitle,
-          summary: snippet,
-          whyItMatters,
-          url: link,
-          source: src.name,
-          sourceUrl: src.sourceUrl,
-          publishedAt: pubDate,
-          category,
-          imageUrl: finalImage,
-          readTimeMinutes: Math.max(2, Math.ceil(snippet.split(" ").length / 60)),
+      try {
+        const res = await fetch(src.url, {
+          signal: controller.signal,
+          headers: {
+            "User-Agent": "techHappy-Bot/1.0 (+https://techhappynews.com)",
+            Accept: "application/rss+xml, application/xml, text/xml, application/atom+xml, */*",
+          },
         });
+        clearTimeout(timeoutId);
+
+        if (!res.ok) return [];
+
+        const xmlText = await res.text();
+        const jsonObj = parser.parse(xmlText);
+        const rawItems: RawFeedEntry[] =
+          jsonObj?.rss?.channel?.item ||
+          jsonObj?.feed?.entry ||
+          jsonObj?.["rdf:RDF"]?.item ||
+          [];
+        const itemArray = Array.isArray(rawItems) ? rawItems : [rawItems];
+
+        const srcItems: NewsItem[] = [];
+
+        for (const [itemIndex, item] of itemArray.slice(0, 20).entries()) {
+          if (!item) continue;
+
+          const titleRaw =
+            typeof item.title === "object" ? item.title?.["#text"] || "" : item.title || "";
+          const rawTitle = stripHtml(titleRaw);
+          if (!rawTitle || rawTitle.length < 5) continue;
+
+          const descVal =
+            (typeof item.description === "object" ? item.description?.["#text"] || "" : item.description) ||
+            (typeof item.summary === "object" ? item.summary?.["#text"] || "" : item.summary);
+
+          const contentVal =
+            item["content:encoded"] ||
+            (typeof item.content === "object" ? item.content?.["#text"] || "" : item.content) ||
+            "";
+
+          // Use description/summary first for concise summaries, fallback to content
+          const contentRaw = descVal && descVal.trim().length > 15 ? descVal : contentVal || descVal || "";
+
+          const rawDesc = stripHtml(contentRaw);
+          const link = extractLink(item);
+          const pubDate = extractDate(item);
+
+          // Extract media image
+          const mediaUrl =
+            (typeof item["media:content"] === "object"
+              ? Array.isArray(item["media:content"])
+                ? item["media:content"][0]?.["@_url"]
+                : item["media:content"]?.["@_url"]
+              : undefined) ||
+            (typeof item["media:thumbnail"] === "object"
+              ? Array.isArray(item["media:thumbnail"])
+                ? item["media:thumbnail"][0]?.["@_url"]
+                : item["media:thumbnail"]?.["@_url"]
+              : undefined) ||
+            item.enclosure?.["@_url"] ||
+            extractImageFromHtml(contentRaw);
+
+          const category = categorizeItem(rawTitle, rawDesc, src.defaultCategory);
+          const snippet =
+            rawDesc.length > 220 ? rawDesc.slice(0, 217) + "..." : rawDesc || rawTitle;
+          const whyItMatters = generateWhyItMatters(rawTitle, snippet, category);
+          const finalImage = mediaUrl || getRandomImage(category, srcIndex * 7 + itemIndex);
+
+          const uniqueId = crypto
+            .createHash("sha256")
+            .update(`${src.name}:${link}:${rawTitle}`)
+            .digest("hex")
+            .slice(0, 18);
+
+          srcItems.push({
+            id: uniqueId,
+            title: rawTitle,
+            summary: snippet,
+            whyItMatters,
+            url: link,
+            source: src.name,
+            sourceUrl: src.sourceUrl,
+            publishedAt: pubDate,
+            category,
+            imageUrl: finalImage,
+            readTimeMinutes: Math.max(2, Math.ceil(snippet.split(" ").length / 60)),
+          });
+        }
+
+        return srcItems;
+      } catch {
+        clearTimeout(timeoutId);
+        return [];
       }
-    } catch {
-      // Continue gracefully
+    })
+  );
+
+  const fetchedItems: NewsItem[] = [];
+  for (const r of results) {
+    if (r.status === "fulfilled" && Array.isArray(r.value)) {
+      fetchedItems.push(...r.value);
     }
   }
 
-  // Combine fresh items with curated fallbacks, deduplicating by title
+  // Combine fresh items with curated fallbacks, deduplicating by title, url, and id
   const seenTitles = new Set<string>();
+  const seenUrls = new Set<string>();
+  const seenIds = new Set<string>();
   const combined: NewsItem[] = [];
 
   for (const item of [...fetchedItems, ...CURATED_FALLBACKS]) {
-    const key = item.title.toLowerCase().trim();
-    if (!seenTitles.has(key)) {
-      seenTitles.add(key);
+    const titleKey = item.title.toLowerCase().trim();
+    const urlKey = item.url.toLowerCase().trim();
+
+    if (!seenTitles.has(titleKey) && !seenUrls.has(urlKey) && !seenIds.has(item.id)) {
+      seenTitles.add(titleKey);
+      if (item.url && item.url !== "#") {
+        seenUrls.add(urlKey);
+      }
+      seenIds.add(item.id);
       combined.push(item);
     }
   }
 
-  // Sort by published date descending
-  combined.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+  // Interleave across sources to guarantee maximum variety at the top
+  const sourceGroups: Record<string, NewsItem[]> = {};
+  for (const item of combined) {
+    if (!sourceGroups[item.source]) sourceGroups[item.source] = [];
+    sourceGroups[item.source].push(item);
+  }
+
+  // Sort each source queue by newest date
+  for (const s of Object.keys(sourceGroups)) {
+    sourceGroups[s].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+  }
+
+  let sourceKeys = Object.keys(sourceGroups);
+
+  // If refreshing, rotate the source order so a different publisher leads the feed every refresh
+  if (bypassCache) {
+    const shiftCount = Math.floor(Math.random() * sourceKeys.length);
+    sourceKeys = [...sourceKeys.slice(shiftCount), ...sourceKeys.slice(0, shiftCount)];
+  }
+
+  const interleaved: NewsItem[] = [];
+  let hasMore = true;
+  while (hasMore) {
+    hasMore = false;
+    for (const key of sourceKeys) {
+      if (sourceGroups[key] && sourceGroups[key].length > 0) {
+        interleaved.push(sourceGroups[key].shift()!);
+        hasMore = true;
+      }
+    }
+  }
 
   cachedFeed = {
-    data: combined,
+    data: interleaved,
     timestamp: now,
   };
 
-  return combined;
+  return interleaved;
 }

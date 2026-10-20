@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Sparkles, Github, Shield } from "lucide-react";
+import { Github, Shield } from "lucide-react";
+import { TechHappyEmblem } from "./Logo";
 
 export function Footer() {
   return (
@@ -8,11 +9,11 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/15 border border-emerald-500/40 text-emerald-400">
-              <Sparkles className="h-4 w-4" />
+              <TechHappyEmblem className="h-4 w-4" />
             </div>
             <div>
               <div className="font-bold text-white text-sm">techHappy</div>
-              <div className="text-xs text-slate-300 font-medium">Autonomous positive technology stream & giving matcher</div>
+              <div className="text-xs text-slate-300 font-medium">Curated positive technology stream & giving matcher</div>
             </div>
           </div>
 

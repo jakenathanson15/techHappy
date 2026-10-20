@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { NewsItem } from "@/lib/types";
 import { NewsCard } from "@/components/NewsCard";
 import {
-  Sparkles,
   RefreshCw,
   Bookmark,
   Search,
@@ -33,6 +32,8 @@ export default function FeedPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showSavedOnly, setShowSavedOnly] = useState(false);
   const [news, setNews] = useState<NewsItem[]>([]);
+  const [sourcesList, setSourcesList] = useState<Array<{ name: string; url: string; category: string; description?: string }>>([]);
+  const [selectedSource, setSelectedSource] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [refreshNotice, setRefreshNotice] = useState<string | null>(null);
@@ -60,8 +61,11 @@ export default function FeedPage() {
       const json = await res.json();
       if (json.success && json.items) {
         setNews(json.items);
+        if (json.sources) {
+          setSourcesList(json.sources);
+        }
         if (forceRefresh) {
-          setRefreshNotice(`Refreshed! Loaded ${json.items.length} breakthroughs.`);
+          setRefreshNotice(`Refreshed! Loaded ${json.items.length} breakthroughs from ${json.sources?.length || 13} sources.`);
           setTimeout(() => setRefreshNotice(null), 3000);
         }
       }
@@ -83,6 +87,7 @@ export default function FeedPage() {
 
   const filteredNews = news
     .filter((item) => (showSavedOnly ? bookmarkedStoryIds.includes(item.id) : true))
+    .filter((item) => (selectedSource ? item.source.toLowerCase() === selectedSource.toLowerCase() : true))
     .filter((item) => {
       if (!searchQuery.trim()) return true;
       const q = searchQuery.toLowerCase();
@@ -103,38 +108,13 @@ export default function FeedPage() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14">
         {/* Header Section */}
         <div className="mb-8">
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-950/60 px-3.5 py-1 text-xs font-bold text-emerald-300 mb-3 shadow-[0_0_12px_rgba(16,185,129,0.2)]">
-            <Sparkles className="h-3.5 w-3.5 text-emerald-400" />
-            <span>Autonomous Intelligence Stream</span>
-          </div>
-
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-            <div>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white mb-2">
-                The Uplift Feed
-              </h1>
-              <p className="text-sm sm:text-base text-slate-100 font-medium max-w-2xl leading-relaxed">
-                Curated breakthroughs across renewable energy, biotechnology, open source, and public scientific milestones.
-              </p>
-            </div>
-
-            {/* Quick stats / metadata & Update Feed CTA */}
-            <div className="flex flex-wrap items-center gap-2.5">
-              <button
-                onClick={handleManualRefresh}
-                disabled={isRefreshing || loading}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-400 text-xs sm:text-sm font-extrabold text-slate-950 shadow-[0_0_20px_rgba(16,185,129,0.35)] hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(16,185,129,0.5)] active:scale-95 transition disabled:opacity-70"
-                title="Fetch latest breakthroughs from live sources"
-              >
-                <RefreshCw className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} />
-                <span>{isRefreshing ? "Fetching Stories..." : "Update My Feed"}</span>
-              </button>
-
-              <div className="flex items-center gap-2 text-xs font-semibold text-slate-200 bg-[#0d1424] border border-slate-800 px-3.5 py-2 rounded-xl shadow-sm">
-                <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-white">Live Ingestion</span>
-              </div>
-            </div>
+          <div>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white mb-2">
+              The Uplift Feed
+            </h1>
+            <p className="text-sm sm:text-base text-slate-100 font-medium max-w-2xl leading-relaxed">
+              Curated breakthroughs across renewable energy, biotechnology, open source, and public scientific milestones.
+            </p>
           </div>
 
           {/* Ephemeral Refresh Success Badge */}
@@ -205,14 +185,27 @@ export default function FeedPage() {
           <div className="lg:col-span-8">
             {/* Stream Status Bar */}
             <div className="flex items-center justify-between mb-4 px-1 text-xs font-semibold text-slate-200">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <span className="font-bold text-white text-sm">
-                  {showSavedOnly ? "Saved Breakthroughs" : selectedCategory}
+                  {showSavedOnly
+                    ? "Saved Breakthroughs"
+                    : selectedSource
+                    ? `Source: ${selectedSource}`
+                    : selectedCategory}
                 </span>
                 <span className="text-slate-400">•</span>
                 <span className="text-slate-200">
                   {filteredNews.length} {filteredNews.length === 1 ? "story" : "stories"}
                 </span>
+                {selectedSource && (
+                  <button
+                    onClick={() => setSelectedSource(null)}
+                    className="inline-flex items-center gap-1 rounded-full bg-slate-800 border border-slate-700 px-2.5 py-0.5 text-xs text-slate-300 hover:text-white"
+                  >
+                    <span>Clear source filter</span>
+                    <X className="h-3 w-3" />
+                  </button>
+                )}
               </div>
 
               <div className="flex items-center gap-3">
@@ -378,29 +371,47 @@ export default function FeedPage() {
               </div>
             </div>
 
-            {/* 4. Curation Standards Card */}
+            {/* 4. Live Sources Network Card */}
             <div className="rounded-2xl border border-slate-800 bg-[#0c1220] p-5 shadow-xl">
-              <div className="flex items-center gap-2 mb-2.5 text-xs font-bold uppercase tracking-wider text-teal-400">
-                <ShieldCheck className="h-4 w-4" />
-                <span>Curation Standards</span>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-teal-400">
+                  <ShieldCheck className="h-4 w-4" />
+                  <span>Verified Wires ({sourcesList.length || 13})</span>
+                </div>
+                {selectedSource && (
+                  <button
+                    onClick={() => setSelectedSource(null)}
+                    className="text-xs text-slate-400 hover:text-white font-medium underline"
+                  >
+                    Reset
+                  </button>
+                )}
               </div>
-              <p className="text-xs text-slate-200 leading-relaxed mb-3 font-normal">
-                Stories are autonomously collected from peer-reviewed scientific journals and verified engineering labs.
+              <p className="text-xs text-slate-300 leading-relaxed mb-3">
+                Aggregated in real-time from independent academic labs, peer-reviewed journals, and public science institutions:
               </p>
-              <ul className="text-xs text-slate-200 space-y-2 font-normal">
-                <li className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
-                  <span>No speculative financial hype or crypto</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
-                  <span>Verified positive human milestone</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
-                  <span>Zero trackers, cookies, or sponsored ads</span>
-                </li>
-              </ul>
+              <div className="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto pr-1 scrollbar-thin">
+                {sourcesList.map((s) => {
+                  const isSelected = selectedSource?.toLowerCase() === s.name.toLowerCase();
+                  return (
+                    <button
+                      key={s.name}
+                      onClick={() =>
+                        setSelectedSource(isSelected ? null : s.name)
+                      }
+                      title={s.description || s.name}
+                      className={`inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-lg border transition ${
+                        isSelected
+                          ? "bg-teal-500/25 border-teal-400 text-teal-200 font-bold shadow-[0_0_8px_rgba(20,184,166,0.3)]"
+                          : "bg-[#111a2e] border-slate-700/80 text-slate-300 hover:text-white hover:border-slate-500"
+                      }`}
+                    >
+                      <span className="h-1.5 w-1.5 rounded-full bg-teal-400" />
+                      <span>{s.name}</span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             {/* 5. Impact Matcher CTA */}

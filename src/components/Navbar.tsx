@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sparkles, HeartHandshake, Newspaper, ArrowRight, Github } from "lucide-react";
+import { HeartHandshake, Newspaper, ArrowRight, Github } from "lucide-react";
+import { TechHappyEmblem } from "./Logo";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -15,16 +16,11 @@ export function Navbar() {
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-teal-400 text-slate-950 font-black shadow-[0_0_20px_rgba(52,211,153,0.3)] transition duration-300 group-hover:scale-105 group-hover:shadow-[0_0_25px_rgba(52,211,153,0.5)]">
-            <Sparkles className="h-5 w-5 fill-current" />
+            <TechHappyEmblem className="h-5 w-5" />
           </div>
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-lg font-bold tracking-tight text-white">
-              techHappy
-            </span>
-            <span className="hidden sm:inline-block text-[10px] font-bold tracking-widest uppercase px-2 py-0.5 rounded border border-emerald-500/40 bg-emerald-950/60 text-emerald-300">
-              Optimism
-            </span>
-          </div>
+          <span className="text-lg font-bold tracking-tight text-white">
+            techHappy
+          </span>
         </Link>
 
         {/* Center Nav Links */}

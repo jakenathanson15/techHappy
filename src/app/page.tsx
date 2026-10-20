@@ -1,6 +1,5 @@
 import Link from "next/link";
 import {
-  Sparkles,
   HeartHandshake,
   Newspaper,
   ArrowRight,
@@ -11,6 +10,7 @@ import {
   ArrowUpRight,
   TrendingUp,
 } from "lucide-react";
+import { TechHappyEmblem } from "@/components/Logo";
 import charitiesData from "@/data/charities.json";
 import { fetchUpliftNews } from "@/lib/rss";
 import { NewsCard } from "@/components/NewsCard";
@@ -30,8 +30,8 @@ export default async function HomePage() {
       <section className="relative mx-auto max-w-5xl px-4 pt-14 sm:pt-20 pb-16 text-center">
         {/* Pill Badge */}
         <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-950/60 px-4 py-1.5 text-xs font-bold text-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.2)] mb-8">
-          <Sparkles className="h-4 w-4 text-emerald-400" />
-          <span>Real Engineering Breakthroughs & Tech Giving</span>
+          <TechHappyEmblem className="h-4 w-4 text-emerald-400" />
+          <span>Engineering Breakthroughs & High-Impact Giving</span>
         </div>
 
         {/* Main Headline */}

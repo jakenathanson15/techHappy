@@ -4,8 +4,21 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://techhappynews.com"),
   title: "techHappy — Optimism in Tech & High-Impact Giving",
   description: "Automated positive tech news and smart charity matcher connecting technologists with causes that matter.",
+  openGraph: {
+    title: "techHappy — Optimism in Tech & High-Impact Giving",
+    description: "Automated positive tech news and smart charity matcher connecting technologists with causes that matter.",
+    url: "https://techhappynews.com",
+    siteName: "techHappy",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "techHappy — Optimism in Tech & High-Impact Giving",
+    description: "Automated positive tech news and smart charity matcher connecting technologists with causes that matter.",
+  },
 };
 
 export default function RootLayout({
