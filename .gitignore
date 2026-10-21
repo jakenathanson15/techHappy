@@ -48,3 +48,6 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
+
+# Bob AI Tooling
+.bob/
