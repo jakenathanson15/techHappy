@@ -131,7 +131,7 @@ export function NewsCard({
             rel="noopener noreferrer"
             className="group/title block mb-2.5"
           >
-            <h2 className="font-display text-lg sm:text-xl font-semibold text-neutral-100 group-hover/title:text-emerald-400 transition duration-150 leading-snug">
+            <h2 className="font-serif text-xl sm:text-2xl font-normal text-neutral-100 group-hover/title:text-emerald-300 transition duration-150 leading-snug">
               {news.title}
             </h2>
           </a>
