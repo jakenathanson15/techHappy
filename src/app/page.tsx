@@ -66,8 +66,8 @@ export default async function HomePage() {
     <div className="relative pb-24 wire-grid-bg min-h-screen">
       {/* 1. Hero & Mission Section */}
       <section className="mx-auto max-w-5xl px-4 sm:px-6 pt-12 sm:pt-20 pb-12 sm:pb-16 text-center">
-        <div className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-emerald-400 mb-4 px-3 py-1 rounded-sm bg-emerald-950/40 border border-emerald-800/40">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+        <div className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-[#f5e642] mb-4 px-3 py-1 border border-[#f5e642]/30 bg-[#f5e642]/5">
+          <span className="h-1.5 w-1.5 bg-[#f5e642]" />
           <span>AN INDEPENDENT PUBLICATION & DIRECTORY</span>
         </div>
 
@@ -84,14 +84,14 @@ export default async function HomePage() {
           {/* Doorway 1: The Feed */}
           <Link
             href="/feed"
-            className="group wire-card rounded-sm p-6 flex flex-col justify-between hover:border-emerald-500/50 transition duration-150"
+            className="group wire-card p-6 flex flex-col justify-between transition duration-100"
           >
             <div>
-              <div className="flex items-center justify-between mb-3 font-mono text-xs text-emerald-400 font-semibold">
+              <div className="flex items-center justify-between mb-3 font-mono text-xs text-[#f5e642] font-semibold">
                 <span>01 // YOUR GOOD NEWS FEED</span>
                 <ArrowRight className="h-4 w-4 transform group-hover:translate-x-1 transition" />
               </div>
-              <h2 className="font-serif text-2xl font-normal text-neutral-100 mb-2 group-hover:text-emerald-300 transition">
+              <h2 className="font-serif text-2xl font-normal text-neutral-100 mb-2 group-hover:text-[#f5e642] transition">
                 Explore the Feed
               </h2>
               <p className="font-sans text-xs sm:text-sm text-neutral-400 leading-relaxed">
@@ -101,7 +101,7 @@ export default async function HomePage() {
 
             <div className="pt-4 mt-4 border-t border-neutral-800/80 flex items-center justify-between font-mono text-xs text-neutral-300">
               <span className="text-neutral-500">Updated Hourly</span>
-              <span className="font-semibold text-emerald-400 group-hover:underline inline-flex items-center gap-1">
+              <span className="font-semibold text-[#f5e642] group-hover:underline inline-flex items-center gap-1">
                 Browse the Feed <ArrowRight className="h-3 w-3" />
               </span>
             </div>
@@ -110,14 +110,14 @@ export default async function HomePage() {
           {/* Doorway 2: Find a Cause */}
           <Link
             href="/match"
-            className="group wire-card rounded-sm p-6 flex flex-col justify-between hover:border-teal-500/50 transition duration-150"
+            className="group wire-card p-6 flex flex-col justify-between transition duration-100"
           >
             <div>
-              <div className="flex items-center justify-between mb-3 font-mono text-xs text-teal-400 font-semibold">
+              <div className="flex items-center justify-between mb-3 font-mono text-xs text-[#f5e642] font-semibold">
                 <span>02 // FIND A CAUSE</span>
                 <HeartHandshake className="h-4 w-4 transform group-hover:scale-110 transition" />
               </div>
-              <h2 className="font-serif text-2xl font-normal text-neutral-100 mb-2 group-hover:text-teal-300 transition">
+              <h2 className="font-serif text-2xl font-normal text-neutral-100 mb-2 group-hover:text-[#f5e642] transition">
                 Take the Matcher
               </h2>
               <p className="font-sans text-xs sm:text-sm text-neutral-400 leading-relaxed">
@@ -127,7 +127,7 @@ export default async function HomePage() {
 
             <div className="pt-4 mt-4 border-t border-neutral-800/80 flex items-center justify-between font-mono text-xs text-neutral-300">
               <span className="text-neutral-500">100% Vetted Non-Profits</span>
-              <span className="font-semibold text-teal-400 group-hover:underline inline-flex items-center gap-1">
+              <span className="font-semibold text-[#f5e642] group-hover:underline inline-flex items-center gap-1">
                 Find Your Cause <ArrowRight className="h-3 w-3" />
               </span>
             </div>
@@ -139,7 +139,7 @@ export default async function HomePage() {
       {storyOfTheDay && (
         <section className="mx-auto max-w-5xl px-4 sm:px-6 py-12 border-t border-neutral-800/80">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-3 border-b border-neutral-800">
-            <div className="flex items-center gap-2 font-mono text-xs text-emerald-400 font-semibold">
+            <div className="flex items-center gap-2 font-mono text-xs text-[#f5e642] font-semibold">
               <Calendar className="h-3.5 w-3.5" />
               <span>STORY OF THE DAY • {formattedDate} (MIDNIGHT EST EDITION)</span>
             </div>
@@ -153,9 +153,9 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          <div className="wire-card rounded-sm overflow-hidden p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div className="wire-card overflow-hidden p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
             {storyOfTheDay.imageUrl && (
-              <div className="lg:col-span-5 relative aspect-[16/10] sm:aspect-[4/3] rounded-sm overflow-hidden bg-neutral-900 border border-neutral-800">
+              <div className="lg:col-span-5 relative aspect-[16/10] sm:aspect-[4/3] overflow-hidden bg-[#181818] border border-white/10">
                 <img
                   src={storyOfTheDay.imageUrl}
                   alt={storyOfTheDay.title}
@@ -167,7 +167,7 @@ export default async function HomePage() {
 
             <div className={storyOfTheDay.imageUrl ? "lg:col-span-7 space-y-4" : "lg:col-span-12 space-y-4"}>
               <div className="flex items-center gap-2 font-mono text-xs">
-                <span className="text-emerald-400 font-semibold">{storyOfTheDay.source}</span>
+                <span className="text-[#f5e642] font-semibold">{storyOfTheDay.source}</span>
                 <span className="text-neutral-600">•</span>
                 <span className="text-neutral-400">{storyOfTheDay.category}</span>
                 <span className="text-neutral-600">•</span>
@@ -214,7 +214,7 @@ export default async function HomePage() {
           <div className="lg:pr-10 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-2">
-                <div className="font-mono text-xs text-teal-400 font-semibold uppercase tracking-wider">
+                <div className="font-mono text-xs text-[#f5e642] font-semibold uppercase tracking-wider">
                   OUR CAUSES // VETTED DIRECTORY
                 </div>
                 <span className="font-mono text-[11px] text-neutral-500">
@@ -237,7 +237,7 @@ export default async function HomePage() {
                         <span className="font-mono text-[11px] text-neutral-600 font-medium">
                           0{idx + 1}
                         </span>
-                        <h3 className="font-serif text-base font-normal text-neutral-100 group-hover:text-teal-300 transition">
+                        <h3 className="font-serif text-base font-normal text-neutral-100 group-hover:text-[#f5e642] transition">
                           {charity.name}
                         </h3>
                       </div>
@@ -245,7 +245,7 @@ export default async function HomePage() {
                         href={charity.websiteUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-neutral-500 group-hover:text-teal-400 transition flex-shrink-0"
+                        className="text-neutral-500 group-hover:text-[#f5e642] transition flex-shrink-0"
                         title="Visit organization website"
                       >
                         <ArrowUpRight className="h-3.5 w-3.5" />
@@ -253,7 +253,7 @@ export default async function HomePage() {
                     </div>
 
                     <div className="flex items-center gap-2 font-mono text-[10px] text-neutral-500 mb-1.5 ml-6">
-                      <span className="text-teal-400/90">{charity.category.replace(/-/g, " ")}</span>
+                      <span className="text-[#f5e642]/80">{charity.category.replace(/-/g, " ")}</span>
                       <span>•</span>
                       <span className="text-neutral-400">{charity.rating}</span>
                     </div>
@@ -269,7 +269,7 @@ export default async function HomePage() {
             <div className="pt-6 mt-6 border-t border-neutral-800/80">
               <Link
                 href="/causes"
-                className="group font-mono text-xs text-teal-400 hover:text-teal-300 font-semibold inline-flex items-center gap-1.5"
+                className="group font-mono text-xs text-[#f5e642] hover:text-[#faf080] font-semibold inline-flex items-center gap-1.5"
               >
                 <span>View Complete Causes Directory ({allCharities.length} Organizations)</span>
                 <ArrowRight className="h-3.5 w-3.5 transform group-hover:translate-x-1 transition" />
@@ -281,7 +281,7 @@ export default async function HomePage() {
           <div className="lg:pl-10 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-2">
-                <div className="font-mono text-xs text-emerald-400 font-semibold uppercase tracking-wider">
+                <div className="font-mono text-xs text-[#f5e642] font-semibold uppercase tracking-wider">
                   THE WIRE NETWORK // RESEARCH DESKS
                 </div>
                 <span className="font-mono text-[11px] text-neutral-500">
@@ -304,7 +304,7 @@ export default async function HomePage() {
                         <span className="font-mono text-[11px] text-neutral-600 font-medium">
                           0{idx + 1}
                         </span>
-                        <h3 className="font-serif text-base font-normal text-neutral-100 group-hover:text-emerald-300 transition">
+                        <h3 className="font-serif text-base font-normal text-neutral-100 group-hover:text-[#f5e642] transition">
                           {source.name}
                         </h3>
                       </div>
@@ -312,7 +312,7 @@ export default async function HomePage() {
                         href={source.sourceUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-neutral-500 group-hover:text-emerald-400 transition flex-shrink-0"
+                        className="text-neutral-500 group-hover:text-[#f5e642] transition flex-shrink-0"
                         title="Visit source research desk"
                       >
                         <ArrowUpRight className="h-3.5 w-3.5" />
@@ -320,7 +320,7 @@ export default async function HomePage() {
                     </div>
 
                     <div className="flex items-center gap-2 font-mono text-[10px] text-neutral-500 mb-1.5 ml-6">
-                      <span className="text-emerald-400/90">{source.defaultCategory}</span>
+                      <span className="text-[#f5e642]/80">{source.defaultCategory}</span>
                       <span>•</span>
                       <span className="text-neutral-400">{source.sourceUrl.replace("https://", "").replace("www.", "")}</span>
                     </div>
@@ -336,7 +336,7 @@ export default async function HomePage() {
             <div className="pt-6 mt-6 border-t border-neutral-800/80">
               <Link
                 href="/sources"
-                className="group font-mono text-xs text-emerald-400 hover:text-emerald-300 font-semibold inline-flex items-center gap-1.5"
+                className="group font-mono text-xs text-[#f5e642] hover:text-[#faf080] font-semibold inline-flex items-center gap-1.5"
               >
                 <span>View Wire Network & Editorial Standards ({RSS_SOURCES.length} Feeds)</span>
                 <ArrowRight className="h-3.5 w-3.5 transform group-hover:translate-x-1 transition" />
