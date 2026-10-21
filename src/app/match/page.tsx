@@ -22,8 +22,6 @@ import {
   Megaphone,
   Compass,
   Layers,
-  Sparkles,
-  ShieldCheck,
 } from "lucide-react";
 import { useBookmarks } from "@/lib/useBookmarks";
 import { IconMap } from "@/components/Icons";
@@ -123,7 +121,9 @@ const SCOPE_OPTIONS: { id: "global" | "local-community" | "open-web" | "any"; la
 ];
 
 export default function MatcherPage() {
-  const [showIntro, setShowIntro] = useState<boolean>(true);
+  const [loadingIntro, setLoadingIntro] = useState<boolean>(true);
+  const [loadProgress, setLoadProgress] = useState<number>(0);
+  const [loadStatus, setLoadStatus] = useState<string>("CALIBRATING 501(c)(3) INDEX");
   const [mounted, setMounted] = useState(false);
   const [step, setStep] = useState<number>(1);
   const [answers, setAnswers] = useState<QuizState>({
@@ -141,13 +141,46 @@ export default function MatcherPage() {
     setMounted(true);
     const introSeen = sessionStorage.getItem("techhappy_matcher_intro_seen");
     if (introSeen) {
-      setShowIntro(false);
+      setLoadingIntro(false);
+      return;
     }
+
+    // Run the automatic loading animation sequence
+    const timers: NodeJS.Timeout[] = [];
+
+    timers.push(
+      setTimeout(() => {
+        setLoadProgress(45);
+        setLoadStatus("PREPARING 3-STAGE DECISION MATRIX");
+      }, 400)
+    );
+
+    timers.push(
+      setTimeout(() => {
+        setLoadProgress(90);
+        setLoadStatus("LOADING QUESTIONNAIRE PROTOCOLS");
+      }, 950)
+    );
+
+    timers.push(
+      setTimeout(() => {
+        setLoadProgress(100);
+        setLoadStatus("READY");
+      }, 1400)
+    );
+
+    timers.push(
+      setTimeout(() => {
+        finishIntro();
+      }, 1750)
+    );
+
+    return () => timers.forEach(clearTimeout);
   }, []);
 
-  const handleStartQuiz = () => {
+  const finishIntro = () => {
     sessionStorage.setItem("techhappy_matcher_intro_seen", "true");
-    setShowIntro(false);
+    setLoadingIntro(false);
     setStep(1);
   };
 
@@ -174,7 +207,6 @@ export default function MatcherPage() {
   const restartQuiz = () => {
     setResults(null);
     setViewSavedOnly(false);
-    setShowIntro(false);
     setStep(1);
   };
 
@@ -214,7 +246,7 @@ export default function MatcherPage() {
             {bookmarkedCharityIds.length > 0 && (
               <button
                 onClick={() => {
-                  setShowIntro(false);
+                  setLoadingIntro(false);
                   setViewSavedOnly(!viewSavedOnly);
                   if (!viewSavedOnly) setStep(4);
                 }}
@@ -231,12 +263,20 @@ export default function MatcherPage() {
           </div>
         </div>
 
-        {/* First Time Intro Card with Animated TH Eyes-Smile */}
-        {mounted && showIntro && !viewSavedOnly ? (
-          <div className="wire-card rounded-sm p-8 sm:p-12 text-center max-w-2xl mx-auto animate-matcher-header">
+        {/* Loading Screen Animation for First Time in Session */}
+        {mounted && loadingIntro && !viewSavedOnly ? (
+          <div
+            onClick={finishIntro}
+            className="wire-card rounded-sm p-10 sm:p-16 text-center max-w-xl mx-auto cursor-pointer animate-matcher-header relative overflow-hidden"
+          >
+            {/* Top skip affordance */}
+            <div className="absolute top-4 right-4 font-mono text-[10px] text-neutral-500 hover:text-neutral-300">
+              [ CLICK TO SKIP ↵ ]
+            </div>
+
             {/* Animated TH Eyes Smile SVG */}
             <div className="relative mb-6 flex items-center justify-center">
-              <div className="absolute h-24 w-24 rounded-full border border-teal-500/30 bg-teal-950/20 animate-pulse pointer-events-none" />
+              <div className="absolute h-24 w-24 rounded-full border border-teal-500/20 bg-teal-950/20 animate-pulse pointer-events-none" />
               <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-[#0a0e14] border border-neutral-800">
                 <svg
                   viewBox="0 0 24 24"
@@ -288,7 +328,7 @@ export default function MatcherPage() {
                     style={{ strokeDasharray: 30, animationDelay: "300ms" }}
                   />
 
-                  {/* Smile Arc in Vibrant Teal/Emerald */}
+                  {/* Smile Arc in Radiant Teal */}
                   <path
                     d="M5 16C7.5 19.5 16.5 19.5 19 16"
                     stroke="#14b8a6"
@@ -302,39 +342,31 @@ export default function MatcherPage() {
             </div>
 
             <div className="font-mono text-xs text-teal-400 font-semibold uppercase tracking-wider mb-2">
-              ALIGNED PHILANTHROPY // 3-STEP QUIZ
+              ALIGNED PHILANTHROPY // INITIALIZING
             </div>
 
             <h2 className="font-serif text-3xl sm:text-4xl font-normal text-neutral-100 mb-3">
               Let&apos;s find you the right cause.
             </h2>
 
-            <p className="font-sans text-xs sm:text-sm text-neutral-300 max-w-lg mx-auto leading-relaxed mb-8">
-              Answer 3 quick questions about your skills, interests, and preferred way to give back. We&apos;ll connect you directly with vetted, high-impact non-profits.
+            <p className="font-sans text-xs sm:text-sm text-neutral-400 max-w-sm mx-auto leading-relaxed mb-6">
+              Preparing tailored recommendations across vetted climate, privacy, and open source initiatives...
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-left mb-8 max-w-xl mx-auto font-mono text-[11px]">
-              <div className="p-3 rounded-sm border border-neutral-800 bg-[#080c12]/80">
-                <span className="text-teal-400 block font-semibold mb-1">01 // VETTED</span>
-                <span className="text-neutral-400">100% 4-Star Charity Navigator</span>
-              </div>
-              <div className="p-3 rounded-sm border border-neutral-800 bg-[#080c12]/80">
-                <span className="text-teal-400 block font-semibold mb-1">02 // TAILORED</span>
-                <span className="text-neutral-400">Code, Hardware, or Giving</span>
-              </div>
-              <div className="p-3 rounded-sm border border-neutral-800 bg-[#080c12]/80">
-                <span className="text-teal-400 block font-semibold mb-1">03 // PRIVATE</span>
-                <span className="text-neutral-400">Zero tracking or sign-ups</span>
+            {/* Progress Bar */}
+            <div className="w-48 sm:w-64 mx-auto mb-3">
+              <div className="h-1 w-full bg-neutral-900 border border-neutral-800 rounded-sm overflow-hidden">
+                <div
+                  className="h-full bg-teal-400 transition-all duration-300 ease-out"
+                  style={{ width: `${loadProgress}%` }}
+                />
               </div>
             </div>
 
-            <button
-              onClick={handleStartQuiz}
-              className="inline-flex items-center gap-2 rounded-sm bg-teal-400 px-6 py-2.5 font-mono text-xs font-semibold text-neutral-950 hover:bg-teal-300 active:scale-[0.98] transition shadow-md"
-            >
-              <span>Start 3-Step Matcher</span>
-              <ArrowRight className="h-4 w-4" />
-            </button>
+            <div className="font-mono text-[11px] text-neutral-500 tracking-wider">
+              <span className="text-teal-400 mr-1.5">&gt;</span>
+              <span>{loadStatus}</span>
+            </div>
           </div>
         ) : (
           <>
@@ -380,8 +412,18 @@ export default function MatcherPage() {
               </div>
             )}
 
-            {/* Main Terminal Frame */}
-            <div className="rounded-sm border border-neutral-800 bg-[#0c1017] p-6 sm:p-8">
+            {/* Main Questionnaire Frame */}
+            <div className="rounded-sm border border-neutral-800 bg-[#0c1017] p-6 sm:p-8 relative overflow-hidden">
+              {/* Subtle top progress bar */}
+              {step < 4 && !viewSavedOnly && (
+                <div className="absolute top-0 left-0 right-0 h-[2px] bg-neutral-800">
+                  <div
+                    className="h-full bg-gradient-to-r from-teal-500 to-teal-300 transition-all duration-700 ease-out"
+                    style={{ width: `${(step / 3) * 100}%` }}
+                  />
+                </div>
+              )}
+
               {step < 4 && !viewSavedOnly ? (
                 <div key={`step-container-${step}`}>
                   {/* Step 1: Cause */}
@@ -389,6 +431,7 @@ export default function MatcherPage() {
                     <div>
                       <div className="animate-matcher-header">
                         <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-teal-400">
+                          <span className="h-1.5 w-1.5 rounded-full bg-teal-400 animate-pulse" />
                           <span>QUESTION 1 OF 3</span>
                         </div>
                         <h2 className="font-serif text-2xl sm:text-3xl font-normal text-neutral-100 mb-2">
@@ -407,15 +450,15 @@ export default function MatcherPage() {
                             <button
                               key={opt.id}
                               onClick={() => setAnswers({ ...answers, primaryCause: opt.id })}
-                              style={{ animationDelay: `${idx * 110 + 380}ms` }}
-                              className={`animate-matcher-choice w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition duration-150 active:scale-[0.99] ${
+                              style={{ animationDelay: `${idx * 60 + 70}ms` }}
+                              className={`animate-matcher-choice w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition-all duration-300 ease-out active:scale-[0.995] ${
                                 isSelected
-                                  ? "border-teal-500/80 bg-teal-950/20 shadow-sm ring-1 ring-teal-500/30"
-                                  : "border-neutral-800 bg-[#080c12]/80 hover:border-neutral-700 hover:bg-[#0f141e]"
+                                  ? "border-teal-500/80 bg-teal-950/25 shadow-[0_0_20px_rgba(20,184,166,0.06)] ring-1 ring-teal-500/30"
+                                  : "border-neutral-800/90 bg-[#080c12]/90 hover:border-neutral-700 hover:bg-[#0f141e] hover:-translate-y-0.5"
                               }`}
                             >
                               <div
-                                className={`p-2 rounded-sm border mt-0.5 flex-shrink-0 transition-colors ${
+                                className={`p-2 rounded-sm border mt-0.5 flex-shrink-0 transition-all duration-300 ${
                                   isSelected
                                     ? "border-teal-500/50 bg-teal-500/20 text-teal-300"
                                     : "border-neutral-800 bg-neutral-900 text-neutral-400"
@@ -431,9 +474,9 @@ export default function MatcherPage() {
                               </div>
                               <div className="flex-shrink-0 pt-1">
                                 <div
-                                  className={`h-4 w-4 rounded-sm border flex items-center justify-center transition-colors ${
+                                  className={`h-4 w-4 rounded-sm border flex items-center justify-center transition-all duration-300 ${
                                     isSelected
-                                      ? "border-teal-400 bg-teal-400 text-neutral-950"
+                                      ? "border-teal-400 bg-teal-400 text-neutral-950 shadow-[0_0_8px_rgba(20,184,166,0.4)]"
                                       : "border-neutral-700 bg-neutral-900"
                                   }`}
                                 >
@@ -452,6 +495,7 @@ export default function MatcherPage() {
                     <div>
                       <div className="animate-matcher-header">
                         <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-teal-400">
+                          <span className="h-1.5 w-1.5 rounded-full bg-teal-400 animate-pulse" />
                           <span>QUESTION 2 OF 3</span>
                         </div>
                         <h2 className="font-serif text-2xl sm:text-3xl font-normal text-neutral-100 mb-2">
@@ -470,15 +514,15 @@ export default function MatcherPage() {
                             <button
                               key={opt.id}
                               onClick={() => setAnswers({ ...answers, givingPreference: opt.id })}
-                              style={{ animationDelay: `${idx * 110 + 380}ms` }}
-                              className={`animate-matcher-choice w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition duration-150 active:scale-[0.99] ${
+                              style={{ animationDelay: `${idx * 60 + 70}ms` }}
+                              className={`animate-matcher-choice w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition-all duration-300 ease-out active:scale-[0.995] ${
                                 isSelected
-                                  ? "border-teal-500/80 bg-teal-950/20 shadow-sm ring-1 ring-teal-500/30"
-                                  : "border-neutral-800 bg-[#080c12]/80 hover:border-neutral-700 hover:bg-[#0f141e]"
+                                  ? "border-teal-500/80 bg-teal-950/25 shadow-[0_0_20px_rgba(20,184,166,0.06)] ring-1 ring-teal-500/30"
+                                  : "border-neutral-800/90 bg-[#080c12]/90 hover:border-neutral-700 hover:bg-[#0f141e] hover:-translate-y-0.5"
                               }`}
                             >
                               <div
-                                className={`p-2 rounded-sm border mt-0.5 flex-shrink-0 transition-colors ${
+                                className={`p-2 rounded-sm border mt-0.5 flex-shrink-0 transition-all duration-300 ${
                                   isSelected
                                     ? "border-teal-500/50 bg-teal-500/20 text-teal-300"
                                     : "border-neutral-800 bg-neutral-900 text-neutral-400"
@@ -494,9 +538,9 @@ export default function MatcherPage() {
                               </div>
                               <div className="flex-shrink-0 pt-1">
                                 <div
-                                  className={`h-4 w-4 rounded-sm border flex items-center justify-center transition-colors ${
+                                  className={`h-4 w-4 rounded-sm border flex items-center justify-center transition-all duration-300 ${
                                     isSelected
-                                      ? "border-teal-400 bg-teal-400 text-neutral-950"
+                                      ? "border-teal-400 bg-teal-400 text-neutral-950 shadow-[0_0_8px_rgba(20,184,166,0.4)]"
                                       : "border-neutral-700 bg-neutral-900"
                                   }`}
                                 >
@@ -515,6 +559,7 @@ export default function MatcherPage() {
                     <div>
                       <div className="animate-matcher-header">
                         <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-teal-400">
+                          <span className="h-1.5 w-1.5 rounded-full bg-teal-400 animate-pulse" />
                           <span>QUESTION 3 OF 3</span>
                         </div>
                         <h2 className="font-serif text-2xl sm:text-3xl font-normal text-neutral-100 mb-2">
@@ -533,15 +578,15 @@ export default function MatcherPage() {
                             <button
                               key={opt.id}
                               onClick={() => setAnswers({ ...answers, impactScope: opt.id })}
-                              style={{ animationDelay: `${idx * 110 + 380}ms` }}
-                              className={`animate-matcher-choice w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition duration-150 active:scale-[0.99] ${
+                              style={{ animationDelay: `${idx * 60 + 70}ms` }}
+                              className={`animate-matcher-choice w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition-all duration-300 ease-out active:scale-[0.995] ${
                                 isSelected
-                                  ? "border-teal-500/80 bg-teal-950/20 shadow-sm ring-1 ring-teal-500/30"
-                                  : "border-neutral-800 bg-[#080c12]/80 hover:border-neutral-700 hover:bg-[#0f141e]"
+                                  ? "border-teal-500/80 bg-teal-950/25 shadow-[0_0_20px_rgba(20,184,166,0.06)] ring-1 ring-teal-500/30"
+                                  : "border-neutral-800/90 bg-[#080c12]/90 hover:border-neutral-700 hover:bg-[#0f141e] hover:-translate-y-0.5"
                               }`}
                             >
                               <div
-                                className={`p-2 rounded-sm border mt-0.5 flex-shrink-0 transition-colors ${
+                                className={`p-2 rounded-sm border mt-0.5 flex-shrink-0 transition-all duration-300 ${
                                   isSelected
                                     ? "border-teal-500/50 bg-teal-500/20 text-teal-300"
                                     : "border-neutral-800 bg-neutral-900 text-neutral-400"
@@ -557,9 +602,9 @@ export default function MatcherPage() {
                               </div>
                               <div className="flex-shrink-0 pt-1">
                                 <div
-                                  className={`h-4 w-4 rounded-sm border flex items-center justify-center transition-colors ${
+                                  className={`h-4 w-4 rounded-sm border flex items-center justify-center transition-all duration-300 ${
                                     isSelected
-                                      ? "border-teal-400 bg-teal-400 text-neutral-950"
+                                      ? "border-teal-400 bg-teal-400 text-neutral-950 shadow-[0_0_8px_rgba(20,184,166,0.4)]"
                                       : "border-neutral-700 bg-neutral-900"
                                   }`}
                                 >
@@ -578,7 +623,7 @@ export default function MatcherPage() {
                     {step > 1 ? (
                       <button
                         onClick={() => setStep(step - 1)}
-                        className="inline-flex items-center gap-1.5 px-3 py-2 rounded-sm border border-neutral-800 bg-[#080c12] text-neutral-300 hover:border-neutral-700 hover:text-white transition"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-sm border border-neutral-800 bg-[#080c12] text-neutral-300 hover:border-neutral-700 hover:text-white transition-all duration-200"
                       >
                         <ArrowLeft className="h-3.5 w-3.5" /> Back
                       </button>
@@ -589,7 +634,7 @@ export default function MatcherPage() {
                     {step < 3 ? (
                       <button
                         onClick={() => setStep(step + 1)}
-                        className="inline-flex items-center gap-2 rounded-sm bg-neutral-100 px-5 py-2 font-semibold text-neutral-950 hover:bg-white transition active:scale-[0.98]"
+                        className="inline-flex items-center gap-2 rounded-sm bg-neutral-100 px-5 py-2 font-semibold text-neutral-950 hover:bg-white transition-all duration-200 active:scale-[0.98]"
                       >
                         <span>Continue</span>
                         <ArrowRight className="h-3.5 w-3.5" />
@@ -598,7 +643,7 @@ export default function MatcherPage() {
                       <button
                         onClick={handleSubmit}
                         disabled={isSubmitting}
-                        className="inline-flex items-center gap-2 rounded-sm bg-teal-400 px-5 py-2 font-semibold text-neutral-950 hover:bg-teal-300 transition active:scale-[0.98] disabled:opacity-50"
+                        className="inline-flex items-center gap-2 rounded-sm bg-teal-400 px-5 py-2 font-semibold text-neutral-950 hover:bg-teal-300 transition-all duration-200 active:scale-[0.98] disabled:opacity-50"
                       >
                         <span>{isSubmitting ? "Finding Matches..." : "View Recommendations"}</span>
                         <ArrowRight className="h-3.5 w-3.5" />
@@ -649,12 +694,12 @@ export default function MatcherPage() {
                       {(viewSavedOnly ? savedCharitiesList : results || []).map((charity, idx) => {
                         const bookmarked = isCharityBookmarked(charity.id);
                         const IconComp = IconMap[charity.iconName] || Shield;
-    
+
                         return (
                           <div
                             key={charity.id}
-                            style={{ animationDelay: `${idx * 120 + 380}ms` }}
-                            className="animate-matcher-choice rounded-sm border border-neutral-800 bg-[#080c12] p-5 sm:p-6 transition hover:border-neutral-700"
+                            style={{ animationDelay: `${idx * 70 + 80}ms` }}
+                            className="animate-matcher-choice rounded-sm border border-neutral-800 bg-[#080c12] p-5 sm:p-6 transition-all duration-300 hover:border-neutral-700 hover:bg-[#0c111a]"
                           >
                             <div className="flex items-start justify-between gap-4 mb-3">
                               <div className="flex items-center gap-3">

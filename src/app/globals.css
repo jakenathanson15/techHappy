@@ -84,8 +84,8 @@
 @keyframes matcherQuestionFade {
   0% {
     opacity: 0;
-    transform: translateY(-8px);
-    filter: blur(4px);
+    transform: translateY(14px);
+    filter: blur(8px);
   }
   100% {
     opacity: 1;
@@ -94,24 +94,23 @@
   }
 }
 
-@keyframes matcherChoiceFallIn {
+@keyframes matcherChoiceGlide {
   0% {
     opacity: 0;
-    transform: translateY(-16px);
-    filter: blur(3px);
+    transform: translateY(16px) scale(0.992);
+    filter: blur(6px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
     filter: blur(0);
   }
 }
 
 .animate-matcher-header {
-  animation: matcherQuestionFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: matcherQuestionFade 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .animate-matcher-choice {
-  opacity: 0;
-  animation: matcherChoiceFallIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: matcherChoiceGlide 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
