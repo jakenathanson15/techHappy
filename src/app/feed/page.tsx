@@ -24,25 +24,8 @@ const CATEGORIES = [
   "Social Impact",
 ];
 
-const WIRE_DESKS = [
-  "MIT News",
-  "Nature",
-  "NASA Climate",
-  "ScienceDaily",
-  "EFF Rights",
-  "Our World in Data",
-  "Berkeley Lab",
-  "CleanTechnica",
-  "Mozilla Commons",
-  "Ars Technica",
-  "IEEE Spectrum",
-  "Mongabay",
-  "Stanford Earth",
-];
-
 export default function FeedPage() {
   const [loadingStream, setLoadingStream] = useState(true);
-  const [streamStatus, setStreamStatus] = useState("SYNCHRONIZING 13 WIRE DESK NODES");
   const [mounted, setMounted] = useState(false);
 
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -64,35 +47,12 @@ export default function FeedPage() {
   useEffect(() => {
     setMounted(true);
     setLoadingStream(true);
-    setStreamStatus("SYNCHRONIZING 13 WIRE DESK NODES");
 
-    const timers: NodeJS.Timeout[] = [];
+    const timer = setTimeout(() => {
+      finishStreamIntro();
+    }, 2100);
 
-    timers.push(
-      setTimeout(() => {
-        setStreamStatus("PHOTON TELEMETRY STREAMS CONVERGING");
-      }, 500)
-    );
-
-    timers.push(
-      setTimeout(() => {
-        setStreamStatus("ILLUMINATING BROADCAST NODE");
-      }, 1100)
-    );
-
-    timers.push(
-      setTimeout(() => {
-        setStreamStatus("ALL CHANNELS ACTIVE // WIRE STREAMING");
-      }, 1650)
-    );
-
-    timers.push(
-      setTimeout(() => {
-        finishStreamIntro();
-      }, 2150)
-    );
-
-    return () => timers.forEach(clearTimeout);
+    return () => clearTimeout(timer);
   }, []);
 
   const finishStreamIntro = () => {
@@ -201,39 +161,39 @@ export default function FeedPage() {
           )}
         </div>
 
-        {/* Wire Stream Calibration / Photon Convergence on Navigation */}
+        {/* Minimalist Wire Calibration / Photon Convergence on Navigation */}
         {mounted && loadingStream ? (
           <div
             onClick={finishStreamIntro}
-            className="wire-card rounded-sm p-8 sm:p-14 text-center max-w-2xl mx-auto cursor-pointer animate-matcher-header relative overflow-hidden shadow-2xl bg-[#0c1017] border border-neutral-800 my-6"
+            className="wire-card rounded-sm p-10 sm:p-14 text-center max-w-lg mx-auto cursor-pointer animate-matcher-header relative overflow-hidden shadow-2xl bg-[#0c1017] border border-neutral-800 my-8"
           >
             {/* Luminous emerald aura background glow */}
-            <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[32rem] h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none animate-matcher-aura" />
+            <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-56 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none animate-matcher-aura" />
 
-            {/* Animated Wiring & Light Beams Shooting into Central Logo */}
+            {/* Minimalist Circuit with Logo in the Middle of Converging Wires */}
             <div className="relative mb-6 flex items-center justify-center">
               <svg
-                viewBox="0 0 500 150"
+                viewBox="0 0 380 160"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-full max-w-xl h-auto overflow-visible"
+                className="w-full max-w-md h-auto overflow-visible"
               >
-                {/* Background circuit base lines */}
-                <path d="M 40 25 L 140 25 L 218 64" stroke="#1f2937" strokeWidth="1.5" strokeDasharray="3 3" />
-                <path d="M 20 75 L 218 75" stroke="#1f2937" strokeWidth="1.5" strokeDasharray="3 3" />
-                <path d="M 40 125 L 140 125 L 218 86" stroke="#1f2937" strokeWidth="1.5" strokeDasharray="3 3" />
+                {/* Background circuit base lines converging to center (190, 80) */}
+                <path d="M 25 30 L 110 30 L 158 68" stroke="#1f2937" strokeWidth="1.5" strokeDasharray="3 3" />
+                <path d="M 15 80 L 158 80" stroke="#1f2937" strokeWidth="1.5" strokeDasharray="3 3" />
+                <path d="M 25 130 L 110 130 L 158 92" stroke="#1f2937" strokeWidth="1.5" strokeDasharray="3 3" />
 
-                <path d="M 460 25 L 360 25 L 282 64" stroke="#1f2937" strokeWidth="1.5" strokeDasharray="3 3" />
-                <path d="M 480 75 L 282 75" stroke="#1f2937" strokeWidth="1.5" strokeDasharray="3 3" />
-                <path d="M 460 125 L 360 125 L 282 86" stroke="#1f2937" strokeWidth="1.5" strokeDasharray="3 3" />
+                <path d="M 355 30 L 270 30 L 222 68" stroke="#1f2937" strokeWidth="1.5" strokeDasharray="3 3" />
+                <path d="M 365 80 L 222 80" stroke="#1f2937" strokeWidth="1.5" strokeDasharray="3 3" />
+                <path d="M 355 130 L 270 130 L 222 92" stroke="#1f2937" strokeWidth="1.5" strokeDasharray="3 3" />
 
-                <path d="M 250 10 L 250 44" stroke="#1f2937" strokeWidth="1.5" strokeDasharray="3 3" />
-                <path d="M 250 140 L 250 106" stroke="#1f2937" strokeWidth="1.5" strokeDasharray="3 3" />
+                <path d="M 190 12 L 190 48" stroke="#1f2937" strokeWidth="1.5" strokeDasharray="3 3" />
+                <path d="M 190 148 L 190 112" stroke="#1f2937" strokeWidth="1.5" strokeDasharray="3 3" />
 
-                {/* Animated Light Photons Shooting Towards the Central Logo */}
-                {/* Left side streams */}
+                {/* Light Photons Shooting Inwards Through Wires Towards Central Logo */}
+                {/* Left side */}
                 <path
-                  d="M 40 25 L 140 25 L 218 64"
+                  d="M 25 30 L 110 30 L 158 68"
                   stroke="#34d399"
                   strokeWidth="2.5"
                   strokeLinecap="round"
@@ -241,7 +201,7 @@ export default function FeedPage() {
                   style={{ animationDelay: "0ms" }}
                 />
                 <path
-                  d="M 20 75 L 218 75"
+                  d="M 15 80 L 158 80"
                   stroke="#10b981"
                   strokeWidth="3"
                   strokeLinecap="round"
@@ -249,7 +209,7 @@ export default function FeedPage() {
                   style={{ animationDelay: "250ms" }}
                 />
                 <path
-                  d="M 40 125 L 140 125 L 218 86"
+                  d="M 25 130 L 110 130 L 158 92"
                   stroke="#059669"
                   strokeWidth="2.5"
                   strokeLinecap="round"
@@ -257,9 +217,9 @@ export default function FeedPage() {
                   style={{ animationDelay: "500ms" }}
                 />
 
-                {/* Right side streams */}
+                {/* Right side */}
                 <path
-                  d="M 460 25 L 360 25 L 282 64"
+                  d="M 355 30 L 270 30 L 222 68"
                   stroke="#34d399"
                   strokeWidth="2.5"
                   strokeLinecap="round"
@@ -267,7 +227,7 @@ export default function FeedPage() {
                   style={{ animationDelay: "150ms" }}
                 />
                 <path
-                  d="M 480 75 L 282 75"
+                  d="M 365 80 L 222 80"
                   stroke="#10b981"
                   strokeWidth="3"
                   strokeLinecap="round"
@@ -275,7 +235,7 @@ export default function FeedPage() {
                   style={{ animationDelay: "400ms" }}
                 />
                 <path
-                  d="M 460 125 L 360 125 L 282 86"
+                  d="M 355 130 L 270 130 L 222 92"
                   stroke="#059669"
                   strokeWidth="2.5"
                   strokeLinecap="round"
@@ -283,9 +243,9 @@ export default function FeedPage() {
                   style={{ animationDelay: "650ms" }}
                 />
 
-                {/* Vertical streams */}
+                {/* Vertical tracks */}
                 <path
-                  d="M 250 10 L 250 44"
+                  d="M 190 12 L 190 48"
                   stroke="#34d399"
                   strokeWidth="2.5"
                   strokeLinecap="round"
@@ -293,7 +253,7 @@ export default function FeedPage() {
                   style={{ animationDelay: "300ms" }}
                 />
                 <path
-                  d="M 250 140 L 250 106"
+                  d="M 190 148 L 190 112"
                   stroke="#10b981"
                   strokeWidth="2.5"
                   strokeLinecap="round"
@@ -301,49 +261,37 @@ export default function FeedPage() {
                   style={{ animationDelay: "550ms" }}
                 />
 
-                {/* Outer Node Source Labels & LEDs */}
-                <g>
-                  <circle cx="40" cy="25" r="3.5" fill="#10b981" className="animate-wire-pulse" />
-                  <text x="50" y="28" fill="#9ca3af" fontSize="9" fontFamily="monospace">MIT</text>
+                {/* Outer LED Nodes */}
+                <circle cx="25" cy="30" r="3" fill="#10b981" className="animate-wire-pulse" />
+                <circle cx="15" cy="80" r="3" fill="#34d399" className="animate-wire-pulse" style={{ animationDelay: "200ms" }} />
+                <circle cx="25" cy="130" r="3" fill="#10b981" className="animate-wire-pulse" style={{ animationDelay: "400ms" }} />
 
-                  <circle cx="20" cy="75" r="3.5" fill="#34d399" className="animate-wire-pulse" style={{ animationDelay: "200ms" }} />
-                  <text x="30" y="78" fill="#9ca3af" fontSize="9" fontFamily="monospace">NATURE</text>
+                <circle cx="355" cy="30" r="3" fill="#10b981" className="animate-wire-pulse" style={{ animationDelay: "300ms" }} />
+                <circle cx="365" cy="80" r="3" fill="#34d399" className="animate-wire-pulse" style={{ animationDelay: "500ms" }} />
+                <circle cx="355" cy="130" r="3" fill="#10b981" className="animate-wire-pulse" style={{ animationDelay: "700ms" }} />
 
-                  <circle cx="40" cy="125" r="3.5" fill="#10b981" className="animate-wire-pulse" style={{ animationDelay: "400ms" }} />
-                  <text x="50" y="128" fill="#9ca3af" fontSize="9" fontFamily="monospace">NASA</text>
-                </g>
+                <circle cx="190" cy="12" r="3" fill="#34d399" className="animate-wire-pulse" style={{ animationDelay: "350ms" }} />
+                <circle cx="190" cy="148" r="3" fill="#10b981" className="animate-wire-pulse" style={{ animationDelay: "600ms" }} />
 
-                <g>
-                  <circle cx="460" cy="25" r="3.5" fill="#10b981" className="animate-wire-pulse" style={{ animationDelay: "300ms" }} />
-                  <text x="415" y="28" fill="#9ca3af" fontSize="9" fontFamily="monospace">BERKELEY</text>
-
-                  <circle cx="480" cy="75" r="3.5" fill="#34d399" className="animate-wire-pulse" style={{ animationDelay: "500ms" }} />
-                  <text x="455" y="78" fill="#9ca3af" fontSize="9" fontFamily="monospace">EFF</text>
-
-                  <circle cx="460" cy="125" r="3.5" fill="#10b981" className="animate-wire-pulse" style={{ animationDelay: "700ms" }} />
-                  <text x="428" y="128" fill="#9ca3af" fontSize="9" fontFamily="monospace">OWID</text>
-                </g>
-
-                {/* CENTRAL TECHHAPPY LOGO // ILLUMINATING POWER CORE */}
-                <g transform="translate(250, 75)" className="animate-logo-charge">
-                  {/* Outer Concentric Energy Rings */}
-                  <circle cx="0" cy="0" r="38" fill="none" stroke="#064e3b" strokeWidth="1.5" strokeDasharray="4 4" />
+                {/* TECHHAPPY LOGO // CENTERED IN THE MIDDLE OF THE WIRES & LIGHTING UP */}
+                <g transform="translate(190, 80)" className="animate-logo-charge">
+                  {/* Energy Aura Ring */}
+                  <circle cx="0" cy="0" r="38" fill="none" stroke="#064e3b" strokeWidth="1.5" strokeDasharray="3 3" />
                   <circle cx="0" cy="0" r="32" fill="#0a0e14" stroke="#10b981" strokeWidth="2" />
 
-                  {/* TH Eyes + Smile Vector Icon */}
                   {/* Left Eye: 'T' */}
-                  <path d="M -16 -13 H -5" stroke="#f8fafc" strokeWidth="2.5" strokeLinecap="round" />
-                  <path d="M -10.5 -13 V -3" stroke="#f8fafc" strokeWidth="2.5" strokeLinecap="round" />
+                  <path d="M -15 -13 H -5" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" className="animate-eyes-ignite" />
+                  <path d="M -10 -13 V -3" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" className="animate-eyes-ignite" />
 
                   {/* Right Eye: 'H' */}
-                  <path d="M 5 -13 V -3" stroke="#f8fafc" strokeWidth="2.5" strokeLinecap="round" />
-                  <path d="M 16 -13 V -3" stroke="#f8fafc" strokeWidth="2.5" strokeLinecap="round" />
-                  <path d="M 5 -8 H 16" stroke="#f8fafc" strokeWidth="2.5" strokeLinecap="round" />
+                  <path d="M 5 -13 V -3" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" className="animate-eyes-ignite" />
+                  <path d="M 15 -13 V -3" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" className="animate-eyes-ignite" />
+                  <path d="M 5 -8 H 15" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" className="animate-eyes-ignite" />
 
                   {/* Radiant Smile Arc */}
                   <path
-                    d="M -15 6 C -8 16 8 16 15 6"
-                    stroke="#10b981"
+                    d="M -14 6 C -7 16 7 16 14 6"
+                    stroke="#34d399"
                     strokeWidth="2.5"
                     strokeLinecap="round"
                     className="animate-smile-ignite"
@@ -352,38 +300,18 @@ export default function FeedPage() {
               </svg>
             </div>
 
-            <div className="inline-flex items-center gap-2 mb-3 px-2.5 py-1 rounded-sm bg-emerald-950/40 border border-emerald-500/30 font-mono text-[11px] text-emerald-300 uppercase tracking-widest">
+            <div className="flex items-center justify-center gap-2 mb-2 font-mono text-[11px] text-emerald-400 font-semibold tracking-widest uppercase">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
-              <span>THE WIRE // {streamStatus}</span>
+              <span>THE WIRE // CONNECTING</span>
             </div>
 
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-4xl font-normal text-neutral-100 mb-3 tracking-tight">
-              Illuminating the research wire.
+            <h2 className="font-serif text-2xl sm:text-3xl font-normal text-neutral-100 mb-2 tracking-tight">
+              Connecting to Wire Feed...
             </h2>
 
-            <p className="font-sans text-xs sm:text-sm text-neutral-400 max-w-lg mx-auto leading-relaxed mb-8">
-              Live photon telemetry streaming from 13 institutional labs, open journals, and earth satellites directly into your feed.
+            <p className="font-sans text-xs text-neutral-400 max-w-sm mx-auto leading-relaxed">
+              Streaming real-time peer-reviewed scientific breakthroughs and open source dispatches.
             </p>
-
-            {/* 13 Connected Feeds Matrix */}
-            <div className="pt-4 border-t border-neutral-800/80 max-w-lg mx-auto">
-              <div className="font-mono text-[10px] text-neutral-500 uppercase tracking-wider mb-2.5 text-left flex items-center justify-between">
-                <span>ACTIVE WIRE NODES (13/13)</span>
-                <span className="text-emerald-400">CHANNELS SYNCHRONIZED</span>
-              </div>
-              <div className="flex flex-wrap gap-1.5 justify-start">
-                {WIRE_DESKS.map((desk, idx) => (
-                  <span
-                    key={desk}
-                    style={{ animationDelay: `${idx * 40}ms` }}
-                    className="font-mono text-[10px] px-2 py-0.5 rounded-sm bg-[#080c12] border border-neutral-800/90 text-neutral-300 inline-flex items-center gap-1.5"
-                  >
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    <span>{desk}</span>
-                  </span>
-                ))}
-              </div>
-            </div>
           </div>
         ) : (
           <>
