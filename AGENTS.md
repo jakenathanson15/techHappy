@@ -1,62 +1,69 @@
 # AGENTS.md — techHappy
 
 ## Overview
-**techHappy** is a privacy-first, zero-cost, open-source web application designed to counteract media cynicism in tech by highlighting positive, high-impact breakthroughs in technology and connecting technologists directly with vetted non-profits.
+**techHappy** ([https://www.techhappynews.com](https://www.techhappynews.com)) is a high-density, privacy-first editorial broadsheet and impact allocation terminal designed to counteract media cynicism in technology by streaming verified scientific breakthroughs and routing capital and code contributions to vetted public goods non-profits.
 
-### Core Value Pillars
-1. **The Uplift Feed**: An automated, curated stream of positive technology, climate-tech, biotech, healthcare, and open-source breakthroughs with concise "Why This Matters" summaries and high-res photography.
-2. **Tech Impact Matcher**: A 3-step interactive questionnaire connecting tech workers with vetted 501(c)(3) tech-adjacent non-profits based on cause, preferred contribution method (code mentorship, direct donation, device giving), and scope.
-
----
-
-## Architecture & Technology Stack
-- **Framework**: [Next.js 15 (App Router)](https://nextjs.org/) + React 19 + TypeScript
-- **Styling & UI**: Tailwind CSS (sleek dark mode `#080c14` with `#0e1524` glass surfaces and emerald/teal glows)
-- **Icons**: Lucide React vector icons strictly (zero emojis across the entire UI)
-- **Data & Ingestion**: Public RSS feeds from peer-reviewed scientific journals & verified labs parsed with `fast-xml-parser`, ISR hourly caching, and curated fallback datasets
-- **Persistence**: Stateless browser `localStorage` hook ([`src/lib/useBookmarks.ts`](src/lib/useBookmarks.ts)) for bookmarks with zero user accounts or server tracking
-- **Deployment & Git**: GitHub repository at `git@github.com:jakenathanson15/techHappy.git` configured with personal SSH key `~/.ssh/id_ed25519_techhappy`
+### Core Architecture & Modules
+1. **`01 // WIRE FEED` ([`src/app/feed/page.tsx`](src/app/feed/page.tsx))**:
+   - Automated scientific RSS/Atom wire aggregator pulling ~225 dispatches in parallel from 13 peer-reviewed feeds (MIT News, Nature, ScienceDaily, NASA, EFF, Our World in Data, CleanTechnica, UC Berkeley, Mozilla, etc.).
+   - Two-pass XML sanitization pipeline in [`src/lib/rss.ts`](src/lib/rss.ts) to clean encoded HTML entities and strip raw tags.
+   - Deterministic SHA-256 dispatch ID hashing and deduplication across multiple category syndications.
+2. **`02 // DECISION TERMINAL & CAUSE MATCHER` ([`src/app/match/page.tsx`](src/app/match/page.tsx))**:
+   - A 3-stage decision terminal helping technologists allocate capital, code mentorship, hardware, or policy advocacy to vetted 501(c)(3) organizations across digital rights, open source commons, earth science, engineering access, and assistive accessibility.
+3. **`03 // CHARITY REGISTRY & TELEMETRY LEDGER` ([`src/app/page.tsx`](src/app/page.tsx))**:
+   - Asymmetric 60/40 broadsheet homepage with live wire telemetry, interactive dispatch ledgers, and a comprehensive organization registry table.
 
 ---
 
-## Repository Structure
+## Design System & Token Rules
+- **Anti-Trope Aesthetic**: Strictly avoid generic "AI-generated" tropes — no floating neon gradient halos, purple/indigo blur circles (`ambient-glow-*`), or uniform bubble radius values.
+- **Color Palette**:
+  - Dark ink backgrounds: `#080c12`, `#0c1017`, `#0f141e`
+  - Crisp hairline borders: `border-neutral-800`, `border-neutral-700/80`
+  - Restrained telemetry accents: Emerald `#10b981`, Amber `#f59e0b`
+- **Typography Pairing**:
+  - **Headlines & Display**: `Newsreader` (Variable serif)
+  - **Body & UI**: `Plus Jakarta Sans`
+  - **Telemetry & Section Indices**: `JetBrains Mono` (`01 // WIRE FEED`, `[ 01 CAUSE DOMAIN ]`)
+- **Iconography**: Lucide React vector icons strictly (zero emojis across the entire UI).
+- **Privacy & Storage**: 100% stateless client architecture. Bookmarks and preferences persist strictly in local browser storage (`localStorage`) via [`src/lib/useBookmarks.ts`](src/lib/useBookmarks.ts) with zero server tracking or cookies.
+
+---
+
+## Directory Layout
 ```text
 techHappy/
-├── .bob/                           # Bob workspace rules and MCP configs
-│   ├── rules/project.md            # Coding standards, clean scripts, and guidelines
-│   └── mcp.json                    # GitHub MCP config
 ├── src/
-│   ├── app/                        # Next.js App Router pages and API routes
+│   ├── app/                        # Next.js 15 App Router
 │   │   ├── api/
-│   │   │   ├── news/route.ts       # Hourly RSS fetcher & positive heuristics
-│   │   │   └── match/route.ts      # Impact matcher recommendation logic
-│   │   ├── feed/page.tsx           # Uplift feed page (two-column desktop layout)
-│   │   ├── match/page.tsx          # 3-step questionnaire & results UI
-│   │   ├── globals.css             # Tailwind theme, glowing gradients, animations
-│   │   ├── layout.tsx              # Root layout & navigation shell
-│   │   └── page.tsx                # Hero landing page
-│   ├── components/                 # Reusable UI components
-│   │   ├── Navbar.tsx              # Navigation bar with live links & badge
-│   │   ├── Footer.tsx              # Footer with privacy pledge & repository link
-│   │   ├── NewsCard.tsx            # Social card layout with dual source links
-│   │   └── Icons.tsx               # Lucide icon mapping helpers
+│   │   │   ├── news/route.ts       # Parallel scientific wire fetcher & deduplication
+│   │   │   └── match/route.ts      # Impact terminal scoring engine
+│   │   ├── feed/page.tsx           # Live wire feed with filter ribbons & wire registry
+│   │   ├── match/page.tsx          # 3-stage impact allocation terminal
+│   │   ├── globals.css             # Wire grid pattern, font definitions, dark scrollbars
+│   │   ├── layout.tsx              # Root shell with Newsreader, Plus Jakarta Sans, JetBrains Mono
+│   │   └── page.tsx                # Editorial homepage with 60/40 hero and registry ledger
+│   ├── components/                 # UI components
+│   │   ├── Logo.tsx                # Bespoke geometric TH eyes-smile emblem
+│   │   ├── Navbar.tsx              # Architectural header with telemetry status
+│   │   ├── Footer.tsx              # 4-column engineering footer
+│   │   ├── NewsCard.tsx            # Broadsheet dispatch card with significance ledger
+│   │   └── Icons.tsx               # Vector icon mapping helpers
 │   ├── data/
-│   │   └── charities.json          # Curated database of 9 vetted tech non-profits
+│   │   └── charities.json          # Curated database of vetted non-profits & impact metrics
 │   └── lib/
 │       ├── types.ts                # TypeScript interfaces (NewsItem, Charity, QuizState)
-│       ├── rss.ts                  # Multi-source RSS aggregation & image extractor
+│       ├── rss.ts                  # Multi-source RSS aggregation & two-pass XML sanitization
 │       ├── matcher.ts              # Weighted cause scoring engine
-│       └── useBookmarks.ts         # LocalStorage hook for saved causes & stories
-├── AGENTS.md                       # Comprehensive project context
-├── README.md                       # Public documentation & architecture overview
-└── package.json                    # Dependencies & build scripts (clean, dev, build)
+│       └── useBookmarks.ts         # LocalStorage hook for saved causes & dispatches
+├── tailwind.config.ts              # Font families & dark ink color configuration
+├── AGENTS.md                       # Comprehensive architecture and design guidelines
+├── README.md                       # Project overview and quickstart
+└── package.json                    # Scripts and dependencies
 ```
 
 ---
 
-## Key Conventions & Decisions
-- **Zero Cost & Zero Database**: Runs completely without paid API keys, external databases, or third-party auth services.
-- **Social Feed UX**: News cards formatted as rich social posts with high-res photography, direct root source domain link in header, exact article link in footer, one-click link copying, and local bookmarking.
-- **Two-Column Desktop Feed**: Main stream on the left (`lg:col-span-8`) with a right sticky sidebar (`lg:col-span-4`) containing search, category filters, curation standards, and the impact matcher CTA.
-- **Zero Emojis**: All UI indicators, tags, and categories use crisp Lucide vector icons (`Shield`, `Code2`, `Globe2`, `Library`, `GraduationCap`, etc.).
-- **Build Cleanliness**: Always run `npm run clean` before building to prevent webpack chunk conflicts.
+## Engineering Guidelines
+- **Build Verification**: Always run `npm run build` to verify Next.js static generation and TypeScript type safety across all routes.
+- **Git Remote**: GitHub repository at `git@github.com:jakenathanson15/techHappy.git`. Automatic production deployment is triggered on push to `main`.
