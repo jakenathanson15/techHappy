@@ -9,7 +9,7 @@
     "givingTypes": ["direct-donation", "advocacy"],
     "websiteUrl": "https://www.eff.org",
     "donateUrl": "https://supporters.eff.org/donate",
-    "volunteerUrl": "https://www.eff.org/pages/volunteering-eff",
+    "volunteerUrl": "https://www.eff.org/about/opportunities/volunteer",
     "iconName": "Shield",
     "impactMetrics": "Defending privacy and encryption rights for 4+ billion global internet users",
     "rating": "Charity Navigator 100% 4-Star",
@@ -27,7 +27,7 @@
     "givingTypes": ["direct-donation", "mentorship-volunteering"],
     "websiteUrl": "https://girlswhocode.com",
     "donateUrl": "https://girlswhocode.com/donate",
-    "volunteerUrl": "https://girlswhocode.com/volunteer",
+    "volunteerUrl": "https://girlswhocode.com/get-involved",
     "iconName": "Code2",
     "impactMetrics": "500,000+ students taught; alumni major in CS at 7x national average",
     "rating": "GuideStar Platinum Transparency",
@@ -120,7 +120,7 @@
     "impactMetrics": "100,000+ students across 15 national chapters and virtual bootcamps",
     "rating": "GuideStar Platinum",
     "tags": ["Diversity", "STEM Education", "Youth Mentorship", "Robotics", "Coding"],
-    "imageUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1200&q=80",
+    "imageUrl": "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?auto=format&fit=crop&w=1200&q=80",
     "heroImageUrl": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=80"
   },
   {
