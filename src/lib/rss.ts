@@ -26,6 +26,7 @@ export interface RSSSourceConfig {
   sourceUrl: string;
   defaultCategory: NewsItem["category"];
   description?: string;
+  imageUrl?: string;
 }
 
 export const RSS_SOURCES: RSSSourceConfig[] = [
@@ -35,6 +36,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     sourceUrl: "https://news.mit.edu",
     defaultCategory: "Healthcare & Bio",
     description: "Cutting-edge breakthroughs in medicine, robotics, materials, and sustainable engineering.",
+    imageUrl: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "Our World in Data",
@@ -42,6 +44,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     sourceUrl: "https://ourworldindata.org",
     defaultCategory: "Social Impact",
     description: "Empirical research and data showing global progress against disease, poverty, and energy transitions.",
+    imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "Nature Research",
@@ -49,6 +52,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     sourceUrl: "https://www.nature.com",
     defaultCategory: "Healthcare & Bio",
     description: "Peer-reviewed scientific discoveries across biotechnology, physics, and ecology.",
+    imageUrl: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "CleanTechnica",
@@ -56,6 +60,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     sourceUrl: "https://cleantechnica.com",
     defaultCategory: "Climate Tech",
     description: "Global advances in solar power, grid batteries, electric mobility, and clean technology.",
+    imageUrl: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "ScienceDaily Clean Energy",
@@ -63,6 +68,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     sourceUrl: "https://www.sciencedaily.com",
     defaultCategory: "Climate Tech",
     description: "Laboratory research on next-generation photovoltaics, fusion, and hydrogen power.",
+    imageUrl: "https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "ScienceDaily AI & Tech",
@@ -70,6 +76,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     sourceUrl: "https://www.sciencedaily.com",
     defaultCategory: "AI for Good",
     description: "Breakthrough machine intelligence and computational science applications.",
+    imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "Positive News",
@@ -77,6 +84,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     sourceUrl: "https://www.positive.news",
     defaultCategory: "Climate Tech",
     description: "Rigorous solutions journalism focused on environmental progress and human innovation.",
+    imageUrl: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "Good News Network",
@@ -84,6 +92,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     sourceUrl: "https://www.goodnewsnetwork.org",
     defaultCategory: "Social Impact",
     description: "Uplifting science and technological progress advancing humanity.",
+    imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "NASA Science & Tech",
@@ -91,6 +100,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     sourceUrl: "https://www.nasa.gov",
     defaultCategory: "Climate Tech",
     description: "Space exploration, planetary climate monitoring, and advanced aeronautics.",
+    imageUrl: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "Phys.org Technology",
@@ -98,6 +108,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     sourceUrl: "https://phys.org",
     defaultCategory: "AI for Good",
     description: "Emerging engineering innovations, smart materials, and computing advancements.",
+    imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "UC Berkeley Research",
@@ -105,6 +116,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     sourceUrl: "https://news.berkeley.edu",
     defaultCategory: "AI for Good",
     description: "Pioneering academic discoveries from world-class university labs.",
+    imageUrl: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "Mozilla Blog",
@@ -112,6 +124,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     sourceUrl: "https://blog.mozilla.org",
     defaultCategory: "Open Access & Web",
     description: "Championing open web standards, privacy-preserving tools, and responsible technology.",
+    imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "Electronic Frontier Foundation",
@@ -119,50 +132,225 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     sourceUrl: "https://www.eff.org",
     defaultCategory: "Open Access & Web",
     description: "Defending digital rights, cryptography, privacy, and public-interest innovation.",
+    imageUrl: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80",
   },
 ];
 
-const TOPIC_IMAGES = {
-  climate: [
+export const THEMATIC_IMAGE_BANK: {
+  keywords: string[];
+  images: string[];
+}[] = [
+  // 1. Solar & Photovoltaics
+  {
+    keywords: ["solar", "photovoltaic", "perovskite", "sunlight", "solar panel", "solar cell"],
+    images: [
+      "https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1508873696983-2df5293cb32f?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+  // 2. Nuclear Fusion & Clean Power
+  {
+    keywords: ["fusion", "tokamak", "reactor", "nuclear", "plasma", "clean power", "grid", "electricity", "geothermal"],
+    images: [
+      "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+  // 3. Wind & Renewable Turbines
+  {
+    keywords: ["wind", "turbine", "offshore wind", "renewables", "aerodynamic"],
+    images: [
+      "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1497440001374-f26997328c1b?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+  // 4. Batteries, Solid State & Storage
+  {
+    keywords: ["battery", "batteries", "solid-state", "lithium", "energy storage", "storage", "cathode", "anode", "ev", "electric vehicle"],
+    images: [
+      "https://images.unsplash.com/photo-1558441719-79a40578848f?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1563770660941-20978e870e26?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+  // 5. Quantum Computing & Quantum Physics
+  {
+    keywords: ["quantum", "qubit", "superposition", "photonics", "laser", "cryogenic", "superconductor"],
+    images: [
+      "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+  // 6. AI, Machine Learning & Neural Networks
+  {
+    keywords: ["ai", "artificial intelligence", "neural", "machine learning", "deep learning", "algorithm", "llm", "model", "generative"],
+    images: [
+      "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+  // 7. Robotics & Autonomous Systems
+  {
+    keywords: ["robot", "robotics", "autonomous", "drone", "humanoid", "actuator", "bionic", "prosthetic"],
+    images: [
+      "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1563770660941-20978e870e26?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+  // 8. Space, Astronomy & Satellites
+  {
+    keywords: ["space", "satellite", "orbit", "nasa", "esa", "jwst", "telescope", "galaxy", "astronomy", "exoplanet", "mars", "lunar"],
+    images: [
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+  // 9. Marine Biology & Ocean Science
+  {
+    keywords: ["ocean", "marine", "reef", "coral", "sea", "underwater", "aquatic", "kelp", "whale", "fisheries"],
+    images: [
+      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1682687220063-4742bd7fd538?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+  // 10. Biotechnology, CRISPR, DNA & Genetics
+  {
+    keywords: ["crispr", "dna", "gene", "genetics", "biotech", "cellular", "protein", "mrna", "genome", "molecular"],
+    images: [
+      "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+  // 11. Neuroscience & Brain Tech
+  {
+    keywords: ["brain", "neuroscience", "neural interface", "synapse", "cognitive", "neurological", "neuro"],
+    images: [
+      "https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+  // 12. Clean Water & Hydrology
+  {
+    keywords: ["water", "purification", "desalination", "filtration", "clean water", "hydrology", "aquifer"],
+    images: [
+      "https://images.unsplash.com/photo-1519692933481-e162a57d6721?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+  // 13. Reforestation, Forestry & Biodiversity
+  {
+    keywords: ["forest", "tree", "reforestation", "biodiversity", "wildlife", "conservation", "rainforest", "species", "canopy"],
+    images: [
+      "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+  // 14. Sustainable Agriculture & Agritech
+  {
+    keywords: ["agriculture", "crop", "farming", "vertical farm", "soil", "harvest", "hydroponics", "food security"],
+    images: [
+      "https://images.unsplash.com/photo-1586771107445-d3ca888129ff?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+  // 15. Open Source, Cryptography & Internet Infrastructure
+  {
+    keywords: ["open source", "crypto", "encryption", "privacy", "code", "software", "linux", "security", "developer", "protocol", "decentralized"],
+    images: [
+      "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+  // 16. Healthcare, Vaccines & Clinical Medicine
+  {
+    keywords: ["health", "hospital", "doctor", "medicine", "vaccine", "cancer", "therapy", "clinical", "disease", "treatment", "patient"],
+    images: [
+      "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+];
+
+export const CATEGORY_FALLBACK_IMAGES: Record<NewsItem["category"], string[]> = {
+  "Climate Tech": [
     "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=1200&q=80",
     "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=1200&q=80",
     "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
   ],
-  health: [
+  "Healthcare & Bio": [
     "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80",
     "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1200&q=80",
     "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=1200&q=80",
   ],
-  ai: [
-    "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
+  "AI for Good": [
     "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
   ],
-  openSource: [
+  "Open Access & Web": [
     "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80",
     "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
     "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
   ],
-  social: [
+  "Social Impact": [
     "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80",
     "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80",
     "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80",
-  ]
+  ],
 };
 
-function getRandomImage(category: NewsItem["category"], index: number): string {
-  switch (category) {
-    case "Climate Tech":
-      return TOPIC_IMAGES.climate[index % TOPIC_IMAGES.climate.length];
-    case "Healthcare & Bio":
-      return TOPIC_IMAGES.health[index % TOPIC_IMAGES.health.length];
-    case "AI for Good":
-      return TOPIC_IMAGES.ai[index % TOPIC_IMAGES.ai.length];
-    case "Open Access & Web":
-      return TOPIC_IMAGES.openSource[index % TOPIC_IMAGES.openSource.length];
-    default:
-      return TOPIC_IMAGES.social[index % TOPIC_IMAGES.social.length];
+/**
+ * Intelligent topic & keyword-based image resolver.
+ * Parses headline + summary tokens to find the best contextual photograph.
+ */
+export function resolveSmartImage(
+  title: string = "",
+  summary: string = "",
+  category: NewsItem["category"] = "Social Impact",
+  seed: string | number = 0
+): string {
+  const combinedText = `${title} ${summary}`.toLowerCase();
+
+  // 1. Try to find the first matching thematic bank
+  for (const bank of THEMATIC_IMAGE_BANK) {
+    for (const kw of bank.keywords) {
+      // Regex boundary search or substring for compound words
+      const regex = new RegExp(`\\b${kw}`, "i");
+      if (regex.test(combinedText)) {
+        const hash = typeof seed === "number" ? seed : hashStringToNumber(seed || title);
+        return bank.images[Math.abs(hash) % bank.images.length];
+      }
+    }
   }
+
+  // 2. Fall back to category-specific photo array
+  const categoryBank = CATEGORY_FALLBACK_IMAGES[category] || CATEGORY_FALLBACK_IMAGES["Social Impact"];
+  const hash = typeof seed === "number" ? seed : hashStringToNumber(seed || title);
+  return categoryBank[Math.abs(hash) % categoryBank.length];
+}
+
+function hashStringToNumber(str: string): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash << 5) - hash + str.charCodeAt(i);
+    hash |= 0;
+  }
+  return hash;
 }
 
 function extractImageFromHtml(html: string): string | null {
@@ -481,7 +669,9 @@ export async function fetchUpliftNews(bypassCache: boolean = false): Promise<New
           const snippet =
             rawDesc.length > 220 ? rawDesc.slice(0, 217) + "..." : rawDesc || rawTitle;
           const whyItMatters = generateWhyItMatters(rawTitle, snippet, category);
-          const finalImage = mediaUrl || getRandomImage(category, srcIndex * 7 + itemIndex);
+          const finalImage =
+            mediaUrl ||
+            resolveSmartImage(rawTitle, snippet, category, srcIndex * 7 + itemIndex);
 
           const uniqueId = crypto
             .createHash("sha256")

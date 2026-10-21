@@ -107,8 +107,8 @@ export function SplashEntrance() {
         {/* Animated TH Eyes-Smile Emblem */}
         <div className="relative mb-6 flex items-center justify-center">
           {/* Subtle concentric calibration ring */}
-          <div className="absolute h-28 w-28 rounded-full border border-neutral-800/80 animate-ping opacity-20 pointer-events-none" />
-          <div className="absolute h-24 w-24 rounded-full border border-neutral-800 bg-[#0c1017]/80" />
+          <div className="absolute h-28 w-28 rounded-2xl border border-neutral-700/50 animate-ping opacity-20 pointer-events-none" />
+          <div className="absolute h-24 w-24 rounded-2xl border border-neutral-700/80 bg-neutral-900/95 shadow-2xl" />
 
           <svg
             viewBox="0 0 24 24"

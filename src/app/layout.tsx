@@ -31,6 +31,15 @@ export const metadata: Metadata = {
     template: "%s | techHappy",
   },
   description: "Real progress in technology happening every day. Verified breakthroughs across clean energy, biotechnology, and open access — paired with a vetted directory of high-impact non-profits.",
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: ["/icon.svg"],
+    apple: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+  },
   openGraph: {
     title: "techHappy — Good News Now",
     description: "Real progress in technology happening every day. Verified breakthroughs across clean energy, biotechnology, and open access.",

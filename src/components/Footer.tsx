@@ -10,7 +10,7 @@ export function Footer() {
           {/* Col 1: Identity & Mission */}
           <div className="md:col-span-5 space-y-3">
             <div className="flex items-center gap-2.5">
-              <div className="flex h-7 w-7 items-center justify-center rounded-md bg-neutral-900 border border-neutral-800 text-emerald-400">
+              <div className="flex h-7 w-7 items-center justify-center rounded-md bg-neutral-900 border border-neutral-700/80">
                 <TechHappyEmblem className="h-3.5 w-3.5" />
               </div>
               <span className="font-sans font-bold text-sm tracking-tight text-white">

@@ -109,40 +109,56 @@ export default function SourcesPage() {
             <span>STATUS: ACTIVE & SYNDICATED</span>
           </div>
 
-          <div className="divide-y divide-neutral-800/80 border-y border-neutral-800/80">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {RSS_SOURCES.map((source, idx) => (
               <div
                 key={source.name}
-                className="py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 group"
+                className="wire-card rounded-sm overflow-hidden flex flex-col justify-between group hover:border-neutral-700 transition"
               >
-                <div className="flex-1 max-w-2xl">
-                  <div className="flex items-center gap-3 mb-1">
-                    <span className="font-mono text-[11px] text-neutral-600 font-medium">
-                      {idx < 9 ? `0${idx + 1}` : idx + 1}
-                    </span>
-                    <h3 className="font-serif text-lg font-normal text-neutral-100 group-hover:text-emerald-300 transition">
+                <div>
+                  {source.imageUrl && (
+                    <div className="relative aspect-[21/9] w-full overflow-hidden bg-neutral-950 border-b border-neutral-800/80">
+                      <img
+                        src={source.imageUrl}
+                        alt={source.name}
+                        className="w-full h-full object-cover opacity-75 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#080c12] via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute top-2.5 left-2.5 flex items-center gap-2">
+                        <span className="font-mono text-[10px] text-neutral-400 bg-neutral-950/80 border border-neutral-800 px-2 py-0.5 rounded-sm backdrop-blur-sm">
+                          DESK 0{idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
+                        </span>
+                        <span className="font-mono text-[10px] text-emerald-400 bg-emerald-950/90 border border-emerald-800/60 px-2 py-0.5 rounded-sm backdrop-blur-sm">
+                          {source.defaultCategory}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="p-4 sm:p-5">
+                    <h3 className="font-serif text-lg font-normal text-neutral-100 group-hover:text-emerald-300 transition mb-2">
                       {source.name}
                     </h3>
-                    <span className="font-mono text-[10px] text-emerald-400 bg-emerald-950/40 border border-emerald-800/50 px-2 py-0.5 rounded-sm">
-                      {source.defaultCategory}
-                    </span>
-                  </div>
-
-                  <p className="font-sans text-xs sm:text-sm text-neutral-400 leading-relaxed ml-7">
-                    {source.description}
-                  </p>
-
-                  <div className="font-mono text-[10px] text-neutral-500 mt-1 ml-7 truncate">
-                    Feed Endpoint: <span className="text-neutral-400">{source.url}</span>
+                    <p className="font-sans text-xs sm:text-sm text-neutral-400 leading-relaxed mb-3">
+                      {source.description}
+                    </p>
+                    <div className="font-mono text-[10px] text-neutral-500 truncate">
+                      Endpoint: <span className="text-neutral-400">{source.url}</span>
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 ml-7 sm:ml-0 flex-shrink-0">
+                <div className="px-4 sm:px-5 py-3 border-t border-neutral-800/80 bg-neutral-900/30 flex items-center justify-between">
+                  <span className="font-mono text-[11px] text-emerald-400 flex items-center gap-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    Live Syndicate
+                  </span>
                   <a
                     href={source.sourceUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded-sm border border-neutral-800 bg-[#0c1017] px-3 py-1.5 font-mono text-xs text-neutral-300 hover:border-neutral-700 hover:text-white transition"
+                    className="inline-flex items-center gap-1.5 rounded-sm border border-neutral-800 bg-[#0c1017] px-3 py-1 font-mono text-xs text-neutral-300 hover:border-neutral-700 hover:text-white transition"
                   >
                     <span>Visit Desk</span>
                     <ExternalLink className="h-3 w-3 text-neutral-400" />

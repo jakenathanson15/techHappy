@@ -26,6 +26,8 @@ export interface Charity {
   impactMetrics: string;
   rating: string;
   tags: string[];
+  imageUrl: string;
+  heroImageUrl?: string;
 }
 
 export interface NewsItem {

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { NewsItem } from "@/lib/types";
+import { resolveSmartImage } from "@/lib/rss";
 import {
   Clock,
   Bookmark,
@@ -10,14 +11,6 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 import { getCategoryIcon } from "./Icons";
-
-const CATEGORY_FALLBACK_IMAGES: Record<string, string> = {
-  "Climate Tech": "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=1200&q=80",
-  "Healthcare & Bio": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80",
-  "AI for Good": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
-  "Open Access & Web": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
-  "Social Impact": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80",
-};
 
 interface NewsCardProps {
   news: NewsItem;
@@ -31,8 +24,14 @@ export function NewsCard({
   onToggleBookmark,
 }: NewsCardProps) {
   const [copied, setCopied] = useState(false);
+  const smartFallback = resolveSmartImage(
+    news.title,
+    news.summary,
+    news.category,
+    news.id
+  );
   const [imgSrc, setImgSrc] = useState<string>(
-    news.imageUrl || CATEGORY_FALLBACK_IMAGES[news.category] || CATEGORY_FALLBACK_IMAGES["Social Impact"]
+    news.imageUrl || smartFallback
   );
   const [imgFailed, setImgFailed] = useState(false);
 
@@ -52,9 +51,8 @@ export function NewsCard({
   };
 
   const handleImageError = () => {
-    const fallback = CATEGORY_FALLBACK_IMAGES[news.category] || CATEGORY_FALLBACK_IMAGES["Social Impact"];
-    if (imgSrc !== fallback) {
-      setImgSrc(fallback);
+    if (imgSrc !== smartFallback) {
+      setImgSrc(smartFallback);
     } else {
       setImgFailed(true);
     }

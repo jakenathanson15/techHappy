@@ -180,104 +180,123 @@ export default function CausesDirectoryPage() {
               return (
                 <div
                   key={charity.id}
-                  className="wire-card rounded-sm p-5 sm:p-6 transition hover:border-neutral-700"
+                  className="wire-card rounded-sm overflow-hidden transition hover:border-neutral-700 flex flex-col md:flex-row"
                 >
-                  <div className="flex items-start justify-between gap-4 mb-3">
-                    <div className="flex items-center gap-3.5">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-neutral-900 border border-neutral-800 text-teal-400 flex-shrink-0">
-                        <IconComp className="h-4 w-4" />
-                      </div>
-                      <div>
-                        <div className="flex flex-wrap items-center gap-2">
-                          <h2 className="font-serif text-xl font-normal text-neutral-100 leading-tight">
-                            {charity.name}
-                          </h2>
-                          <span className="font-mono text-[10px] text-emerald-400 bg-emerald-950/40 border border-emerald-800/50 px-1.5 py-0.5 rounded-sm">
-                            {charity.rating}
-                          </span>
-                        </div>
-                        <div className="font-mono text-[11px] text-neutral-500 mt-0.5">
-                          {charity.category.replace(/-/g, " ")} • {charity.shortName}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-2 flex-shrink-0">
-                      <a
-                        href={charity.websiteUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-1.5 rounded-sm border border-neutral-800 bg-neutral-900 text-neutral-400 hover:text-white hover:border-neutral-700 transition"
-                        title="Visit official website"
-                      >
-                        <ExternalLink className="h-3.5 w-3.5" />
-                      </a>
-                      <button
-                        onClick={() => toggleCharityBookmark(charity.id)}
-                        title={bookmarked ? "Remove bookmark" : "Save cause"}
-                        className={`p-1.5 rounded-sm border transition ${
-                          bookmarked
-                            ? "bg-amber-400/10 border-amber-400/40 text-amber-300"
-                            : "border-neutral-800 bg-neutral-900 text-neutral-400 hover:text-white hover:border-neutral-700"
-                        }`}
-                      >
-                        <Bookmark className={`h-3.5 w-3.5 ${bookmarked ? "fill-amber-400 text-amber-400" : ""}`} />
-                      </button>
-                    </div>
-                  </div>
-
-                  <p className="font-sans text-xs italic text-neutral-300 mb-2">
-                    &ldquo;{charity.tagline}&rdquo;
-                  </p>
-
-                  <p className="font-sans text-xs sm:text-sm text-neutral-400 leading-relaxed mb-4">
-                    {charity.description}
-                  </p>
-
-                  {/* Impact Ledger Callout */}
-                  <div className="rounded-sm border border-neutral-800/80 bg-neutral-900/40 p-3 mb-4 font-mono text-xs">
-                    <span className="text-neutral-500 uppercase tracking-wider text-[10px] block mb-1">
-                      VERIFIED IMPACT LEDGER
-                    </span>
-                    <span className="text-neutral-200 font-sans text-xs leading-relaxed block">
-                      {charity.impactMetrics}
-                    </span>
-                  </div>
-
-                  {/* Tags and Action Bar */}
-                  <div className="flex flex-wrap items-center justify-between gap-3 border-t border-neutral-800/80 pt-4">
-                    <div className="flex flex-wrap gap-1.5">
-                      {charity.tags.map((t) => (
-                        <span
-                          key={t}
-                          className="font-mono text-[10px] rounded-sm border border-neutral-800 bg-neutral-900/60 px-2 py-0.5 text-neutral-400"
-                        >
-                          #{t}
+                  {/* Visual Imagery Panel */}
+                  {charity.imageUrl && (
+                    <div className="md:w-56 lg:w-64 relative aspect-[16/9] md:aspect-auto flex-shrink-0 bg-neutral-950 border-b md:border-b-0 md:border-r border-neutral-800/80 overflow-hidden group">
+                      <img
+                        src={charity.imageUrl}
+                        alt={charity.name}
+                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-neutral-950/80 via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute top-3 left-3 flex items-center gap-2">
+                        <span className="font-mono text-[10px] text-emerald-400 bg-neutral-950/80 border border-emerald-800/60 px-2 py-0.5 rounded-sm backdrop-blur-sm">
+                          {charity.rating}
                         </span>
-                      ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-start justify-between gap-4 mb-3">
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-neutral-900 border border-neutral-800 text-teal-400 flex-shrink-0">
+                            <IconComp className="h-4 w-4" />
+                          </div>
+                          <div>
+                            <div className="flex flex-wrap items-center gap-2">
+                              <h2 className="font-serif text-xl font-normal text-neutral-100 leading-tight">
+                                {charity.name}
+                              </h2>
+                            </div>
+                            <div className="font-mono text-[11px] text-neutral-500 mt-0.5">
+                              {charity.category.replace(/-/g, " ")} • {charity.shortName}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 flex-shrink-0">
+                          <a
+                            href={charity.websiteUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-1.5 rounded-sm border border-neutral-800 bg-neutral-900 text-neutral-400 hover:text-white hover:border-neutral-700 transition"
+                            title="Visit official website"
+                          >
+                            <ExternalLink className="h-3.5 w-3.5" />
+                          </a>
+                          <button
+                            onClick={() => toggleCharityBookmark(charity.id)}
+                            title={bookmarked ? "Remove bookmark" : "Save cause"}
+                            className={`p-1.5 rounded-sm border transition ${
+                              bookmarked
+                                ? "bg-amber-400/10 border-amber-400/40 text-amber-300"
+                                : "border-neutral-800 bg-neutral-900 text-neutral-400 hover:text-white hover:border-neutral-700"
+                            }`}
+                          >
+                            <Bookmark className={`h-3.5 w-3.5 ${bookmarked ? "fill-amber-400 text-amber-400" : ""}`} />
+                          </button>
+                        </div>
+                      </div>
+
+                      <p className="font-sans text-xs italic text-neutral-300 mb-2">
+                        &ldquo;{charity.tagline}&rdquo;
+                      </p>
+
+                      <p className="font-sans text-xs sm:text-sm text-neutral-400 leading-relaxed mb-4">
+                        {charity.description}
+                      </p>
+
+                      {/* Impact Ledger Callout */}
+                      <div className="rounded-sm border border-neutral-800/80 bg-neutral-900/40 p-3 mb-4 font-mono text-xs">
+                        <span className="text-neutral-500 uppercase tracking-wider text-[10px] block mb-1">
+                          VERIFIED IMPACT LEDGER
+                        </span>
+                        <span className="text-neutral-200 font-sans text-xs leading-relaxed block">
+                          {charity.impactMetrics}
+                        </span>
+                      </div>
                     </div>
 
-                    <div className="flex items-center gap-2 font-mono text-xs">
-                      {charity.volunteerUrl && (
+                    {/* Tags and Action Bar */}
+                    <div className="flex flex-wrap items-center justify-between gap-3 border-t border-neutral-800/80 pt-4 mt-2">
+                      <div className="flex flex-wrap gap-1.5">
+                        {charity.tags.map((t) => (
+                          <span
+                            key={t}
+                            className="font-mono text-[10px] rounded-sm border border-neutral-800 bg-neutral-900/60 px-2 py-0.5 text-neutral-400"
+                          >
+                            #{t}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="flex items-center gap-2 font-mono text-xs">
+                        {charity.volunteerUrl && (
+                          <a
+                            href={charity.volunteerUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 rounded-sm border border-neutral-800 bg-neutral-900 px-3 py-1.5 text-neutral-300 hover:bg-neutral-800 hover:text-white transition"
+                          >
+                            Volunteer
+                            <ArrowUpRight className="h-3 w-3" />
+                          </a>
+                        )}
                         <a
-                          href={charity.volunteerUrl}
+                          href={charity.donateUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 rounded-sm border border-neutral-800 bg-neutral-900 px-3 py-1.5 text-neutral-300 hover:bg-neutral-800 hover:text-white transition"
+                          className="inline-flex items-center gap-1 rounded-sm bg-neutral-100 px-3 py-1.5 font-semibold text-neutral-950 hover:bg-white transition"
                         >
-                          Volunteer
-                          <ArrowUpRight className="h-3 w-3" />
+                          Direct Support
+                          <ArrowUpRight className="h-3 w-3 text-neutral-950" />
                         </a>
-                      )}
-                      <a
-                        href={charity.donateUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 rounded-sm bg-neutral-100 px-3 py-1.5 font-semibold text-neutral-950 hover:bg-white transition"
-                      >
-                        Direct Support
-                        <ArrowUpRight className="h-3 w-3 text-neutral-950" />
-                      </a>
+                      </div>
                     </div>
                   </div>
                 </div>
