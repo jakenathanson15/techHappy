@@ -62,3 +62,20 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #2d3b4e;
 }
+
+/* Splash Entrance animations */
+@keyframes splashStroke {
+  from {
+    stroke-dashoffset: 40;
+    opacity: 0.1;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+.splash-stroke-draw {
+  stroke-dashoffset: 40;
+  animation: splashStroke 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

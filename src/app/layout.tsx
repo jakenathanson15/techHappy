@@ -3,6 +3,7 @@ import { Newsreader, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google"
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { SplashEntrance } from "@/components/SplashEntrance";
 
 const newsreader = Newsreader({
   subsets: ["latin"],
@@ -52,6 +53,7 @@ export default function RootLayout({
       className={`dark ${newsreader.variable} ${jakarta.variable} ${jetbrainsMono.variable}`}
     >
       <body className="min-h-screen flex flex-col bg-[#080c12] text-slate-100 selection:bg-emerald-500/20 selection:text-emerald-300 font-sans antialiased">
+        <SplashEntrance />
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
