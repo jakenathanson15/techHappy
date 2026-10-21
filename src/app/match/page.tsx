@@ -22,7 +22,6 @@ import {
   Megaphone,
   Compass,
   Layers,
-  Sparkles,
 } from "lucide-react";
 import { useBookmarks } from "@/lib/useBookmarks";
 import { IconMap } from "@/components/Icons";
@@ -257,36 +256,39 @@ export default function MatcherPage() {
         {/* Main Terminal Frame */}
         <div className="rounded-sm border border-neutral-800 bg-[#0c1017] p-6 sm:p-8">
           {step < 4 && !viewSavedOnly ? (
-            <div>
+            <div key={`step-container-${step}`}>
               {/* Step 1: Cause */}
               {step === 1 && (
                 <div>
-                  <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-teal-400">
-                    <span>QUESTION 1 OF 3</span>
+                  <div className="animate-matcher-header">
+                    <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-teal-400">
+                      <span>QUESTION 1 OF 3</span>
+                    </div>
+                    <h2 className="font-serif text-2xl sm:text-3xl font-normal text-neutral-100 mb-2">
+                      What tech cause inspires you most?
+                    </h2>
+                    <p className="font-sans text-xs sm:text-sm text-neutral-400 mb-6">
+                      Select the mission area where you would like your support to make a difference.
+                    </p>
                   </div>
-                  <h2 className="font-serif text-2xl sm:text-3xl font-normal text-neutral-100 mb-2">
-                    What tech cause inspires you most?
-                  </h2>
-                  <p className="font-sans text-xs sm:text-sm text-neutral-400 mb-6">
-                    Select the mission area where you would like your support to make a difference.
-                  </p>
 
                   <div className="space-y-2.5">
-                    {CAUSE_OPTIONS.map((opt) => {
+                    {CAUSE_OPTIONS.map((opt, idx) => {
                       const Icon = opt.icon;
                       const isSelected = answers.primaryCause === opt.id;
                       return (
                         <button
                           key={opt.id}
                           onClick={() => setAnswers({ ...answers, primaryCause: opt.id })}
-                          className={`w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition ${
+                          style={{ animationDelay: `${idx * 60 + 100}ms` }}
+                          className={`animate-matcher-choice w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition duration-150 active:scale-[0.99] ${
                             isSelected
                               ? "border-teal-500/80 bg-teal-950/20 shadow-sm ring-1 ring-teal-500/30"
                               : "border-neutral-800 bg-[#080c12]/80 hover:border-neutral-700 hover:bg-[#0f141e]"
                           }`}
                         >
                           <div
-                            className={`p-2 rounded-sm border mt-0.5 flex-shrink-0 ${
+                            className={`p-2 rounded-sm border mt-0.5 flex-shrink-0 transition-colors ${
                               isSelected
                                 ? "border-teal-500/50 bg-teal-500/20 text-teal-300"
                                 : "border-neutral-800 bg-neutral-900 text-neutral-400"
@@ -302,7 +304,7 @@ export default function MatcherPage() {
                           </div>
                           <div className="flex-shrink-0 pt-1">
                             <div
-                              className={`h-4 w-4 rounded-sm border flex items-center justify-center ${
+                              className={`h-4 w-4 rounded-sm border flex items-center justify-center transition-colors ${
                                 isSelected
                                   ? "border-teal-400 bg-teal-400 text-neutral-950"
                                   : "border-neutral-700 bg-neutral-900"
@@ -321,32 +323,35 @@ export default function MatcherPage() {
               {/* Step 2: Giving Style */}
               {step === 2 && (
                 <div>
-                  <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-teal-400">
-                    <span>QUESTION 2 OF 3</span>
+                  <div className="animate-matcher-header">
+                    <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-teal-400">
+                      <span>QUESTION 2 OF 3</span>
+                    </div>
+                    <h2 className="font-serif text-2xl sm:text-3xl font-normal text-neutral-100 mb-2">
+                      How would you prefer to contribute?
+                    </h2>
+                    <p className="font-sans text-xs sm:text-sm text-neutral-400 mb-6">
+                      Choose whether you want to donate directly, volunteer engineering skills, or donate equipment.
+                    </p>
                   </div>
-                  <h2 className="font-serif text-2xl sm:text-3xl font-normal text-neutral-100 mb-2">
-                    How would you prefer to contribute?
-                  </h2>
-                  <p className="font-sans text-xs sm:text-sm text-neutral-400 mb-6">
-                    Choose whether you want to donate directly, volunteer engineering skills, or donate equipment.
-                  </p>
 
                   <div className="space-y-2.5">
-                    {GIVING_OPTIONS.map((opt) => {
+                    {GIVING_OPTIONS.map((opt, idx) => {
                       const Icon = opt.icon;
                       const isSelected = answers.givingPreference === opt.id;
                       return (
                         <button
                           key={opt.id}
                           onClick={() => setAnswers({ ...answers, givingPreference: opt.id })}
-                          className={`w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition ${
+                          style={{ animationDelay: `${idx * 60 + 100}ms` }}
+                          className={`animate-matcher-choice w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition duration-150 active:scale-[0.99] ${
                             isSelected
                               ? "border-teal-500/80 bg-teal-950/20 shadow-sm ring-1 ring-teal-500/30"
                               : "border-neutral-800 bg-[#080c12]/80 hover:border-neutral-700 hover:bg-[#0f141e]"
                           }`}
                         >
                           <div
-                            className={`p-2 rounded-sm border mt-0.5 flex-shrink-0 ${
+                            className={`p-2 rounded-sm border mt-0.5 flex-shrink-0 transition-colors ${
                               isSelected
                                 ? "border-teal-500/50 bg-teal-500/20 text-teal-300"
                                 : "border-neutral-800 bg-neutral-900 text-neutral-400"
@@ -362,7 +367,7 @@ export default function MatcherPage() {
                           </div>
                           <div className="flex-shrink-0 pt-1">
                             <div
-                              className={`h-4 w-4 rounded-sm border flex items-center justify-center ${
+                              className={`h-4 w-4 rounded-sm border flex items-center justify-center transition-colors ${
                                 isSelected
                                   ? "border-teal-400 bg-teal-400 text-neutral-950"
                                   : "border-neutral-700 bg-neutral-900"
@@ -381,32 +386,35 @@ export default function MatcherPage() {
               {/* Step 3: Scope */}
               {step === 3 && (
                 <div>
-                  <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-teal-400">
-                    <span>QUESTION 3 OF 3</span>
+                  <div className="animate-matcher-header">
+                    <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-teal-400">
+                      <span>QUESTION 3 OF 3</span>
+                    </div>
+                    <h2 className="font-serif text-2xl sm:text-3xl font-normal text-neutral-100 mb-2">
+                      What scope of impact matters most?
+                    </h2>
+                    <p className="font-sans text-xs sm:text-sm text-neutral-400 mb-6">
+                      Specify whether your support should target global initiatives, open web protocols, or local community classrooms.
+                    </p>
                   </div>
-                  <h2 className="font-serif text-2xl sm:text-3xl font-normal text-neutral-100 mb-2">
-                    What scope of impact matters most?
-                  </h2>
-                  <p className="font-sans text-xs sm:text-sm text-neutral-400 mb-6">
-                    Specify whether your support should target global initiatives, open web protocols, or local community classrooms.
-                  </p>
 
                   <div className="space-y-2.5">
-                    {SCOPE_OPTIONS.map((opt) => {
+                    {SCOPE_OPTIONS.map((opt, idx) => {
                       const Icon = opt.icon;
                       const isSelected = answers.impactScope === opt.id;
                       return (
                         <button
                           key={opt.id}
                           onClick={() => setAnswers({ ...answers, impactScope: opt.id })}
-                          className={`w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition ${
+                          style={{ animationDelay: `${idx * 60 + 100}ms` }}
+                          className={`animate-matcher-choice w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition duration-150 active:scale-[0.99] ${
                             isSelected
                               ? "border-teal-500/80 bg-teal-950/20 shadow-sm ring-1 ring-teal-500/30"
                               : "border-neutral-800 bg-[#080c12]/80 hover:border-neutral-700 hover:bg-[#0f141e]"
                           }`}
                         >
                           <div
-                            className={`p-2 rounded-sm border mt-0.5 flex-shrink-0 ${
+                            className={`p-2 rounded-sm border mt-0.5 flex-shrink-0 transition-colors ${
                               isSelected
                                 ? "border-teal-500/50 bg-teal-500/20 text-teal-300"
                                 : "border-neutral-800 bg-neutral-900 text-neutral-400"
@@ -422,7 +430,7 @@ export default function MatcherPage() {
                           </div>
                           <div className="flex-shrink-0 pt-1">
                             <div
-                              className={`h-4 w-4 rounded-sm border flex items-center justify-center ${
+                              className={`h-4 w-4 rounded-sm border flex items-center justify-center transition-colors ${
                                 isSelected
                                   ? "border-teal-400 bg-teal-400 text-neutral-950"
                                   : "border-neutral-700 bg-neutral-900"
@@ -473,8 +481,8 @@ export default function MatcherPage() {
             </div>
           ) : (
             /* Results View */
-            <div>
-              <div className="border-b border-neutral-800 pb-6 mb-6">
+            <div key="results-view-container">
+              <div className="animate-matcher-header border-b border-neutral-800 pb-6 mb-6">
                 <div className="flex items-center justify-between mb-2">
                   <div className="font-mono text-[11px] uppercase tracking-wider text-teal-400">
                     {viewSavedOnly ? "SAVED CAUSES LEDGER" : "RECOMMENDED FOR YOU"}
@@ -500,7 +508,7 @@ export default function MatcherPage() {
               </div>
 
               {((viewSavedOnly ? savedCharitiesList : results) || []).length === 0 ? (
-                <div className="p-8 text-center border border-dashed border-neutral-800 rounded-sm">
+                <div className="p-8 text-center border border-dashed border-neutral-800 rounded-sm animate-matcher-choice">
                   <p className="font-mono text-xs text-neutral-400">No organizations found matching this query.</p>
                   <button
                     onClick={restartQuiz}
@@ -511,14 +519,15 @@ export default function MatcherPage() {
                 </div>
               ) : (
                 <div className="space-y-4 mb-8">
-                  {(viewSavedOnly ? savedCharitiesList : results || []).map((charity) => {
+                  {(viewSavedOnly ? savedCharitiesList : results || []).map((charity, idx) => {
                     const bookmarked = isCharityBookmarked(charity.id);
                     const IconComp = IconMap[charity.iconName] || Shield;
 
                     return (
                       <div
                         key={charity.id}
-                        className="rounded-sm border border-neutral-800 bg-[#080c12] p-5 sm:p-6 transition hover:border-neutral-700"
+                        style={{ animationDelay: `${idx * 80 + 120}ms` }}
+                        className="animate-matcher-choice rounded-sm border border-neutral-800 bg-[#080c12] p-5 sm:p-6 transition hover:border-neutral-700"
                       >
                         <div className="flex items-start justify-between gap-4 mb-3">
                           <div className="flex items-center gap-3">
