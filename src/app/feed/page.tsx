@@ -274,23 +274,23 @@ export default function FeedPage() {
                 <circle cx="190" cy="148" r="3" fill="#10b981" className="animate-wire-pulse" style={{ animationDelay: "600ms" }} />
 
                 {/* TECHHAPPY LOGO // CENTERED IN THE MIDDLE OF THE WIRES & LIGHTING UP */}
-                <g transform="translate(190, 80)" className="animate-logo-charge">
-                  {/* Energy Aura Ring */}
-                  <circle cx="0" cy="0" r="38" fill="none" stroke="#064e3b" strokeWidth="1.5" strokeDasharray="3 3" />
-                  <circle cx="0" cy="0" r="32" fill="#0a0e14" stroke="#10b981" strokeWidth="2" />
+                <g className="animate-logo-charge">
+                  {/* Outer Concentric Energy Aura Ring */}
+                  <circle cx="190" cy="80" r="38" fill="none" stroke="#064e3b" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <circle cx="190" cy="80" r="32" fill="#0a0e14" stroke="#10b981" strokeWidth="2" />
 
                   {/* Left Eye: 'T' */}
-                  <path d="M -15 -13 H -5" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" className="animate-eyes-ignite" />
-                  <path d="M -10 -13 V -3" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" className="animate-eyes-ignite" />
+                  <path d="M 175 67 H 185" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" className="animate-eyes-ignite" />
+                  <path d="M 180 67 V 77" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" className="animate-eyes-ignite" />
 
                   {/* Right Eye: 'H' */}
-                  <path d="M 5 -13 V -3" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" className="animate-eyes-ignite" />
-                  <path d="M 15 -13 V -3" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" className="animate-eyes-ignite" />
-                  <path d="M 5 -8 H 15" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" className="animate-eyes-ignite" />
+                  <path d="M 195 67 V 77" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" className="animate-eyes-ignite" />
+                  <path d="M 205 67 V 77" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" className="animate-eyes-ignite" />
+                  <path d="M 195 72 H 205" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" className="animate-eyes-ignite" />
 
                   {/* Radiant Smile Arc */}
                   <path
-                    d="M -14 6 C -7 16 7 16 14 6"
+                    d="M 176 86 C 182 96 198 96 204 86"
                     stroke="#34d399"
                     strokeWidth="2.5"
                     strokeLinecap="round"

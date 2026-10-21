@@ -150,18 +150,15 @@
 
 @keyframes logoBloomCharge {
   0% {
-    transform: scale(0.92);
     filter: drop-shadow(0 0 0px rgba(16, 185, 129, 0));
-    opacity: 0.25;
+    opacity: 0.3;
   }
   50% {
-    transform: scale(0.97);
-    filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.3));
-    opacity: 0.6;
+    filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.45));
+    opacity: 0.7;
   }
   85%, 100% {
-    transform: scale(1.06);
-    filter: drop-shadow(0 0 20px rgba(52, 211, 153, 0.95)) drop-shadow(0 0 40px rgba(16, 185, 129, 0.5));
+    filter: drop-shadow(0 0 16px rgba(52, 211, 153, 0.95)) drop-shadow(0 0 32px rgba(16, 185, 129, 0.5));
     opacity: 1;
   }
 }
