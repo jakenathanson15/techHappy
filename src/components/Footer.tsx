@@ -38,8 +38,18 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/causes" className="text-neutral-400 hover:text-white transition duration-150 flex items-center gap-2">
+                  <span className="font-mono text-neutral-400">02</span> Causes Directory
+                </Link>
+              </li>
+              <li>
+                <Link href="/sources" className="text-neutral-400 hover:text-white transition duration-150 flex items-center gap-2">
+                  <span className="font-mono text-neutral-400">03</span> Sources & Standards
+                </Link>
+              </li>
+              <li>
                 <Link href="/match" className="text-neutral-400 hover:text-white transition duration-150 flex items-center gap-2">
-                  <span className="font-mono text-neutral-400">02</span> Impact Matcher
+                  <span className="font-mono text-neutral-400">04</span> Impact Matcher
                 </Link>
               </li>
               <li>
@@ -49,7 +59,7 @@ export function Footer() {
                   rel="noreferrer"
                   className="text-neutral-400 hover:text-white transition duration-150 flex items-center gap-2"
                 >
-                  <Github className="h-3 w-3" /> Source Repository
+                  <Github className="h-3 w-3" /> GitHub Repository
                 </a>
               </li>
             </ul>

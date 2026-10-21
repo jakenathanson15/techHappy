@@ -1,17 +1,16 @@
 import Link from "next/link";
 import {
   ArrowRight,
-  Shield,
   ArrowUpRight,
   Calendar,
-  Sparkles,
   ExternalLink,
   HeartHandshake,
-  Compass,
+  Shield,
+  Layers,
+  Sparkles,
 } from "lucide-react";
 import charitiesData from "@/data/charities.json";
 import { fetchUpliftNews, RSS_SOURCES } from "@/lib/rss";
-import { IconMap } from "@/components/Icons";
 import { Charity, NewsItem } from "@/lib/types";
 
 // Helper to get formatted date in America/New_York (EST/EDT)
@@ -24,7 +23,7 @@ function getTodayDateEST(): { formattedDate: string; dateSeed: string } {
     month: "long",
     day: "numeric",
   });
-  
+
   const seedFormatter = new Intl.DateTimeFormat("en-US", {
     timeZone: "America/New_York",
     year: "numeric",
@@ -42,11 +41,9 @@ function getTodayDateEST(): { formattedDate: string; dateSeed: string } {
 function selectStoryOfTheDay(news: NewsItem[], dateSeed: string): NewsItem | null {
   if (!news || news.length === 0) return null;
 
-  // Filter for stories with valid image URLs first
   const withImages = news.filter((item) => item.imageUrl && item.imageUrl.startsWith("http"));
   const pool = withImages.length > 0 ? withImages : news;
 
-  // Simple string hash of the date string (e.g. "10/20/2026")
   let hash = 0;
   for (let i = 0; i < dateSeed.length; i++) {
     hash = (hash << 5) - hash + dateSeed.charCodeAt(i);
@@ -62,7 +59,8 @@ export default async function HomePage() {
   const { formattedDate, dateSeed } = getTodayDateEST();
   const storyOfTheDay = selectStoryOfTheDay(latestNews, dateSeed);
   const allCharities = charitiesData as Charity[];
-  const featuredCharities = allCharities.slice(0, 6);
+  const featuredCharities = allCharities.slice(0, 4);
+  const featuredSources = RSS_SOURCES.slice(0, 4);
 
   return (
     <div className="relative pb-24 wire-grid-bg min-h-screen">
@@ -208,128 +206,144 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* 3. Our Causes Section (Vetted Non-Profit Index) */}
+      {/* 3. The Split Dossier: Our Causes & The Wire Network */}
       <section className="mx-auto max-w-5xl px-4 sm:px-6 py-12 border-t border-neutral-800/80">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4 pb-3 border-b border-neutral-800">
-          <div>
-            <div className="font-mono text-xs text-teal-400 font-semibold mb-1">
-              OUR CAUSES // VETTED DIRECTORY
-            </div>
-            <h2 className="font-serif text-2xl sm:text-3xl font-normal text-neutral-100">
-              Vetted Non-Profit Index
-            </h2>
-            <p className="font-sans text-xs sm:text-sm text-neutral-400 mt-1 max-w-xl">
-              Featured organizations evaluated for transparent governance, 4-star Charity Navigator ratings, and direct technical impact.
-            </p>
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-0 lg:divide-x divide-neutral-800/80">
+          
+          {/* Column 1: Our Causes */}
+          <div className="lg:pr-10 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <div className="font-mono text-xs text-teal-400 font-semibold uppercase tracking-wider">
+                  OUR CAUSES // VETTED DIRECTORY
+                </div>
+                <span className="font-mono text-[11px] text-neutral-500">
+                  {allCharities.length} Non-Profits
+                </span>
+              </div>
+              <h2 className="font-serif text-2xl font-normal text-neutral-100 mb-2">
+                Featured Non-Profits
+              </h2>
+              <p className="font-sans text-xs text-neutral-400 mb-6 leading-relaxed">
+                Organizations vetted for 100% Charity Navigator ratings, open governance, and direct technical leverage.
+              </p>
 
-          <Link
-            href="/match"
-            className="font-mono text-xs text-teal-400 hover:text-teal-300 transition inline-flex items-center gap-1 font-semibold"
-          >
-            <span>Explore All {allCharities.length} Causes</span>
-            <ArrowRight className="h-3 w-3" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {featuredCharities.map((charity) => {
-            const IconComp = IconMap[charity.iconName] || Shield;
-            return (
-              <div
-                key={charity.id}
-                className="wire-card rounded-sm p-4 flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-neutral-800">
-                    <div className="flex items-center gap-2">
-                      <div className="flex h-7 w-7 items-center justify-center rounded-sm bg-neutral-900 border border-neutral-800 text-teal-400">
-                        <IconComp className="h-3.5 w-3.5" />
+              {/* Typographic Ruled Ledger */}
+              <div className="divide-y divide-neutral-800/60 border-y border-neutral-800/60">
+                {featuredCharities.map((charity, idx) => (
+                  <div key={charity.id} className="py-4 group">
+                    <div className="flex items-start justify-between gap-3 mb-1">
+                      <div className="flex items-baseline gap-2">
+                        <span className="font-mono text-[11px] text-neutral-600 font-medium">
+                          0{idx + 1}
+                        </span>
+                        <h3 className="font-serif text-base font-normal text-neutral-100 group-hover:text-teal-300 transition">
+                          {charity.name}
+                        </h3>
                       </div>
-                      <span className="font-mono text-[11px] text-neutral-400 font-semibold">
-                        {charity.shortName}
-                      </span>
+                      <a
+                        href={charity.websiteUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-neutral-500 group-hover:text-teal-400 transition flex-shrink-0"
+                        title="Visit organization website"
+                      >
+                        <ArrowUpRight className="h-3.5 w-3.5" />
+                      </a>
                     </div>
-                    <span className="font-mono text-[10px] text-emerald-400 bg-emerald-950/80 border border-emerald-800/60 px-2 py-0.5 rounded-sm">
-                      {charity.rating}
-                    </span>
+
+                    <div className="flex items-center gap-2 font-mono text-[10px] text-neutral-500 mb-1.5 ml-6">
+                      <span className="text-teal-400/90">{charity.category.replace(/-/g, " ")}</span>
+                      <span>•</span>
+                      <span className="text-neutral-400">{charity.rating}</span>
+                    </div>
+
+                    <p className="font-sans text-xs text-neutral-400 leading-relaxed ml-6 line-clamp-2">
+                      {charity.tagline}
+                    </p>
                   </div>
-
-                  <h3 className="font-serif text-base font-normal text-neutral-100 mb-1">
-                    {charity.name}
-                  </h3>
-                  <p className="font-sans text-xs text-neutral-400 line-clamp-2 leading-relaxed mb-3">
-                    {charity.tagline}
-                  </p>
-                </div>
-
-                <div className="pt-2.5 border-t border-neutral-800/80 flex items-center justify-between font-mono text-xs">
-                  <span className="text-[10px] text-neutral-500 uppercase">
-                    {charity.category.replace(/-/g, " ")}
-                  </span>
-                  <a
-                    href={charity.donateUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-teal-400 hover:text-teal-300 font-semibold"
-                  >
-                    <span>Direct Action</span>
-                    <ArrowUpRight className="h-3 w-3" />
-                  </a>
-                </div>
+                ))}
               </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* 4. Our Sources Section (Scientific & Open Source Wires) */}
-      <section className="mx-auto max-w-5xl px-4 sm:px-6 py-12 border-t border-neutral-800/80">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4 pb-3 border-b border-neutral-800">
-          <div>
-            <div className="font-mono text-xs text-emerald-400 font-semibold mb-1">
-              OUR SOURCES // SCIENTIFIC & OPEN COMMONS
             </div>
-            <h2 className="font-serif text-2xl sm:text-3xl font-normal text-neutral-100">
-              The Research Wires
-            </h2>
-            <p className="font-sans text-xs sm:text-sm text-neutral-400 mt-1 max-w-xl">
-              Sourced directly from {RSS_SOURCES.length} peer-reviewed research labs, journals, and open-source foundations.
-            </p>
+
+            <div className="pt-6 mt-6 border-t border-neutral-800/80">
+              <Link
+                href="/causes"
+                className="group font-mono text-xs text-teal-400 hover:text-teal-300 font-semibold inline-flex items-center gap-1.5"
+              >
+                <span>View Complete Causes Directory ({allCharities.length} Organizations)</span>
+                <ArrowRight className="h-3.5 w-3.5 transform group-hover:translate-x-1 transition" />
+              </Link>
+            </div>
           </div>
 
-          <Link
-            href="/feed"
-            className="font-mono text-xs text-emerald-400 hover:text-emerald-300 transition inline-flex items-center gap-1 font-semibold"
-          >
-            <span>Live Stream</span>
-            <ArrowRight className="h-3 w-3" />
-          </Link>
-        </div>
+          {/* Column 2: The Wire Network (Sources) */}
+          <div className="lg:pl-10 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <div className="font-mono text-xs text-emerald-400 font-semibold uppercase tracking-wider">
+                  THE WIRE NETWORK // RESEARCH DESKS
+                </div>
+                <span className="font-mono text-[11px] text-neutral-500">
+                  {RSS_SOURCES.length} Feeds
+                </span>
+              </div>
+              <h2 className="font-serif text-2xl font-normal text-neutral-100 mb-2">
+                Scientific Sources
+              </h2>
+              <p className="font-sans text-xs text-neutral-400 mb-6 leading-relaxed">
+                Ingested directly from peer-reviewed scientific journals, academic labs, and public digital archives.
+              </p>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-          {RSS_SOURCES.map((source) => (
-            <a
-              key={source.name}
-              href={source.sourceUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="wire-card rounded-sm p-3.5 hover:border-neutral-700 transition flex flex-col justify-between group"
-            >
-              <div>
-                <div className="font-mono text-[10px] text-neutral-500 uppercase mb-1">
-                  {source.defaultCategory}
-                </div>
-                <div className="font-sans font-semibold text-xs sm:text-sm text-neutral-200 group-hover:text-emerald-300 transition">
-                  {source.name}
-                </div>
+              {/* Typographic Ruled Ledger */}
+              <div className="divide-y divide-neutral-800/60 border-y border-neutral-800/60">
+                {featuredSources.map((source, idx) => (
+                  <div key={source.name} className="py-4 group">
+                    <div className="flex items-start justify-between gap-3 mb-1">
+                      <div className="flex items-baseline gap-2">
+                        <span className="font-mono text-[11px] text-neutral-600 font-medium">
+                          0{idx + 1}
+                        </span>
+                        <h3 className="font-serif text-base font-normal text-neutral-100 group-hover:text-emerald-300 transition">
+                          {source.name}
+                        </h3>
+                      </div>
+                      <a
+                        href={source.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-neutral-500 group-hover:text-emerald-400 transition flex-shrink-0"
+                        title="Visit source research desk"
+                      >
+                        <ArrowUpRight className="h-3.5 w-3.5" />
+                      </a>
+                    </div>
+
+                    <div className="flex items-center gap-2 font-mono text-[10px] text-neutral-500 mb-1.5 ml-6">
+                      <span className="text-emerald-400/90">{source.defaultCategory}</span>
+                      <span>•</span>
+                      <span className="text-neutral-400">{source.sourceUrl.replace("https://", "").replace("www.", "")}</span>
+                    </div>
+
+                    <p className="font-sans text-xs text-neutral-400 leading-relaxed ml-6 line-clamp-2">
+                      {source.description}
+                    </p>
+                  </div>
+                ))}
               </div>
-              <div className="pt-2 mt-2 border-t border-neutral-800/60 flex items-center justify-between font-mono text-[10px] text-neutral-500">
-                <span>Research Desk</span>
-                <ArrowUpRight className="h-2.5 w-2.5 text-neutral-400 group-hover:text-emerald-400" />
-              </div>
-            </a>
-          ))}
+            </div>
+
+            <div className="pt-6 mt-6 border-t border-neutral-800/80">
+              <Link
+                href="/sources"
+                className="group font-mono text-xs text-emerald-400 hover:text-emerald-300 font-semibold inline-flex items-center gap-1.5"
+              >
+                <span>View Wire Network & Editorial Standards ({RSS_SOURCES.length} Feeds)</span>
+                <ArrowRight className="h-3.5 w-3.5 transform group-hover:translate-x-1 transition" />
+              </Link>
+            </div>
+          </div>
+
         </div>
       </section>
     </div>

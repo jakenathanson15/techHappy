@@ -1,0 +1,314 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import charitiesData from "@/data/charities.json";
+import { Charity, CauseCategory } from "@/lib/types";
+import { useBookmarks } from "@/lib/useBookmarks";
+import { IconMap } from "@/components/Icons";
+import {
+  Shield,
+  Search,
+  X,
+  Bookmark,
+  ArrowUpRight,
+  ArrowRight,
+  HeartHandshake,
+  CheckCircle2,
+  ExternalLink,
+  Filter,
+} from "lucide-react";
+
+const CATEGORIES: { id: string; label: string }[] = [
+  { id: "all", label: "All Causes" },
+  { id: "digital-rights-privacy", label: "Digital Privacy & Rights" },
+  { id: "education-diversity", label: "Diversity & Education" },
+  { id: "climate-sustainability", label: "Climate & Earth Tech" },
+  { id: "open-source-public-goods", label: "Open Source & Public Commons" },
+  { id: "healthcare-accessibility", label: "Assistive Tech & Healthcare" },
+];
+
+export default function CausesDirectoryPage() {
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showSavedOnly, setShowSavedOnly] = useState(false);
+
+  const { isCharityBookmarked, toggleCharityBookmark, bookmarkedCharityIds } = useBookmarks();
+  const allCharities = charitiesData as Charity[];
+
+  const filteredCharities = allCharities.filter((charity) => {
+    if (showSavedOnly && !bookmarkedCharityIds.includes(charity.id)) {
+      return false;
+    }
+
+    if (selectedCategory !== "all" && charity.category !== selectedCategory) {
+      return false;
+    }
+
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      const matchName = charity.name.toLowerCase().includes(q);
+      const matchTagline = charity.tagline.toLowerCase().includes(q);
+      const matchDesc = charity.description.toLowerCase().includes(q);
+      const matchTags = charity.tags.some((t) => t.toLowerCase().includes(q));
+      return matchName || matchTagline || matchDesc || matchTags;
+    }
+
+    return true;
+  });
+
+  return (
+    <div className="relative min-h-screen pb-24">
+      {/* Background wire grid */}
+      <div className="wire-grid-bg fixed inset-0 opacity-40 -z-10 pointer-events-none" />
+
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 pt-10 sm:pt-14">
+        {/* Header Breadcrumb */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-neutral-800 pb-6 mb-8">
+          <div>
+            <div className="flex items-center gap-2 mb-2 font-mono text-[11px] uppercase tracking-widest text-teal-400">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-teal-400" />
+              <span>DIRECTORY // VETTED TECH NON-PROFITS</span>
+            </div>
+            <h1 className="font-serif text-3xl sm:text-5xl font-normal tracking-tight text-neutral-100">
+              Our Causes Directory
+            </h1>
+            <p className="mt-2 font-sans text-xs sm:text-sm text-neutral-400 max-w-2xl leading-relaxed">
+              Exhaustive index of vetted 501(c)(3) initiatives evaluated for 4-star Charity Navigator governance, public transparency, and direct engineering impact.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Link
+              href="/match"
+              className="inline-flex items-center gap-1.5 rounded-sm bg-teal-500 px-3.5 py-2 font-mono text-xs font-semibold text-neutral-950 hover:bg-teal-400 transition"
+            >
+              <HeartHandshake className="h-3.5 w-3.5" />
+              <span>Take Impact Matcher</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* Filter and Search Ribbon */}
+        <div className="space-y-4 mb-8">
+          {/* Search bar */}
+          <div className="flex items-center gap-3">
+            <div className="relative flex-1">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-neutral-500" />
+              <input
+                type="text"
+                placeholder="Search causes by name, mission, or tags (e.g. privacy, open source, education)..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full rounded-sm border border-neutral-800 bg-[#0c1017] pl-9 pr-8 py-2 font-sans text-xs text-neutral-200 placeholder:text-neutral-500 focus:border-teal-500/80 focus:outline-none"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              )}
+            </div>
+
+            {bookmarkedCharityIds.length > 0 && (
+              <button
+                onClick={() => setShowSavedOnly(!showSavedOnly)}
+                className={`inline-flex items-center gap-1.5 rounded-sm px-3 py-2 font-mono text-xs border transition ${
+                  showSavedOnly
+                    ? "bg-amber-400/10 border-amber-400/40 text-amber-300"
+                    : "border-neutral-800 bg-[#0c1017] text-neutral-400 hover:text-white hover:border-neutral-700"
+                }`}
+              >
+                <Bookmark className={`h-3 w-3 ${showSavedOnly ? "fill-amber-400 text-amber-400" : ""}`} />
+                <span>Saved ({bookmarkedCharityIds.length})</span>
+              </button>
+            )}
+          </div>
+
+          {/* Category Ribbon */}
+          <div className="flex flex-wrap items-center gap-1.5 pt-1">
+            {CATEGORIES.map((cat) => {
+              const isSelected = selectedCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={`rounded-sm px-2.5 py-1 font-mono text-[11px] border transition ${
+                    isSelected
+                      ? "border-teal-500/80 bg-teal-950/40 text-teal-300"
+                      : "border-neutral-800 bg-[#0c1017] text-neutral-400 hover:border-neutral-700 hover:text-neutral-200"
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Directory Counter */}
+        <div className="flex items-center justify-between pb-3 mb-6 border-b border-neutral-800/80 font-mono text-xs text-neutral-500">
+          <span>
+            SHOWING {filteredCharities.length} OF {allCharities.length} VETTED ORGANIZATIONS
+          </span>
+          {showSavedOnly && <span className="text-amber-400">FILTER: BOOKMARKED ONLY</span>}
+        </div>
+
+        {/* Causes Ruled Ledger Cards */}
+        {filteredCharities.length === 0 ? (
+          <div className="p-12 text-center border border-dashed border-neutral-800 rounded-sm">
+            <p className="font-mono text-xs text-neutral-400">No organizations found matching your criteria.</p>
+            <button
+              onClick={() => {
+                setSelectedCategory("all");
+                setSearchQuery("");
+                setShowSavedOnly(false);
+              }}
+              className="mt-4 inline-flex items-center gap-1.5 rounded-sm bg-neutral-100 px-3 py-1.5 font-mono text-xs font-semibold text-neutral-950 hover:bg-white transition"
+            >
+              Reset Filters
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {filteredCharities.map((charity) => {
+              const bookmarked = isCharityBookmarked(charity.id);
+              const IconComp = IconMap[charity.iconName] || Shield;
+
+              return (
+                <div
+                  key={charity.id}
+                  className="wire-card rounded-sm p-5 sm:p-6 transition hover:border-neutral-700"
+                >
+                  <div className="flex items-start justify-between gap-4 mb-3">
+                    <div className="flex items-center gap-3.5">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-neutral-900 border border-neutral-800 text-teal-400 flex-shrink-0">
+                        <IconComp className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h2 className="font-serif text-xl font-normal text-neutral-100 leading-tight">
+                            {charity.name}
+                          </h2>
+                          <span className="font-mono text-[10px] text-emerald-400 bg-emerald-950/40 border border-emerald-800/50 px-1.5 py-0.5 rounded-sm">
+                            {charity.rating}
+                          </span>
+                        </div>
+                        <div className="font-mono text-[11px] text-neutral-500 mt-0.5">
+                          {charity.category.replace(/-/g, " ")} • {charity.shortName}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      <a
+                        href={charity.websiteUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-1.5 rounded-sm border border-neutral-800 bg-neutral-900 text-neutral-400 hover:text-white hover:border-neutral-700 transition"
+                        title="Visit official website"
+                      >
+                        <ExternalLink className="h-3.5 w-3.5" />
+                      </a>
+                      <button
+                        onClick={() => toggleCharityBookmark(charity.id)}
+                        title={bookmarked ? "Remove bookmark" : "Save cause"}
+                        className={`p-1.5 rounded-sm border transition ${
+                          bookmarked
+                            ? "bg-amber-400/10 border-amber-400/40 text-amber-300"
+                            : "border-neutral-800 bg-neutral-900 text-neutral-400 hover:text-white hover:border-neutral-700"
+                        }`}
+                      >
+                        <Bookmark className={`h-3.5 w-3.5 ${bookmarked ? "fill-amber-400 text-amber-400" : ""}`} />
+                      </button>
+                    </div>
+                  </div>
+
+                  <p className="font-sans text-xs italic text-neutral-300 mb-2">
+                    &ldquo;{charity.tagline}&rdquo;
+                  </p>
+
+                  <p className="font-sans text-xs sm:text-sm text-neutral-400 leading-relaxed mb-4">
+                    {charity.description}
+                  </p>
+
+                  {/* Impact Ledger Callout */}
+                  <div className="rounded-sm border border-neutral-800/80 bg-neutral-900/40 p-3 mb-4 font-mono text-xs">
+                    <span className="text-neutral-500 uppercase tracking-wider text-[10px] block mb-1">
+                      VERIFIED IMPACT LEDGER
+                    </span>
+                    <span className="text-neutral-200 font-sans text-xs leading-relaxed block">
+                      {charity.impactMetrics}
+                    </span>
+                  </div>
+
+                  {/* Tags and Action Bar */}
+                  <div className="flex flex-wrap items-center justify-between gap-3 border-t border-neutral-800/80 pt-4">
+                    <div className="flex flex-wrap gap-1.5">
+                      {charity.tags.map((t) => (
+                        <span
+                          key={t}
+                          className="font-mono text-[10px] rounded-sm border border-neutral-800 bg-neutral-900/60 px-2 py-0.5 text-neutral-400"
+                        >
+                          #{t}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center gap-2 font-mono text-xs">
+                      {charity.volunteerUrl && (
+                        <a
+                          href={charity.volunteerUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 rounded-sm border border-neutral-800 bg-neutral-900 px-3 py-1.5 text-neutral-300 hover:bg-neutral-800 hover:text-white transition"
+                        >
+                          Volunteer
+                          <ArrowUpRight className="h-3 w-3" />
+                        </a>
+                      )}
+                      <a
+                        href={charity.donateUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 rounded-sm bg-neutral-100 px-3 py-1.5 font-semibold text-neutral-950 hover:bg-white transition"
+                      >
+                        Direct Support
+                        <ArrowUpRight className="h-3 w-3 text-neutral-950" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Bottom Matcher CTA Banner */}
+        <div className="mt-12 rounded-sm border border-teal-800/40 bg-teal-950/20 p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+          <div>
+            <div className="font-mono text-xs text-teal-400 font-semibold uppercase tracking-wider mb-1">
+              DECISION ENGINE // PERSONALIZED ALIGNMENT
+            </div>
+            <h3 className="font-serif text-xl sm:text-2xl font-normal text-neutral-100">
+              Not sure where to allocate your support?
+            </h3>
+            <p className="font-sans text-xs sm:text-sm text-neutral-400 mt-1 max-w-lg">
+              Take our interactive 3-step Impact Matcher to find non-profits specifically tailored to your technical skills, preferred contribution method, and target domain.
+            </p>
+          </div>
+
+          <Link
+            href="/match"
+            className="inline-flex items-center gap-1.5 rounded-sm bg-teal-400 px-4 py-2 font-mono text-xs font-semibold text-neutral-950 hover:bg-teal-300 transition flex-shrink-0"
+          >
+            <span>Launch Matcher</span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}

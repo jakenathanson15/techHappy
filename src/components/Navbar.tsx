@@ -27,26 +27,50 @@ export function Navbar() {
         <nav className="flex items-center gap-1 sm:gap-2">
           <Link
             href="/feed"
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition duration-150 ${
+            className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition duration-150 ${
               isActive("/feed")
                 ? "bg-neutral-800/90 text-white border border-neutral-700 font-semibold"
                 : "text-neutral-400 hover:text-white hover:bg-neutral-900/60"
             }`}
           >
             <span className="font-mono text-[10px] text-emerald-400 font-semibold">01</span>
-            <span>Wire Feed</span>
+            <span>Feed</span>
           </Link>
 
           <Link
-            href="/match"
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition duration-150 ${
-              isActive("/match")
+            href="/causes"
+            className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition duration-150 ${
+              isActive("/causes")
                 ? "bg-neutral-800/90 text-white border border-neutral-700 font-semibold"
                 : "text-neutral-400 hover:text-white hover:bg-neutral-900/60"
             }`}
           >
             <span className="font-mono text-[10px] text-teal-400 font-semibold">02</span>
-            <span>Impact Matcher</span>
+            <span>Causes</span>
+          </Link>
+
+          <Link
+            href="/sources"
+            className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition duration-150 ${
+              isActive("/sources")
+                ? "bg-neutral-800/90 text-white border border-neutral-700 font-semibold"
+                : "text-neutral-400 hover:text-white hover:bg-neutral-900/60"
+            }`}
+          >
+            <span className="font-mono text-[10px] text-emerald-400 font-semibold">03</span>
+            <span>Sources</span>
+          </Link>
+
+          <Link
+            href="/match"
+            className={`hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition duration-150 ${
+              isActive("/match")
+                ? "bg-neutral-800/90 text-white border border-neutral-700 font-semibold"
+                : "text-neutral-400 hover:text-white hover:bg-neutral-900/60"
+            }`}
+          >
+            <span className="font-mono text-[10px] text-teal-400 font-semibold">04</span>
+            <span>Matcher</span>
           </Link>
         </nav>
 
