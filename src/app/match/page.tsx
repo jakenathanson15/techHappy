@@ -139,47 +139,44 @@ export default function MatcherPage() {
 
   useEffect(() => {
     setMounted(true);
-    const introSeen = sessionStorage.getItem("techhappy_matcher_intro_seen");
-    if (introSeen) {
-      setLoadingIntro(false);
-      return;
-    }
+    setLoadingIntro(true);
+    setLoadProgress(15);
+    setLoadStatus("CALIBRATING 501(c)(3) REPOSITORY INDEX");
 
-    // Run the automatic loading animation sequence
+    // Run the automatic loading animation sequence on every navigation
     const timers: NodeJS.Timeout[] = [];
 
     timers.push(
       setTimeout(() => {
-        setLoadProgress(45);
-        setLoadStatus("PREPARING 3-STAGE DECISION MATRIX");
-      }, 400)
+        setLoadProgress(48);
+        setLoadStatus("INDEXING VETTED CHARITY NAVIGATOR DATA");
+      }, 500)
     );
 
     timers.push(
       setTimeout(() => {
-        setLoadProgress(90);
-        setLoadStatus("LOADING QUESTIONNAIRE PROTOCOLS");
-      }, 950)
+        setLoadProgress(82);
+        setLoadStatus("SYNTHESIZING MULTI-CRITERIA DECISION MATRIX");
+      }, 1100)
     );
 
     timers.push(
       setTimeout(() => {
         setLoadProgress(100);
-        setLoadStatus("READY");
-      }, 1400)
+        setLoadStatus("ALIGNING PHILANTHROPIC PROTOCOLS");
+      }, 1650)
     );
 
     timers.push(
       setTimeout(() => {
         finishIntro();
-      }, 1750)
+      }, 2250)
     );
 
     return () => timers.forEach(clearTimeout);
   }, []);
 
   const finishIntro = () => {
-    sessionStorage.setItem("techhappy_matcher_intro_seen", "true");
     setLoadingIntro(false);
     setStep(1);
   };
@@ -263,21 +260,31 @@ export default function MatcherPage() {
           </div>
         </div>
 
-        {/* Loading Screen Animation for First Time in Session */}
+        {/* Loading Screen Animation on Every Navigation to Matcher */}
         {mounted && loadingIntro && !viewSavedOnly ? (
           <div
             onClick={finishIntro}
-            className="wire-card rounded-sm p-10 sm:p-16 text-center max-w-xl mx-auto cursor-pointer animate-matcher-header relative overflow-hidden"
+            className="wire-card rounded-sm p-8 sm:p-14 text-center max-w-xl mx-auto cursor-pointer animate-matcher-header relative overflow-hidden shadow-2xl bg-[#0c1017] border border-neutral-800"
           >
+            {/* Luminous aura background glow */}
+            <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-64 bg-teal-500/10 rounded-full blur-3xl pointer-events-none animate-matcher-aura" />
+
             {/* Top skip affordance */}
-            <div className="absolute top-4 right-4 font-mono text-[10px] text-neutral-500 hover:text-neutral-300">
-              [ CLICK TO SKIP ↵ ]
-            </div>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                finishIntro();
+              }}
+              className="absolute top-4 right-4 font-mono text-[11px] text-neutral-400 hover:text-teal-300 transition-colors border border-neutral-800/80 bg-neutral-900/60 px-2.5 py-1 rounded-sm flex items-center gap-1.5"
+            >
+              <span>SKIP</span>
+              <ArrowRight className="h-3 w-3" />
+            </button>
 
             {/* Animated TH Eyes Smile SVG */}
             <div className="relative mb-6 flex items-center justify-center">
-              <div className="absolute h-24 w-24 rounded-full border border-teal-500/20 bg-teal-950/20 animate-pulse pointer-events-none" />
-              <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-[#0a0e14] border border-neutral-800">
+              <div className="absolute h-28 w-28 rounded-full border border-teal-500/20 bg-teal-950/20 animate-matcher-aura pointer-events-none" />
+              <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-[#0a0e14] border border-teal-500/30 shadow-[0_0_24px_rgba(20,184,166,0.15)]">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -341,31 +348,50 @@ export default function MatcherPage() {
               </div>
             </div>
 
-            <div className="font-mono text-xs text-teal-400 font-semibold uppercase tracking-wider mb-2">
-              ALIGNED PHILANTHROPY // INITIALIZING
+            <div className="inline-flex items-center gap-2 mb-3 px-2.5 py-1 rounded-sm bg-teal-950/40 border border-teal-500/30 font-mono text-[11px] text-teal-300 uppercase tracking-widest">
+              <span className="h-1.5 w-1.5 rounded-full bg-teal-400 animate-ping" />
+              <span>IMPACT TERMINAL // CALIBRATING</span>
             </div>
 
-            <h2 className="font-serif text-3xl sm:text-4xl font-normal text-neutral-100 mb-3">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-4xl font-normal text-neutral-100 mb-3 tracking-tight">
               Let&apos;s find you the right cause.
             </h2>
 
-            <p className="font-sans text-xs sm:text-sm text-neutral-400 max-w-sm mx-auto leading-relaxed mb-6">
-              Preparing tailored recommendations across vetted climate, privacy, and open source initiatives...
+            <p className="font-sans text-xs sm:text-sm text-neutral-400 max-w-md mx-auto leading-relaxed mb-7">
+              Synthesizing high-impact climate, privacy, and public goods initiatives tailored to your skills and giving preferences.
             </p>
 
-            {/* Progress Bar */}
-            <div className="w-48 sm:w-64 mx-auto mb-3">
-              <div className="h-1 w-full bg-neutral-900 border border-neutral-800 rounded-sm overflow-hidden">
+            {/* Progress Bar & Telemetry Section */}
+            <div className="max-w-md mx-auto mb-6">
+              <div className="flex items-center justify-between text-xs font-mono mb-2 text-neutral-400 px-1">
+                <span className="flex items-center gap-1.5 text-neutral-300 truncate">
+                  <span className="text-teal-400">&gt;</span>
+                  <span className="truncate">{loadStatus}</span>
+                </span>
+                <span className="text-teal-400 font-semibold ml-2">{loadProgress}%</span>
+              </div>
+              <div className="w-full h-1.5 bg-[#080c12] border border-neutral-800 rounded-sm overflow-hidden p-[1px]">
                 <div
-                  className="h-full bg-teal-400 transition-all duration-300 ease-out"
+                  className="h-full bg-gradient-to-r from-teal-500 via-teal-400 to-emerald-300 rounded-sm transition-all duration-500 ease-out shadow-[0_0_12px_rgba(20,184,166,0.5)]"
                   style={{ width: `${loadProgress}%` }}
                 />
               </div>
             </div>
 
-            <div className="font-mono text-[11px] text-neutral-500 tracking-wider">
-              <span className="text-teal-400 mr-1.5">&gt;</span>
-              <span>{loadStatus}</span>
+            {/* 3 Telemetry Pillars */}
+            <div className="grid grid-cols-3 gap-2.5 pt-4 border-t border-neutral-800/80 max-w-md mx-auto text-left font-mono text-[10px]">
+              <div>
+                <span className="text-teal-400 font-semibold block">01 // VETTED</span>
+                <span className="text-neutral-500 block">4-Star Navigator</span>
+              </div>
+              <div>
+                <span className="text-teal-400 font-semibold block">02 // DIRECT</span>
+                <span className="text-neutral-500 block">Zero Overhead</span>
+              </div>
+              <div>
+                <span className="text-teal-400 font-semibold block">03 // PRIVATE</span>
+                <span className="text-neutral-500 block">Zero Trackers</span>
+              </div>
             </div>
           </div>
         ) : (
