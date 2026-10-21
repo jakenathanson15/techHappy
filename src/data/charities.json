@@ -114,13 +114,13 @@
     "category": "education-diversity",
     "givingTypes": ["direct-donation", "mentorship-volunteering"],
     "websiteUrl": "https://wearebgc.org",
-    "donateUrl": "https://wearebgc.org/give",
+    "donateUrl": "https://donorbox.org/blackgirlscode",
     "volunteerUrl": "https://wearebgc.org/volunteer",
     "iconName": "Terminal",
     "impactMetrics": "100,000+ students across 15 national chapters and virtual bootcamps",
     "rating": "GuideStar Platinum",
     "tags": ["Diversity", "STEM Education", "Youth Mentorship", "Robotics", "Coding"],
-    "imageUrl": "https://cdn.sanity.io/images/dbbwy5n2/develop/19b3560abc1c43d3f08d41a479b6f0f412e1204f-1920x1080.jpg",
+    "imageUrl": "/images/bgc.jpg",
     "heroImageUrl": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=80"
   },
   {
