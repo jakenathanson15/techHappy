@@ -26,19 +26,22 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://techhappynews.com"),
-  title: "techHappy — Independent Engineering News Wire & Charity Index",
-  description: "Tracking peer-reviewed breakthroughs across clean energy, biotechnology, and open access — paired with a vetted charity directory for technical workers.",
+  title: {
+    default: "techHappy — Good News Now",
+    template: "%s | techHappy",
+  },
+  description: "Real progress in technology happening every day. Verified breakthroughs across clean energy, biotechnology, and open access — paired with a vetted directory of high-impact non-profits.",
   openGraph: {
-    title: "techHappy — Independent Engineering News Wire & Charity Index",
-    description: "Tracking peer-reviewed breakthroughs across clean energy, biotechnology, and open access.",
+    title: "techHappy — Good News Now",
+    description: "Real progress in technology happening every day. Verified breakthroughs across clean energy, biotechnology, and open access.",
     url: "https://techhappynews.com",
     siteName: "techHappy",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "techHappy — Engineering News Wire & Charity Index",
-    description: "Tracking peer-reviewed breakthroughs across clean energy, biotechnology, and open access.",
+    title: "techHappy — Good News Now",
+    description: "Real progress in technology happening every day. Verified breakthroughs across clean energy, biotechnology, and open access.",
   },
 };
 

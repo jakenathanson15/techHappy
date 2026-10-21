@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 export const metadata = {
-  title: "Sources & Standards — techHappy Wire Network",
+  title: "Sources & Standards",
   description: "Exhaustive index of peer-reviewed scientific journals, research desks, and open web feeds ingested by techHappy.",
 };
 
