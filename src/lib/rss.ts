@@ -36,7 +36,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     sourceUrl: "https://news.mit.edu",
     defaultCategory: "Healthcare & Bio",
     description: "Cutting-edge breakthroughs in medicine, robotics, materials, and sustainable engineering.",
-    imageUrl: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=600&q=80",
+    imageUrl: "/images/mit-news.jpg",
   },
   {
     name: "Our World in Data",
@@ -68,7 +68,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     sourceUrl: "https://www.sciencedaily.com",
     defaultCategory: "Climate Tech",
     description: "Laboratory research on next-generation photovoltaics, fusion, and hydrogen power.",
-    imageUrl: "https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=600&q=80",
+    imageUrl: "/images/sciencedaily.jpg",
   },
   {
     name: "ScienceDaily AI & Tech",
@@ -76,7 +76,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     sourceUrl: "https://www.sciencedaily.com",
     defaultCategory: "AI for Good",
     description: "Breakthrough machine intelligence and computational science applications.",
-    imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=600&q=80",
+    imageUrl: "/images/sciencedaily.jpg",
   },
   {
     name: "Positive News",
