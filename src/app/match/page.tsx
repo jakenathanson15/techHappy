@@ -21,7 +21,6 @@ import {
   HeartHandshake,
   Megaphone,
   Compass,
-  Cpu,
   Layers,
   Sparkles,
 } from "lucide-react";
@@ -71,26 +70,26 @@ const CAUSE_OPTIONS: { id: CauseCategory; label: string; desc: string; icon: Luc
 const GIVING_OPTIONS: { id: GivingType; label: string; desc: string; icon: LucideIcon }[] = [
   {
     id: "direct-donation",
-    label: "Direct Capital Allocation",
-    desc: "Direct tax-exempt 501(c)(3) funding deployed with verified fiscal transparency and zero middleman overhead.",
+    label: "Direct Financial Support",
+    desc: "Tax-deductible 501(c)(3) donations deployed with verified fiscal transparency and zero overhead.",
     icon: DollarSign,
   },
   {
     id: "mentorship-volunteering",
-    label: "Engineering Mentorship & Code Review",
+    label: "Code & Skill Mentorship",
     desc: "Contribute code reviews, architectural advisory, or direct mentorship to non-profit development teams.",
     icon: HeartHandshake,
   },
   {
     id: "equipment-donation",
-    label: "Hardware & Device Provisioning",
+    label: "Hardware & Device Giving",
     desc: "Donate refurbished developer workstations, microcontrollers, or lab equipment to community workshops.",
     icon: Laptop,
   },
   {
     id: "advocacy",
-    label: "Policy Architecture & Amicus Briefs",
-    desc: "Join technical working groups filing open regulatory comments and defending protocol decentralization.",
+    label: "Policy Advocacy & Campaigning",
+    desc: "Join technical coalitions filing open regulatory comments and defending protocol decentralization.",
     icon: Megaphone,
   },
 ];
@@ -98,26 +97,26 @@ const GIVING_OPTIONS: { id: GivingType; label: string; desc: string; icon: Lucid
 const SCOPE_OPTIONS: { id: "global" | "local-community" | "open-web" | "any"; label: string; desc: string; icon: LucideIcon }[] = [
   {
     id: "global",
-    label: "Planetary & Transnational",
+    label: "Global Reach",
     desc: "Initiatives operating across continents, developing infrastructure hubs, and international treaties.",
     icon: Globe2,
   },
   {
     id: "open-web",
-    label: "Internet Commons & Protocols",
+    label: "The Open Web & Digital Commons",
     desc: "Universal public infrastructure, open internet standards, and decentralized archival repositories.",
     icon: Compass,
   },
   {
     id: "local-community",
-    label: "Regional Labs & Classrooms",
+    label: "Local Classrooms & Labs",
     desc: "Grassroots engineering bootcamps, municipal repair collectives, and neighborhood STEM programs.",
     icon: GraduationCap,
   },
   {
     id: "any",
-    label: "Highest Marginal Need",
-    desc: "Algorithmic routing to whichever verified organization has the most acute immediate capital deficit.",
+    label: "Highest Immediate Need",
+    desc: "Route to whichever verified organization has the most acute immediate funding or volunteer deficit.",
     icon: Layers,
   },
 ];
@@ -167,40 +166,50 @@ export default function MatcherPage() {
   return (
     <div className="relative min-h-screen pb-24">
       {/* Background wire grid */}
-      <div className="wire-grid pointer-events-none fixed inset-0 opacity-40 -z-10" />
+      <div className="wire-grid-bg fixed inset-0 opacity-40 -z-10 pointer-events-none" />
 
       <div className="mx-auto max-w-4xl px-4 sm:px-6 pt-10 sm:pt-14">
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-neutral-800 pb-6 mb-8">
           <div>
-            <div className="flex items-center gap-2 mb-2 font-mono text-[11px] uppercase tracking-widest text-emerald-400">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />
-              <span>02 // DECISION TERMINAL & CAUSE MATCHER</span>
+            <div className="flex items-center gap-2 mb-2 font-mono text-[11px] uppercase tracking-widest text-teal-400">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-teal-400" />
+              <span>FIND A CAUSE // 3-STEP IMPACT MATCHER</span>
             </div>
-            <h1 className="font-serif text-2xl sm:text-4xl font-normal tracking-tight text-neutral-100">
-              Impact Allocation Terminal
+            <h1 className="font-serif text-3xl sm:text-5xl font-normal tracking-tight text-neutral-100">
+              Impact Matcher
             </h1>
-            <p className="mt-1 font-sans text-xs sm:text-sm text-neutral-400">
-              Configure parameters to calculate verified non-profit alignments across public technical goods.
+            <p className="mt-2 font-sans text-xs sm:text-sm text-neutral-400 max-w-xl leading-relaxed">
+              Answer 3 simple questions to connect your skills, time, or donations with vetted 501(c)(3) initiatives making a tangible difference.
             </p>
           </div>
 
-          {bookmarkedCharityIds.length > 0 && (
-            <button
-              onClick={() => {
-                setViewSavedOnly(!viewSavedOnly);
-                if (!viewSavedOnly) setStep(4);
-              }}
-              className={`inline-flex items-center gap-2 rounded-sm px-3 py-1.5 font-mono text-xs border transition ${
-                viewSavedOnly
-                  ? "bg-amber-400/10 border-amber-400/40 text-amber-300"
-                  : "border-neutral-800 bg-[#0c1017] text-neutral-300 hover:border-neutral-700 hover:text-white"
-              }`}
+          <div className="flex items-center gap-2.5">
+            <Link
+              href="/causes"
+              className="inline-flex items-center gap-1.5 rounded-sm border border-neutral-800 bg-[#0c1017] px-3 py-1.5 font-mono text-xs text-neutral-300 hover:border-neutral-700 hover:text-white transition"
             >
-              <Bookmark className={`h-3.5 w-3.5 ${viewSavedOnly ? "fill-amber-400 text-amber-400" : "text-neutral-400"}`} />
-              <span>Saved Ledger ({bookmarkedCharityIds.length})</span>
-            </button>
-          )}
+              <span>View All Causes</span>
+              <ArrowRight className="h-3 w-3" />
+            </Link>
+
+            {bookmarkedCharityIds.length > 0 && (
+              <button
+                onClick={() => {
+                  setViewSavedOnly(!viewSavedOnly);
+                  if (!viewSavedOnly) setStep(4);
+                }}
+                className={`inline-flex items-center gap-1.5 rounded-sm px-3 py-1.5 font-mono text-xs border transition ${
+                  viewSavedOnly
+                    ? "bg-amber-400/10 border-amber-400/40 text-amber-300"
+                    : "border-neutral-800 bg-[#0c1017] text-neutral-300 hover:border-neutral-700 hover:text-white"
+                }`}
+              >
+                <Bookmark className={`h-3 w-3 ${viewSavedOnly ? "fill-amber-400 text-amber-400" : "text-neutral-400"}`} />
+                <span>Saved ({bookmarkedCharityIds.length})</span>
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Step Matrix Header */}
@@ -209,38 +218,38 @@ export default function MatcherPage() {
             <div
               className={`p-3 border rounded-sm transition ${
                 step === 1
-                  ? "border-emerald-500/60 bg-emerald-950/20 text-emerald-300"
+                  ? "border-teal-500/80 bg-teal-950/30 text-teal-300"
                   : step > 1
                   ? "border-neutral-800 bg-[#0c1017] text-neutral-400"
                   : "border-neutral-800/60 bg-neutral-900/20 text-neutral-600"
               }`}
             >
-              <div className="text-[10px] text-neutral-500">STAGE 01</div>
-              <div className="font-bold text-neutral-200 mt-0.5 truncate">CAUSE DOMAIN</div>
+              <div className="text-[10px] text-neutral-500">STEP 01</div>
+              <div className="font-semibold text-neutral-200 mt-0.5 truncate">CHOOSE CAUSE</div>
             </div>
 
             <div
               className={`p-3 border rounded-sm transition ${
                 step === 2
-                  ? "border-emerald-500/60 bg-emerald-950/20 text-emerald-300"
+                  ? "border-teal-500/80 bg-teal-950/30 text-teal-300"
                   : step > 2
                   ? "border-neutral-800 bg-[#0c1017] text-neutral-400"
                   : "border-neutral-800/60 bg-neutral-900/20 text-neutral-600"
               }`}
             >
-              <div className="text-[10px] text-neutral-500">STAGE 02</div>
-              <div className="font-bold text-neutral-200 mt-0.5 truncate">DEPLOYMENT MODE</div>
+              <div className="text-[10px] text-neutral-500">STEP 02</div>
+              <div className="font-semibold text-neutral-200 mt-0.5 truncate">HOW TO HELP</div>
             </div>
 
             <div
               className={`p-3 border rounded-sm transition ${
                 step === 3
-                  ? "border-emerald-500/60 bg-emerald-950/20 text-emerald-300"
+                  ? "border-teal-500/80 bg-teal-950/30 text-teal-300"
                   : "border-neutral-800/60 bg-neutral-900/20 text-neutral-600"
               }`}
             >
-              <div className="text-[10px] text-neutral-500">STAGE 03</div>
-              <div className="font-bold text-neutral-200 mt-0.5 truncate">REACH SCOPE</div>
+              <div className="text-[10px] text-neutral-500">STEP 03</div>
+              <div className="font-semibold text-neutral-200 mt-0.5 truncate">IMPACT SCOPE</div>
             </div>
           </div>
         )}
@@ -252,14 +261,14 @@ export default function MatcherPage() {
               {/* Step 1: Cause */}
               {step === 1 && (
                 <div>
-                  <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-emerald-400">
-                    <span>SELECTION 01 / 03</span>
+                  <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-teal-400">
+                    <span>QUESTION 1 OF 3</span>
                   </div>
-                  <h2 className="font-serif text-xl sm:text-2xl font-normal text-neutral-100 mb-2">
-                    Primary Impact Discipline
+                  <h2 className="font-serif text-2xl sm:text-3xl font-normal text-neutral-100 mb-2">
+                    What tech cause inspires you most?
                   </h2>
                   <p className="font-sans text-xs sm:text-sm text-neutral-400 mb-6">
-                    Identify the structural domain where your capital or engineering contribution should be deployed.
+                    Select the mission area where you would like your support to make a difference.
                   </p>
 
                   <div className="space-y-2.5">
@@ -272,14 +281,14 @@ export default function MatcherPage() {
                           onClick={() => setAnswers({ ...answers, primaryCause: opt.id })}
                           className={`w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition ${
                             isSelected
-                              ? "border-emerald-500/70 bg-emerald-950/20 shadow-sm ring-1 ring-emerald-500/30"
+                              ? "border-teal-500/80 bg-teal-950/20 shadow-sm ring-1 ring-teal-500/30"
                               : "border-neutral-800 bg-[#080c12]/80 hover:border-neutral-700 hover:bg-[#0f141e]"
                           }`}
                         >
                           <div
                             className={`p-2 rounded-sm border mt-0.5 flex-shrink-0 ${
                               isSelected
-                                ? "border-emerald-500/50 bg-emerald-500/20 text-emerald-300"
+                                ? "border-teal-500/50 bg-teal-500/20 text-teal-300"
                                 : "border-neutral-800 bg-neutral-900 text-neutral-400"
                             }`}
                           >
@@ -295,7 +304,7 @@ export default function MatcherPage() {
                             <div
                               className={`h-4 w-4 rounded-sm border flex items-center justify-center ${
                                 isSelected
-                                  ? "border-emerald-400 bg-emerald-400 text-neutral-950"
+                                  ? "border-teal-400 bg-teal-400 text-neutral-950"
                                   : "border-neutral-700 bg-neutral-900"
                               }`}
                             >
@@ -312,14 +321,14 @@ export default function MatcherPage() {
               {/* Step 2: Giving Style */}
               {step === 2 && (
                 <div>
-                  <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-emerald-400">
-                    <span>SELECTION 02 / 03</span>
+                  <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-teal-400">
+                    <span>QUESTION 2 OF 3</span>
                   </div>
-                  <h2 className="font-serif text-xl sm:text-2xl font-normal text-neutral-100 mb-2">
-                    Contribution Methodology
+                  <h2 className="font-serif text-2xl sm:text-3xl font-normal text-neutral-100 mb-2">
+                    How would you prefer to contribute?
                   </h2>
                   <p className="font-sans text-xs sm:text-sm text-neutral-400 mb-6">
-                    Determine whether your engagement is purely capital allocation, open source engineering, or policy advocacy.
+                    Choose whether you want to donate directly, volunteer engineering skills, or donate equipment.
                   </p>
 
                   <div className="space-y-2.5">
@@ -332,14 +341,14 @@ export default function MatcherPage() {
                           onClick={() => setAnswers({ ...answers, givingPreference: opt.id })}
                           className={`w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition ${
                             isSelected
-                              ? "border-emerald-500/70 bg-emerald-950/20 shadow-sm ring-1 ring-emerald-500/30"
+                              ? "border-teal-500/80 bg-teal-950/20 shadow-sm ring-1 ring-teal-500/30"
                               : "border-neutral-800 bg-[#080c12]/80 hover:border-neutral-700 hover:bg-[#0f141e]"
                           }`}
                         >
                           <div
                             className={`p-2 rounded-sm border mt-0.5 flex-shrink-0 ${
                               isSelected
-                                ? "border-emerald-500/50 bg-emerald-500/20 text-emerald-300"
+                                ? "border-teal-500/50 bg-teal-500/20 text-teal-300"
                                 : "border-neutral-800 bg-neutral-900 text-neutral-400"
                             }`}
                           >
@@ -355,7 +364,7 @@ export default function MatcherPage() {
                             <div
                               className={`h-4 w-4 rounded-sm border flex items-center justify-center ${
                                 isSelected
-                                  ? "border-emerald-400 bg-emerald-400 text-neutral-950"
+                                  ? "border-teal-400 bg-teal-400 text-neutral-950"
                                   : "border-neutral-700 bg-neutral-900"
                               }`}
                             >
@@ -372,14 +381,14 @@ export default function MatcherPage() {
               {/* Step 3: Scope */}
               {step === 3 && (
                 <div>
-                  <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-emerald-400">
-                    <span>SELECTION 03 / 03</span>
+                  <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-teal-400">
+                    <span>QUESTION 3 OF 3</span>
                   </div>
-                  <h2 className="font-serif text-xl sm:text-2xl font-normal text-neutral-100 mb-2">
-                    Target Geographic & Protocol Scope
+                  <h2 className="font-serif text-2xl sm:text-3xl font-normal text-neutral-100 mb-2">
+                    What scope of impact matters most?
                   </h2>
                   <p className="font-sans text-xs sm:text-sm text-neutral-400 mb-6">
-                    Specify whether deployment should focus on international policy, web standards, or local lab initiatives.
+                    Specify whether your support should target global initiatives, open web protocols, or local community classrooms.
                   </p>
 
                   <div className="space-y-2.5">
@@ -392,14 +401,14 @@ export default function MatcherPage() {
                           onClick={() => setAnswers({ ...answers, impactScope: opt.id })}
                           className={`w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition ${
                             isSelected
-                              ? "border-emerald-500/70 bg-emerald-950/20 shadow-sm ring-1 ring-emerald-500/30"
+                              ? "border-teal-500/80 bg-teal-950/20 shadow-sm ring-1 ring-teal-500/30"
                               : "border-neutral-800 bg-[#080c12]/80 hover:border-neutral-700 hover:bg-[#0f141e]"
                           }`}
                         >
                           <div
                             className={`p-2 rounded-sm border mt-0.5 flex-shrink-0 ${
                               isSelected
-                                ? "border-emerald-500/50 bg-emerald-500/20 text-emerald-300"
+                                ? "border-teal-500/50 bg-teal-500/20 text-teal-300"
                                 : "border-neutral-800 bg-neutral-900 text-neutral-400"
                             }`}
                           >
@@ -415,7 +424,7 @@ export default function MatcherPage() {
                             <div
                               className={`h-4 w-4 rounded-sm border flex items-center justify-center ${
                                 isSelected
-                                  ? "border-emerald-400 bg-emerald-400 text-neutral-950"
+                                  ? "border-teal-400 bg-teal-400 text-neutral-950"
                                   : "border-neutral-700 bg-neutral-900"
                               }`}
                             >
@@ -436,7 +445,7 @@ export default function MatcherPage() {
                     onClick={() => setStep(step - 1)}
                     className="inline-flex items-center gap-1.5 px-3 py-2 rounded-sm border border-neutral-800 bg-[#080c12] text-neutral-300 hover:border-neutral-700 hover:text-white transition"
                   >
-                    <ArrowLeft className="h-3.5 w-3.5" /> STAGE_PREV
+                    <ArrowLeft className="h-3.5 w-3.5" /> Back
                   </button>
                 ) : (
                   <div />
@@ -447,43 +456,43 @@ export default function MatcherPage() {
                     onClick={() => setStep(step + 1)}
                     className="inline-flex items-center gap-2 rounded-sm bg-neutral-100 px-5 py-2 font-semibold text-neutral-950 hover:bg-white transition active:scale-[0.98]"
                   >
-                    <span>NEXT_STAGE</span>
+                    <span>Continue</span>
                     <ArrowRight className="h-3.5 w-3.5" />
                   </button>
                 ) : (
                   <button
                     onClick={handleSubmit}
                     disabled={isSubmitting}
-                    className="inline-flex items-center gap-2 rounded-sm bg-emerald-400 px-5 py-2 font-semibold text-neutral-950 hover:bg-emerald-300 transition active:scale-[0.98] disabled:opacity-50"
+                    className="inline-flex items-center gap-2 rounded-sm bg-teal-400 px-5 py-2 font-semibold text-neutral-950 hover:bg-teal-300 transition active:scale-[0.98] disabled:opacity-50"
                   >
-                    <span>{isSubmitting ? "CALCULATING_MATRIX..." : "EXECUTE_ALIGNMENT"}</span>
+                    <span>{isSubmitting ? "Finding Matches..." : "View Recommendations"}</span>
                     <ArrowRight className="h-3.5 w-3.5" />
                   </button>
                 )}
               </div>
             </div>
           ) : (
-            /* Results Evaluation Matrix */
+            /* Results View */
             <div>
               <div className="border-b border-neutral-800 pb-6 mb-6">
                 <div className="flex items-center justify-between mb-2">
-                  <div className="font-mono text-[11px] uppercase tracking-wider text-emerald-400">
-                    {viewSavedOnly ? "LOCAL BOOKMARKS LEDGER" : "EVALUATION MATRIX RESULTS"}
+                  <div className="font-mono text-[11px] uppercase tracking-wider text-teal-400">
+                    {viewSavedOnly ? "SAVED CAUSES LEDGER" : "RECOMMENDED FOR YOU"}
                   </div>
                   <button
                     onClick={restartQuiz}
                     className="inline-flex items-center gap-1.5 font-mono text-xs text-neutral-400 hover:text-white transition"
                   >
-                    <RefreshCcw className="h-3 w-3" /> RETAKE_MATRIX
+                    <RefreshCcw className="h-3 w-3" /> Retake Quiz
                   </button>
                 </div>
                 <h2 className="font-serif text-2xl sm:text-3xl font-normal text-neutral-100">
-                  {viewSavedOnly ? "Saved Causes" : "Matched Technical Initiatives"}
+                  {viewSavedOnly ? "Saved Causes" : "Matched Organizations"}
                 </h2>
                 <p className="font-sans text-xs sm:text-sm text-neutral-400 mt-1">
                   {viewSavedOnly
                     ? "Locally saved organizations from your evaluation history."
-                    : `Verified non-profit organizations aligned with your focus on ${answers.primaryCause.replace(
+                    : `High-impact non-profits aligned with your preferences in ${answers.primaryCause.replace(
                         /-/g,
                         " "
                       )}.`}
@@ -492,12 +501,12 @@ export default function MatcherPage() {
 
               {((viewSavedOnly ? savedCharitiesList : results) || []).length === 0 ? (
                 <div className="p-8 text-center border border-dashed border-neutral-800 rounded-sm">
-                  <p className="font-mono text-xs text-neutral-400">No organizations found in this ledger query.</p>
+                  <p className="font-mono text-xs text-neutral-400">No organizations found matching this query.</p>
                   <button
                     onClick={restartQuiz}
                     className="mt-4 inline-flex items-center gap-1.5 rounded-sm bg-neutral-100 px-4 py-2 font-mono text-xs font-semibold text-neutral-950 hover:bg-white transition"
                   >
-                    RUN NEW EVALUATION
+                    Take Quiz Again
                   </button>
                 </div>
               ) : (
@@ -513,7 +522,7 @@ export default function MatcherPage() {
                       >
                         <div className="flex items-start justify-between gap-4 mb-3">
                           <div className="flex items-center gap-3">
-                            <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-neutral-900 border border-neutral-800 text-neutral-300">
+                            <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-neutral-900 border border-neutral-800 text-teal-400">
                               <IconComp className="h-4 w-4" />
                             </div>
                             <div>
@@ -605,16 +614,16 @@ export default function MatcherPage() {
 
               <div className="border-t border-neutral-800 pt-6 flex items-center justify-between font-mono text-xs">
                 <Link
-                  href="/feed"
-                  className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition"
+                  href="/causes"
+                  className="inline-flex items-center gap-1.5 text-teal-400 hover:text-teal-300 transition"
                 >
-                  <ArrowLeft className="h-3.5 w-3.5" /> Back to Wire Feed
+                  <ArrowLeft className="h-3.5 w-3.5" /> Browse All Causes Directory
                 </Link>
                 <button
                   onClick={restartQuiz}
                   className="inline-flex items-center gap-1.5 text-neutral-300 hover:text-white transition"
                 >
-                  <RefreshCcw className="h-3.5 w-3.5" /> New Evaluation
+                  <RefreshCcw className="h-3.5 w-3.5" /> Retake Quiz
                 </button>
               </div>
             </div>
