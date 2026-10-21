@@ -1,7 +1,7 @@
 export function TechHappyEmblem({
   className = "h-5 w-5",
   eyesColor = "#f8fafc",
-  smileColor = "#10b981",
+  smileColor = "#f5e642",
   strokeWidth = 2.5,
 }: {
   className?: string;
@@ -16,11 +16,11 @@ export function TechHappyEmblem({
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      {/* 
+      {/*
         techHappy 'T & H' Eyes Smile Emblem:
         - Left Eye: Stylized geometric 'T' (White)
         - Right Eye: Stylized geometric 'H' (White)
-        - Smile: Radiant uplifting emerald arc beneath the eyes (#10b981)
+        - Smile: Acid yellow arc beneath the eyes (#f5e642)
       */}
 
       {/* Left Eye: Geometric 'T' */}

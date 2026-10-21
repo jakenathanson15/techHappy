@@ -121,8 +121,8 @@ export default function FeedPage() {
         <div className="mb-8 pb-6 border-b border-neutral-800">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2 mb-1.5 font-mono text-xs text-emerald-400 font-semibold tracking-wider">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <div className="flex items-center gap-2 mb-1.5 font-mono text-xs text-[#f5e642] font-semibold tracking-wider">
+                <span className="h-1.5 w-1.5 bg-[#f5e642]" />
                 <span>THE WIRE // PEER-REVIEWED RESEARCH STREAM</span>
               </div>
               <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-neutral-100">
@@ -145,8 +145,8 @@ export default function FeedPage() {
                 <span>{isRefreshing ? "Synchronizing..." : "Update Wire"}</span>
               </button>
 
-              <div className="flex items-center gap-1.5 text-xs font-mono text-neutral-400 bg-[#0c1017] border border-neutral-800 px-3 py-1.5 rounded-sm">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              <div className="flex items-center gap-1.5 text-xs font-mono text-neutral-400 bg-[#111] border border-white/10 px-3 py-1.5">
+                <span className="h-1.5 w-1.5 bg-[#f5e642]" />
                 <span>13 Feeds Connected</span>
               </div>
             </div>
@@ -154,8 +154,8 @@ export default function FeedPage() {
 
           {/* Ephemeral Refresh Success Badge */}
           {refreshNotice && (
-            <div className="mt-4 inline-flex items-center gap-2 rounded-sm bg-neutral-900 border border-emerald-500/50 px-3 py-1 text-xs font-mono text-emerald-400">
-              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+            <div className="mt-4 inline-flex items-center gap-2 bg-neutral-900 border border-[#f5e642]/40 px-3 py-1 text-xs font-mono text-[#f5e642]">
+              <CheckCircle2 className="h-3.5 w-3.5 text-[#f5e642]" />
               <span>{refreshNotice}</span>
             </div>
           )}
@@ -165,10 +165,8 @@ export default function FeedPage() {
         {mounted && loadingStream ? (
           <div
             onClick={finishStreamIntro}
-            className="wire-card rounded-sm p-10 sm:p-14 text-center max-w-lg mx-auto cursor-pointer animate-matcher-header relative overflow-hidden shadow-2xl bg-[#0c1017] border border-neutral-800 my-8"
+            className="wire-card p-10 sm:p-14 text-center max-w-lg mx-auto cursor-pointer animate-matcher-header relative overflow-hidden my-8"
           >
-            {/* Luminous emerald aura background glow */}
-            <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-56 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none animate-matcher-aura" />
 
             {/* Minimalist Circuit with Logo in the Middle of Converging Wires */}
             <div className="relative mb-6 flex items-center justify-center">
@@ -194,7 +192,7 @@ export default function FeedPage() {
                 {/* Left side */}
                 <path
                   d="M 25 30 L 110 30 L 158 68"
-                  stroke="#34d399"
+                  stroke="#f5e642"
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   className="animate-wire-photon"
@@ -202,7 +200,7 @@ export default function FeedPage() {
                 />
                 <path
                   d="M 15 80 L 158 80"
-                  stroke="#10b981"
+                  stroke="#e8d600"
                   strokeWidth="3"
                   strokeLinecap="round"
                   className="animate-wire-photon"
@@ -210,7 +208,7 @@ export default function FeedPage() {
                 />
                 <path
                   d="M 25 130 L 110 130 L 158 92"
-                  stroke="#059669"
+                  stroke="#c4b400"
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   className="animate-wire-photon"
@@ -220,7 +218,7 @@ export default function FeedPage() {
                 {/* Right side */}
                 <path
                   d="M 355 30 L 270 30 L 222 68"
-                  stroke="#34d399"
+                  stroke="#f5e642"
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   className="animate-wire-photon"
@@ -228,7 +226,7 @@ export default function FeedPage() {
                 />
                 <path
                   d="M 365 80 L 222 80"
-                  stroke="#10b981"
+                  stroke="#e8d600"
                   strokeWidth="3"
                   strokeLinecap="round"
                   className="animate-wire-photon"
@@ -236,7 +234,7 @@ export default function FeedPage() {
                 />
                 <path
                   d="M 355 130 L 270 130 L 222 92"
-                  stroke="#059669"
+                  stroke="#c4b400"
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   className="animate-wire-photon"
@@ -246,7 +244,7 @@ export default function FeedPage() {
                 {/* Vertical tracks */}
                 <path
                   d="M 190 12 L 190 48"
-                  stroke="#34d399"
+                  stroke="#f5e642"
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   className="animate-wire-photon"
@@ -254,7 +252,7 @@ export default function FeedPage() {
                 />
                 <path
                   d="M 190 148 L 190 112"
-                  stroke="#10b981"
+                  stroke="#e8d600"
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   className="animate-wire-photon"
@@ -262,22 +260,22 @@ export default function FeedPage() {
                 />
 
                 {/* Outer LED Nodes */}
-                <circle cx="25" cy="30" r="3" fill="#10b981" className="animate-wire-pulse" />
-                <circle cx="15" cy="80" r="3" fill="#34d399" className="animate-wire-pulse" style={{ animationDelay: "200ms" }} />
-                <circle cx="25" cy="130" r="3" fill="#10b981" className="animate-wire-pulse" style={{ animationDelay: "400ms" }} />
+                <circle cx="25" cy="30" r="3" fill="#f5e642" className="animate-wire-pulse" />
+                <circle cx="15" cy="80" r="3" fill="#e8d600" className="animate-wire-pulse" style={{ animationDelay: "200ms" }} />
+                <circle cx="25" cy="130" r="3" fill="#f5e642" className="animate-wire-pulse" style={{ animationDelay: "400ms" }} />
 
-                <circle cx="355" cy="30" r="3" fill="#10b981" className="animate-wire-pulse" style={{ animationDelay: "300ms" }} />
-                <circle cx="365" cy="80" r="3" fill="#34d399" className="animate-wire-pulse" style={{ animationDelay: "500ms" }} />
-                <circle cx="355" cy="130" r="3" fill="#10b981" className="animate-wire-pulse" style={{ animationDelay: "700ms" }} />
+                <circle cx="355" cy="30" r="3" fill="#f5e642" className="animate-wire-pulse" style={{ animationDelay: "300ms" }} />
+                <circle cx="365" cy="80" r="3" fill="#e8d600" className="animate-wire-pulse" style={{ animationDelay: "500ms" }} />
+                <circle cx="355" cy="130" r="3" fill="#f5e642" className="animate-wire-pulse" style={{ animationDelay: "700ms" }} />
 
-                <circle cx="190" cy="12" r="3" fill="#34d399" className="animate-wire-pulse" style={{ animationDelay: "350ms" }} />
-                <circle cx="190" cy="148" r="3" fill="#10b981" className="animate-wire-pulse" style={{ animationDelay: "600ms" }} />
+                <circle cx="190" cy="12" r="3" fill="#e8d600" className="animate-wire-pulse" style={{ animationDelay: "350ms" }} />
+                <circle cx="190" cy="148" r="3" fill="#f5e642" className="animate-wire-pulse" style={{ animationDelay: "600ms" }} />
 
                 {/* TECHHAPPY LOGO // CENTERED IN THE MIDDLE OF THE WIRES & LIGHTING UP */}
                 <g className="animate-logo-charge">
                   {/* Outer Concentric Energy Aura Ring */}
-                  <circle cx="190" cy="80" r="38" fill="none" stroke="#064e3b" strokeWidth="1.5" strokeDasharray="3 3" />
-                  <circle cx="190" cy="80" r="32" fill="#0a0e14" stroke="#10b981" strokeWidth="2" />
+                  <circle cx="190" cy="80" r="38" fill="none" stroke="#2a2a00" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <circle cx="190" cy="80" r="32" fill="#0a0a0a" stroke="#f5e642" strokeWidth="2" />
 
                   {/* Left Eye: 'T' */}
                   <path d="M 175 67 H 185" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" className="animate-eyes-ignite" />
@@ -291,7 +289,7 @@ export default function FeedPage() {
                   {/* Radiant Smile Arc */}
                   <path
                     d="M 176 86 C 182 96 198 96 204 86"
-                    stroke="#34d399"
+                    stroke="#f5e642"
                     strokeWidth="2.5"
                     strokeLinecap="round"
                     className="animate-smile-ignite"
@@ -300,8 +298,8 @@ export default function FeedPage() {
               </svg>
             </div>
 
-            <div className="flex items-center justify-center gap-2 mb-2 font-mono text-[11px] text-emerald-400 font-semibold tracking-widest uppercase">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
+            <div className="flex items-center justify-center gap-2 mb-2 font-mono text-[11px] text-[#f5e642] font-semibold tracking-widest uppercase">
+              <span className="h-1.5 w-1.5 bg-[#f5e642] animate-ping" />
               <span>THE WIRE // CONNECTING</span>
             </div>
 
@@ -316,7 +314,7 @@ export default function FeedPage() {
         ) : (
           <>
             {/* Stream Toolbar (Category Filter Strip + Search) */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-6 p-2 rounded-sm bg-[#0c1017] border border-neutral-800">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-6 p-2 bg-[#111] border border-white/10">
               {/* Category Tabs */}
               <div className="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
                 {CATEGORIES.map((cat) => (
@@ -357,7 +355,7 @@ export default function FeedPage() {
                   placeholder="Search dispatches..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full rounded-sm border border-neutral-800 bg-[#080c12] pl-8 pr-7 py-1 text-xs text-neutral-200 placeholder:text-neutral-500 focus:outline-none focus:border-neutral-700 focus:ring-1 focus:ring-emerald-500/40 transition font-sans"
+                  className="w-full border border-white/10 bg-[#0a0a0a] pl-8 pr-7 py-1 text-xs text-neutral-200 placeholder:text-neutral-500 focus:outline-none focus:border-[#f5e642]/40 transition font-sans"
                 />
                 {searchQuery && (
                   <button
@@ -457,9 +455,9 @@ export default function FeedPage() {
           {/* Right Sticky Sidebar (lg:col-span-4) */}
           <aside className="lg:col-span-4 sticky top-20 space-y-4">
             {/* 1. Live Sources Wire Registry */}
-            <div className="wire-card rounded-sm p-5">
-              <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-neutral-800">
-                <div className="font-mono text-xs font-semibold text-emerald-400 uppercase tracking-wider">
+            <div className="wire-card p-5">
+              <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-white/10">
+                <div className="font-mono text-xs font-semibold text-[#f5e642] uppercase tracking-wider">
                   RESEARCH DESKS ({sourcesList.length || 13})
                 </div>
                 {selectedSource && (
@@ -484,13 +482,13 @@ export default function FeedPage() {
                         setSelectedSource(isSelected ? null : s.name)
                       }
                       title={s.description || s.name}
-                      className={`inline-flex items-center gap-1.5 text-[11px] font-mono px-2 py-1 rounded-sm border transition ${
+                      className={`inline-flex items-center gap-1.5 text-[11px] font-mono px-2 py-1 border transition ${
                         isSelected
-                          ? "bg-emerald-500/15 border-emerald-500/60 text-emerald-300 font-semibold"
-                          : "bg-[#080c12] border-neutral-800 text-neutral-400 hover:text-neutral-200 hover:border-neutral-700"
+                          ? "bg-[#f5e642]/10 border-[#f5e642]/50 text-[#f5e642] font-semibold"
+                          : "bg-[#0a0a0a] border-white/10 text-neutral-400 hover:text-neutral-200 hover:border-white/20"
                       }`}
                     >
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                      <span className="h-1.5 w-1.5 bg-[#f5e642]" />
                       <span>{s.name}</span>
                     </button>
                   );
@@ -500,7 +498,7 @@ export default function FeedPage() {
               <div className="pt-3 mt-3 border-t border-neutral-800/80">
                 <Link
                   href="/sources"
-                  className="font-mono text-[11px] text-emerald-400 hover:text-emerald-300 inline-flex items-center gap-1"
+                  className="font-mono text-[11px] text-[#f5e642] hover:text-[#faf080] inline-flex items-center gap-1"
                 >
                   <span>View All Sources & Editorial Standards</span>
                   <ArrowRight className="h-3 w-3" />
@@ -509,8 +507,8 @@ export default function FeedPage() {
             </div>
 
             {/* 2. Causes & Matcher Doorway */}
-            <div className="wire-card rounded-sm p-5 border-l-2 border-l-teal-500 space-y-3">
-              <div className="font-mono text-xs font-semibold text-teal-400 uppercase tracking-wider">
+            <div className="wire-card p-5 border-l-2 border-l-[#f5e642] space-y-3">
+              <div className="font-mono text-xs font-semibold text-[#f5e642] uppercase tracking-wider">
                 VETTED GIVING & ACTION
               </div>
               <h3 className="font-serif text-lg font-normal text-neutral-100 leading-snug">
@@ -523,7 +521,7 @@ export default function FeedPage() {
               <div className="space-y-2 pt-1 font-mono text-xs">
                 <Link
                   href="/causes"
-                  className="w-full inline-flex items-center justify-between rounded-sm bg-[#080c12] border border-neutral-800 py-1.5 px-3 text-neutral-300 hover:text-white hover:border-neutral-700 transition"
+                  className="w-full inline-flex items-center justify-between bg-[#0a0a0a] border border-white/10 py-1.5 px-3 text-neutral-300 hover:text-white hover:border-white/20 transition"
                 >
                   <span>Browse Causes Directory</span>
                   <ArrowRight className="h-3 w-3" />
@@ -531,7 +529,7 @@ export default function FeedPage() {
 
                 <Link
                   href="/match"
-                  className="w-full inline-flex items-center justify-between rounded-sm bg-teal-500 text-neutral-950 font-semibold py-1.5 px-3 hover:bg-teal-400 transition"
+                  className="w-full inline-flex items-center justify-between bg-[#f5e642] text-[#0a0a0a] font-bold py-1.5 px-3 hover:bg-[#faf080] transition"
                 >
                   <span>Take 3-Step Matcher</span>
                   <ArrowRight className="h-3 w-3" />
@@ -540,22 +538,22 @@ export default function FeedPage() {
             </div>
 
             {/* 3. Curation Standards */}
-            <div className="wire-card rounded-sm p-5 space-y-2.5">
-              <div className="flex items-center gap-1.5 font-mono text-xs font-semibold text-neutral-300 pb-2 border-b border-neutral-800">
-                <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
+            <div className="wire-card p-5 space-y-2.5">
+              <div className="flex items-center gap-1.5 font-mono text-xs font-semibold text-neutral-300 pb-2 border-b border-white/10">
+                <ShieldCheck className="h-3.5 w-3.5 text-[#f5e642]" />
                 <span className="uppercase tracking-wider">EDITORIAL PROMISE</span>
               </div>
               <ul className="text-xs text-neutral-400 space-y-1.5 font-sans">
                 <li className="flex items-center gap-2">
-                  <span className="h-1 w-1 rounded-full bg-emerald-400" />
+                  <span className="h-1 w-1 bg-[#f5e642]" />
                   <span>Peer-reviewed scientific discoveries</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="h-1 w-1 rounded-full bg-emerald-400" />
+                  <span className="h-1 w-1 bg-[#f5e642]" />
                   <span>Zero sponsored crypto or paywalled links</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="h-1 w-1 rounded-full bg-emerald-400" />
+                  <span className="h-1 w-1 bg-[#f5e642]" />
                   <span>Zero trackers or surveillance advertising</span>
                 </li>
               </ul>

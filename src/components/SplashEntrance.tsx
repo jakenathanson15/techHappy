@@ -82,7 +82,7 @@ export function SplashEntrance() {
   return (
     <div
       onClick={handleDismiss}
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#080c12] text-neutral-100 select-none cursor-pointer transition-all duration-500 ease-out ${
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#0a0a0a] text-neutral-100 select-none cursor-pointer transition-all duration-500 ease-out ${
         isFadingOut ? "opacity-0 pointer-events-none scale-105" : "opacity-100"
       }`}
     >
@@ -160,10 +160,10 @@ export function SplashEntrance() {
               style={{ strokeDasharray: 30, animationDelay: "450ms" }}
             />
 
-            {/* Smile Arc in Restrained Emerald */}
+            {/* Smile Arc in Acid Yellow */}
             <path
               d="M5 16C7.5 19.5 16.5 19.5 19 16"
-              stroke="#10b981"
+              stroke="#f5e642"
               strokeWidth="2.5"
               strokeLinecap="round"
               className="splash-stroke-draw"
@@ -175,7 +175,7 @@ export function SplashEntrance() {
         {/* Wordmark */}
         <div className="mb-2">
           <span className="font-serif text-2xl sm:text-3xl font-normal tracking-tight text-neutral-100">
-            tech<span className="text-emerald-400 italic">Happy</span>
+            tech<span className="text-[#f5e642] italic">Happy</span>
           </span>
         </div>
 
@@ -187,7 +187,7 @@ export function SplashEntrance() {
         <div className="w-48 sm:w-64 mb-3">
           <div className="h-1 w-full bg-neutral-900 border border-neutral-800 rounded-sm overflow-hidden">
             <div
-              className="h-full bg-emerald-400 transition-all duration-300 ease-out"
+              className="h-full bg-[#f5e642] transition-all duration-300 ease-out"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -195,7 +195,7 @@ export function SplashEntrance() {
 
         {/* Live Status Log */}
         <div className="font-mono text-[10px] text-neutral-500 tracking-wider h-4">
-          <span className="text-emerald-400 mr-1.5">&gt;</span>
+          <span className="text-[#f5e642] mr-1.5">&gt;</span>
           <span>{statusLog}</span>
         </div>
       </div>

@@ -219,8 +219,8 @@ export default function MatcherPage() {
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-neutral-800 pb-6 mb-8">
           <div>
-            <div className="flex items-center gap-2 mb-2 font-mono text-[11px] uppercase tracking-widest text-teal-400">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-teal-400" />
+            <div className="flex items-center gap-2 mb-2 font-mono text-[11px] uppercase tracking-widest text-[#f5e642]">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#f5e642]" />
               <span>FIND A CAUSE // 3-STEP IMPACT MATCHER</span>
             </div>
             <h1 className="font-serif text-3xl sm:text-5xl font-normal tracking-tight text-neutral-100">
@@ -234,7 +234,7 @@ export default function MatcherPage() {
           <div className="flex items-center gap-2.5">
             <Link
               href="/causes"
-              className="inline-flex items-center gap-1.5 rounded-sm border border-neutral-800 bg-[#0c1017] px-3 py-1.5 font-mono text-xs text-neutral-300 hover:border-neutral-700 hover:text-white transition"
+              className="inline-flex items-center gap-1.5 border border-white/10 bg-[#111] px-3 py-1.5 font-mono text-xs text-neutral-300 hover:border-white/20 hover:text-white transition"
             >
               <span>View All Causes</span>
               <ArrowRight className="h-3 w-3" />
@@ -250,7 +250,7 @@ export default function MatcherPage() {
                 className={`inline-flex items-center gap-1.5 rounded-sm px-3 py-1.5 font-mono text-xs border transition ${
                   viewSavedOnly
                     ? "bg-amber-400/10 border-amber-400/40 text-amber-300"
-                    : "border-neutral-800 bg-[#0c1017] text-neutral-300 hover:border-neutral-700 hover:text-white"
+                    : "border-white/10 bg-[#111] text-neutral-300 hover:border-white/20 hover:text-white"
                 }`}
               >
                 <Bookmark className={`h-3 w-3 ${viewSavedOnly ? "fill-amber-400 text-amber-400" : "text-neutral-400"}`} />
@@ -264,10 +264,8 @@ export default function MatcherPage() {
         {mounted && loadingIntro && !viewSavedOnly ? (
           <div
             onClick={finishIntro}
-            className="wire-card rounded-sm p-8 sm:p-14 text-center max-w-xl mx-auto cursor-pointer animate-matcher-header relative overflow-hidden shadow-2xl bg-[#0c1017] border border-neutral-800"
+            className="wire-card p-8 sm:p-14 text-center max-w-xl mx-auto cursor-pointer animate-matcher-header relative overflow-hidden"
           >
-            {/* Luminous aura background glow */}
-            <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-64 bg-teal-500/10 rounded-full blur-3xl pointer-events-none animate-matcher-aura" />
 
             {/* Top skip affordance */}
             <button
@@ -275,7 +273,7 @@ export default function MatcherPage() {
                 e.stopPropagation();
                 finishIntro();
               }}
-              className="absolute top-4 right-4 font-mono text-[11px] text-neutral-400 hover:text-teal-300 transition-colors border border-neutral-800/80 bg-neutral-900/60 px-2.5 py-1 rounded-sm flex items-center gap-1.5"
+              className="absolute top-4 right-4 font-mono text-[11px] text-neutral-400 hover:text-[#f5e642] transition-colors border border-white/10 bg-[#181818]/60 px-2.5 py-1 flex items-center gap-1.5"
             >
               <span>SKIP</span>
               <ArrowRight className="h-3 w-3" />
@@ -283,8 +281,7 @@ export default function MatcherPage() {
 
             {/* Animated TH Eyes Smile SVG */}
             <div className="relative mb-6 flex items-center justify-center">
-              <div className="absolute h-28 w-28 rounded-2xl border border-teal-500/20 bg-teal-950/20 animate-matcher-aura pointer-events-none" />
-              <div className="relative flex h-20 w-20 items-center justify-center rounded-2xl bg-neutral-900 border border-neutral-700/80 shadow-[0_0_24px_rgba(20,184,166,0.15)]">
+              <div className="relative flex h-20 w-20 items-center justify-center bg-[#181818] border border-white/10">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -338,7 +335,7 @@ export default function MatcherPage() {
                   {/* Smile Arc in Radiant Teal */}
                   <path
                     d="M5 16C7.5 19.5 16.5 19.5 19 16"
-                    stroke="#14b8a6"
+                    stroke="#f5e642"
                     strokeWidth="2.5"
                     strokeLinecap="round"
                     className="splash-stroke-draw"
@@ -348,8 +345,8 @@ export default function MatcherPage() {
               </div>
             </div>
 
-            <div className="inline-flex items-center gap-2 mb-3 px-2.5 py-1 rounded-sm bg-teal-950/40 border border-teal-500/30 font-mono text-[11px] text-teal-300 uppercase tracking-widest">
-              <span className="h-1.5 w-1.5 rounded-full bg-teal-400 animate-ping" />
+            <div className="inline-flex items-center gap-2 mb-3 px-2.5 py-1 border border-[#f5e642]/30 bg-[#f5e642]/5 font-mono text-[11px] text-[#f5e642] uppercase tracking-widest">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#f5e642] animate-ping" />
               <span>IMPACT TERMINAL // CALIBRATING</span>
             </div>
 
@@ -365,14 +362,14 @@ export default function MatcherPage() {
             <div className="max-w-md mx-auto mb-6">
               <div className="flex items-center justify-between text-xs font-mono mb-2 text-neutral-400 px-1">
                 <span className="flex items-center gap-1.5 text-neutral-300 truncate">
-                  <span className="text-teal-400">&gt;</span>
+                  <span className="text-[#f5e642]">&gt;</span>
                   <span className="truncate">{loadStatus}</span>
                 </span>
-                <span className="text-teal-400 font-semibold ml-2">{loadProgress}%</span>
+                <span className="text-[#f5e642] font-semibold ml-2">{loadProgress}%</span>
               </div>
-              <div className="w-full h-1.5 bg-[#080c12] border border-neutral-800 rounded-sm overflow-hidden p-[1px]">
+              <div className="w-full h-1.5 bg-[#0a0a0a] border border-white/10 overflow-hidden p-[1px]">
                 <div
-                  className="h-full bg-gradient-to-r from-teal-500 via-teal-400 to-emerald-300 rounded-sm transition-all duration-500 ease-out shadow-[0_0_12px_rgba(20,184,166,0.5)]"
+                  className="h-full bg-[#f5e642] transition-all duration-500 ease-out"
                   style={{ width: `${loadProgress}%` }}
                 />
               </div>
@@ -381,15 +378,15 @@ export default function MatcherPage() {
             {/* 3 Telemetry Pillars */}
             <div className="grid grid-cols-3 gap-2.5 pt-4 border-t border-neutral-800/80 max-w-md mx-auto text-left font-mono text-[10px]">
               <div>
-                <span className="text-teal-400 font-semibold block">01 // VETTED</span>
+                <span className="text-[#f5e642] font-semibold block">01 // VETTED</span>
                 <span className="text-neutral-500 block">4-Star Navigator</span>
               </div>
               <div>
-                <span className="text-teal-400 font-semibold block">02 // DIRECT</span>
+                <span className="text-[#f5e642] font-semibold block">02 // DIRECT</span>
                 <span className="text-neutral-500 block">Zero Overhead</span>
               </div>
               <div>
-                <span className="text-teal-400 font-semibold block">03 // PRIVATE</span>
+                <span className="text-[#f5e642] font-semibold block">03 // PRIVATE</span>
                 <span className="text-neutral-500 block">Zero Trackers</span>
               </div>
             </div>
@@ -402,9 +399,9 @@ export default function MatcherPage() {
                 <div
                   className={`p-3 border rounded-sm transition ${
                     step === 1
-                      ? "border-teal-500/80 bg-teal-950/30 text-teal-300"
+                      ? "border-[#f5e642]/60 bg-[#f5e642]/10 text-[#f5e642]"
                       : step > 1
-                      ? "border-neutral-800 bg-[#0c1017] text-neutral-400"
+                      ? "border-white/10 bg-[#111] text-neutral-400"
                       : "border-neutral-800/60 bg-neutral-900/20 text-neutral-600"
                   }`}
                 >
@@ -415,9 +412,9 @@ export default function MatcherPage() {
                 <div
                   className={`p-3 border rounded-sm transition ${
                     step === 2
-                      ? "border-teal-500/80 bg-teal-950/30 text-teal-300"
+                      ? "border-[#f5e642]/60 bg-[#f5e642]/10 text-[#f5e642]"
                       : step > 2
-                      ? "border-neutral-800 bg-[#0c1017] text-neutral-400"
+                      ? "border-white/10 bg-[#111] text-neutral-400"
                       : "border-neutral-800/60 bg-neutral-900/20 text-neutral-600"
                   }`}
                 >
@@ -428,7 +425,7 @@ export default function MatcherPage() {
                 <div
                   className={`p-3 border rounded-sm transition ${
                     step === 3
-                      ? "border-teal-500/80 bg-teal-950/30 text-teal-300"
+                      ? "border-[#f5e642]/60 bg-[#f5e642]/10 text-[#f5e642]"
                       : "border-neutral-800/60 bg-neutral-900/20 text-neutral-600"
                   }`}
                 >
@@ -439,12 +436,12 @@ export default function MatcherPage() {
             )}
 
             {/* Main Questionnaire Frame */}
-            <div className="rounded-sm border border-neutral-800 bg-[#0c1017] p-6 sm:p-8 relative overflow-hidden">
+            <div className="border border-white/10 bg-[#111] p-6 sm:p-8 relative overflow-hidden">
               {/* Subtle top progress bar */}
               {step < 4 && !viewSavedOnly && (
                 <div className="absolute top-0 left-0 right-0 h-[2px] bg-neutral-800">
                   <div
-                    className="h-full bg-gradient-to-r from-teal-500 to-teal-300 transition-all duration-700 ease-out"
+                    className="h-full bg-[#f5e642] transition-all duration-700 ease-out"
                     style={{ width: `${(step / 3) * 100}%` }}
                   />
                 </div>
@@ -456,8 +453,8 @@ export default function MatcherPage() {
                   {step === 1 && (
                     <div>
                       <div className="animate-matcher-header">
-                        <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-teal-400">
-                          <span className="h-1.5 w-1.5 rounded-full bg-teal-400 animate-pulse" />
+                        <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-[#f5e642]">
+                          <span className="h-1.5 w-1.5 rounded-full bg-[#f5e642] animate-pulse" />
                           <span>QUESTION 1 OF 3</span>
                         </div>
                         <h2 className="font-serif text-2xl sm:text-3xl font-normal text-neutral-100 mb-2">
@@ -479,14 +476,14 @@ export default function MatcherPage() {
                               style={{ animationDelay: `${idx * 60 + 70}ms` }}
                               className={`animate-matcher-choice w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition-all duration-300 ease-out active:scale-[0.995] ${
                                 isSelected
-                                  ? "border-teal-500/80 bg-teal-950/25 shadow-[0_0_20px_rgba(20,184,166,0.06)] ring-1 ring-teal-500/30"
-                                  : "border-neutral-800/90 bg-[#080c12]/90 hover:border-neutral-700 hover:bg-[#0f141e] hover:-translate-y-0.5"
+                                  ? "border-[#f5e642]/60 bg-[#f5e642]/8"
+                                  : "border-white/10 bg-[#0a0a0a]/90 hover:border-white/20 hover:bg-[#141414] hover:-translate-y-0.5"
                               }`}
                             >
                               <div
                                 className={`p-2 rounded-sm border mt-0.5 flex-shrink-0 transition-all duration-300 ${
                                   isSelected
-                                    ? "border-teal-500/50 bg-teal-500/20 text-teal-300"
+                                    ? "border-[#f5e642]/50 bg-[#f5e642]/15 text-[#f5e642]"
                                     : "border-neutral-800 bg-neutral-900 text-neutral-400"
                                 }`}
                               >
@@ -502,7 +499,7 @@ export default function MatcherPage() {
                                 <div
                                   className={`h-4 w-4 rounded-sm border flex items-center justify-center transition-all duration-300 ${
                                     isSelected
-                                      ? "border-teal-400 bg-teal-400 text-neutral-950 shadow-[0_0_8px_rgba(20,184,166,0.4)]"
+                                      ? "border-teal-400 bg-[#f5e642] text-neutral-950 shadow-[0_0_8px_rgba(20,184,166,0.4)]"
                                       : "border-neutral-700 bg-neutral-900"
                                   }`}
                                 >
@@ -520,8 +517,8 @@ export default function MatcherPage() {
                   {step === 2 && (
                     <div>
                       <div className="animate-matcher-header">
-                        <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-teal-400">
-                          <span className="h-1.5 w-1.5 rounded-full bg-teal-400 animate-pulse" />
+                        <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-[#f5e642]">
+                          <span className="h-1.5 w-1.5 rounded-full bg-[#f5e642] animate-pulse" />
                           <span>QUESTION 2 OF 3</span>
                         </div>
                         <h2 className="font-serif text-2xl sm:text-3xl font-normal text-neutral-100 mb-2">
@@ -543,14 +540,14 @@ export default function MatcherPage() {
                               style={{ animationDelay: `${idx * 60 + 70}ms` }}
                               className={`animate-matcher-choice w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition-all duration-300 ease-out active:scale-[0.995] ${
                                 isSelected
-                                  ? "border-teal-500/80 bg-teal-950/25 shadow-[0_0_20px_rgba(20,184,166,0.06)] ring-1 ring-teal-500/30"
-                                  : "border-neutral-800/90 bg-[#080c12]/90 hover:border-neutral-700 hover:bg-[#0f141e] hover:-translate-y-0.5"
+                                  ? "border-[#f5e642]/60 bg-[#f5e642]/8"
+                                  : "border-white/10 bg-[#0a0a0a]/90 hover:border-white/20 hover:bg-[#141414] hover:-translate-y-0.5"
                               }`}
                             >
                               <div
                                 className={`p-2 rounded-sm border mt-0.5 flex-shrink-0 transition-all duration-300 ${
                                   isSelected
-                                    ? "border-teal-500/50 bg-teal-500/20 text-teal-300"
+                                    ? "border-[#f5e642]/50 bg-[#f5e642]/15 text-[#f5e642]"
                                     : "border-neutral-800 bg-neutral-900 text-neutral-400"
                                 }`}
                               >
@@ -566,7 +563,7 @@ export default function MatcherPage() {
                                 <div
                                   className={`h-4 w-4 rounded-sm border flex items-center justify-center transition-all duration-300 ${
                                     isSelected
-                                      ? "border-teal-400 bg-teal-400 text-neutral-950 shadow-[0_0_8px_rgba(20,184,166,0.4)]"
+                                      ? "border-teal-400 bg-[#f5e642] text-neutral-950 shadow-[0_0_8px_rgba(20,184,166,0.4)]"
                                       : "border-neutral-700 bg-neutral-900"
                                   }`}
                                 >
@@ -584,8 +581,8 @@ export default function MatcherPage() {
                   {step === 3 && (
                     <div>
                       <div className="animate-matcher-header">
-                        <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-teal-400">
-                          <span className="h-1.5 w-1.5 rounded-full bg-teal-400 animate-pulse" />
+                        <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-wider text-[#f5e642]">
+                          <span className="h-1.5 w-1.5 rounded-full bg-[#f5e642] animate-pulse" />
                           <span>QUESTION 3 OF 3</span>
                         </div>
                         <h2 className="font-serif text-2xl sm:text-3xl font-normal text-neutral-100 mb-2">
@@ -607,14 +604,14 @@ export default function MatcherPage() {
                               style={{ animationDelay: `${idx * 60 + 70}ms` }}
                               className={`animate-matcher-choice w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition-all duration-300 ease-out active:scale-[0.995] ${
                                 isSelected
-                                  ? "border-teal-500/80 bg-teal-950/25 shadow-[0_0_20px_rgba(20,184,166,0.06)] ring-1 ring-teal-500/30"
-                                  : "border-neutral-800/90 bg-[#080c12]/90 hover:border-neutral-700 hover:bg-[#0f141e] hover:-translate-y-0.5"
+                                  ? "border-[#f5e642]/60 bg-[#f5e642]/8"
+                                  : "border-white/10 bg-[#0a0a0a]/90 hover:border-white/20 hover:bg-[#141414] hover:-translate-y-0.5"
                               }`}
                             >
                               <div
                                 className={`p-2 rounded-sm border mt-0.5 flex-shrink-0 transition-all duration-300 ${
                                   isSelected
-                                    ? "border-teal-500/50 bg-teal-500/20 text-teal-300"
+                                    ? "border-[#f5e642]/50 bg-[#f5e642]/15 text-[#f5e642]"
                                     : "border-neutral-800 bg-neutral-900 text-neutral-400"
                                 }`}
                               >
@@ -630,7 +627,7 @@ export default function MatcherPage() {
                                 <div
                                   className={`h-4 w-4 rounded-sm border flex items-center justify-center transition-all duration-300 ${
                                     isSelected
-                                      ? "border-teal-400 bg-teal-400 text-neutral-950 shadow-[0_0_8px_rgba(20,184,166,0.4)]"
+                                      ? "border-teal-400 bg-[#f5e642] text-neutral-950 shadow-[0_0_8px_rgba(20,184,166,0.4)]"
                                       : "border-neutral-700 bg-neutral-900"
                                   }`}
                                 >
@@ -649,7 +646,7 @@ export default function MatcherPage() {
                     {step > 1 ? (
                       <button
                         onClick={() => setStep(step - 1)}
-                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-sm border border-neutral-800 bg-[#080c12] text-neutral-300 hover:border-neutral-700 hover:text-white transition-all duration-200"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-2 border border-white/10 bg-[#0a0a0a] text-neutral-300 hover:border-white/20 hover:text-white transition-all duration-200"
                       >
                         <ArrowLeft className="h-3.5 w-3.5" /> Back
                       </button>
@@ -669,7 +666,7 @@ export default function MatcherPage() {
                       <button
                         onClick={handleSubmit}
                         disabled={isSubmitting}
-                        className="inline-flex items-center gap-2 rounded-sm bg-teal-400 px-5 py-2 font-semibold text-neutral-950 hover:bg-teal-300 transition-all duration-200 active:scale-[0.98] disabled:opacity-50"
+                        className="inline-flex items-center gap-2 bg-[#f5e642] px-5 py-2 font-bold text-[#0a0a0a] hover:bg-[#faf080] transition-all duration-200 active:scale-[0.98] disabled:opacity-50"
                       >
                         <span>{isSubmitting ? "Finding Matches..." : "View Recommendations"}</span>
                         <ArrowRight className="h-3.5 w-3.5" />
@@ -682,7 +679,7 @@ export default function MatcherPage() {
                 <div key="results-view-container">
                   <div className="animate-matcher-header border-b border-neutral-800 pb-6 mb-6">
                     <div className="flex items-center justify-between mb-2">
-                      <div className="font-mono text-[11px] uppercase tracking-wider text-teal-400">
+                      <div className="font-mono text-[11px] uppercase tracking-wider text-[#f5e642]">
                         {viewSavedOnly ? "SAVED CAUSES LEDGER" : "RECOMMENDED FOR YOU"}
                       </div>
                       <button
@@ -725,7 +722,7 @@ export default function MatcherPage() {
                           <div
                             key={charity.id}
                             style={{ animationDelay: `${idx * 70 + 80}ms` }}
-                            className="animate-matcher-choice rounded-sm border border-neutral-800 bg-[#080c12] overflow-hidden transition-all duration-300 hover:border-neutral-700 hover:bg-[#0c111a] flex flex-col md:flex-row"
+                            className="animate-matcher-choice border border-white/10 bg-[#0a0a0a] overflow-hidden transition-all duration-300 hover:border-[#f5e642]/30 flex flex-col md:flex-row"
                           >
                             {/* Visual Imagery Panel */}
                             {charity.imageUrl && (
@@ -738,7 +735,7 @@ export default function MatcherPage() {
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-neutral-950/80 via-transparent to-transparent pointer-events-none" />
                                 <div className="absolute top-3 left-3 flex items-center gap-2">
-                                  <span className="font-mono text-[10px] text-emerald-400 bg-neutral-950/80 border border-emerald-800/60 px-2 py-0.5 rounded-sm backdrop-blur-sm">
+                                  <span className="font-mono text-[10px] text-[#f5e642] bg-black/80 border border-[#f5e642]/30 px-2 py-0.5 backdrop-blur-sm">
                                     {charity.rating}
                                   </span>
                                 </div>
@@ -749,7 +746,7 @@ export default function MatcherPage() {
                               <div>
                                 <div className="flex items-start justify-between gap-4 mb-3">
                                   <div className="flex items-center gap-3">
-                                    <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-neutral-900 border border-neutral-800 text-teal-400 flex-shrink-0">
+                                    <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-neutral-900 border border-neutral-800 text-[#f5e642] flex-shrink-0">
                                       <IconComp className="h-4 w-4" />
                                     </div>
                                     <div>
@@ -841,7 +838,7 @@ export default function MatcherPage() {
                   <div className="border-t border-neutral-800 pt-6 flex items-center justify-between font-mono text-xs">
                     <Link
                       href="/causes"
-                      className="inline-flex items-center gap-1.5 text-teal-400 hover:text-teal-300 transition"
+                      className="inline-flex items-center gap-1.5 text-[#f5e642] hover:text-[#faf080] transition"
                     >
                       <ArrowLeft className="h-3.5 w-3.5" /> Browse All Causes Directory
                     </Link>

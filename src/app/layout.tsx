@@ -64,7 +64,7 @@ export default function RootLayout({
       lang="en"
       className={`dark ${newsreader.variable} ${jakarta.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="min-h-screen flex flex-col bg-[#080c12] text-slate-100 selection:bg-emerald-500/20 selection:text-emerald-300 font-sans antialiased">
+      <body className="min-h-screen flex flex-col bg-[#0a0a0a] text-neutral-100 selection:bg-[#f5e642]/20 selection:text-[#f5e642] font-sans antialiased">
         <SplashEntrance />
         <Navbar />
         <main className="flex-1">{children}</main>

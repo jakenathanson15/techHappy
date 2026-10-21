@@ -66,8 +66,8 @@ export default function CausesDirectoryPage() {
         {/* Header Breadcrumb */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-neutral-800 pb-6 mb-8">
           <div>
-            <div className="flex items-center gap-2 mb-2 font-mono text-[11px] uppercase tracking-widest text-teal-400">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-teal-400" />
+            <div className="flex items-center gap-2 mb-2 font-mono text-[11px] uppercase tracking-widest text-[#f5e642]">
+              <span className="inline-block h-1.5 w-1.5 bg-[#f5e642]" />
               <span>DIRECTORY // VETTED TECH NON-PROFITS</span>
             </div>
             <h1 className="font-serif text-3xl sm:text-5xl font-normal tracking-tight text-neutral-100">
@@ -81,7 +81,7 @@ export default function CausesDirectoryPage() {
           <div className="flex items-center gap-2">
             <Link
               href="/match"
-              className="inline-flex items-center gap-1.5 rounded-sm bg-teal-500 px-3.5 py-2 font-mono text-xs font-semibold text-neutral-950 hover:bg-teal-400 transition"
+              className="inline-flex items-center gap-1.5 bg-[#f5e642] px-3.5 py-2 font-mono text-xs font-bold text-[#0a0a0a] hover:bg-[#faf080] transition"
             >
               <HeartHandshake className="h-3.5 w-3.5" />
               <span>Take Impact Matcher</span>
@@ -100,7 +100,7 @@ export default function CausesDirectoryPage() {
                 placeholder="Search causes by name, mission, or tags (e.g. privacy, open source, education)..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-sm border border-neutral-800 bg-[#0c1017] pl-9 pr-8 py-2 font-sans text-xs text-neutral-200 placeholder:text-neutral-500 focus:border-teal-500/80 focus:outline-none"
+                className="w-full border border-white/10 bg-[#111] pl-9 pr-8 py-2 font-sans text-xs text-neutral-200 placeholder:text-neutral-500 focus:border-[#f5e642]/50 focus:outline-none"
               />
               {searchQuery && (
                 <button
@@ -115,10 +115,10 @@ export default function CausesDirectoryPage() {
             {bookmarkedCharityIds.length > 0 && (
               <button
                 onClick={() => setShowSavedOnly(!showSavedOnly)}
-                className={`inline-flex items-center gap-1.5 rounded-sm px-3 py-2 font-mono text-xs border transition ${
+                className={`inline-flex items-center gap-1.5 px-3 py-2 font-mono text-xs border transition ${
                   showSavedOnly
                     ? "bg-amber-400/10 border-amber-400/40 text-amber-300"
-                    : "border-neutral-800 bg-[#0c1017] text-neutral-400 hover:text-white hover:border-neutral-700"
+                    : "border-white/10 bg-[#111] text-neutral-400 hover:text-white hover:border-white/20"
                 }`}
               >
                 <Bookmark className={`h-3 w-3 ${showSavedOnly ? "fill-amber-400 text-amber-400" : ""}`} />
@@ -135,10 +135,10 @@ export default function CausesDirectoryPage() {
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`rounded-sm px-2.5 py-1 font-mono text-[11px] border transition ${
+                  className={`px-2.5 py-1 font-mono text-[11px] border transition ${
                     isSelected
-                      ? "border-teal-500/80 bg-teal-950/40 text-teal-300"
-                      : "border-neutral-800 bg-[#0c1017] text-neutral-400 hover:border-neutral-700 hover:text-neutral-200"
+                      ? "border-[#f5e642]/60 bg-[#f5e642]/10 text-[#f5e642]"
+                      : "border-white/10 bg-[#111] text-neutral-400 hover:border-white/20 hover:text-neutral-200"
                   }`}
                 >
                   {cat.label}
@@ -180,11 +180,11 @@ export default function CausesDirectoryPage() {
               return (
                 <div
                   key={charity.id}
-                  className="wire-card rounded-sm overflow-hidden transition hover:border-neutral-700 flex flex-col md:flex-row"
+                  className="wire-card overflow-hidden transition flex flex-col md:flex-row"
                 >
                   {/* Visual Imagery Panel */}
                   {charity.imageUrl && (
-                    <div className="md:w-56 lg:w-64 relative aspect-[16/9] md:aspect-auto flex-shrink-0 bg-neutral-950 border-b md:border-b-0 md:border-r border-neutral-800/80 overflow-hidden group">
+                    <div className="md:w-56 lg:w-64 relative aspect-[16/9] md:aspect-auto flex-shrink-0 bg-[#0a0a0a] border-b md:border-b-0 md:border-r border-white/10 overflow-hidden group">
                       <img
                         src={charity.imageUrl}
                         alt={charity.name}
@@ -193,7 +193,7 @@ export default function CausesDirectoryPage() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-neutral-950/80 via-transparent to-transparent pointer-events-none" />
                       <div className="absolute top-3 left-3 flex items-center gap-2">
-                        <span className="font-mono text-[10px] text-emerald-400 bg-neutral-950/80 border border-emerald-800/60 px-2 py-0.5 rounded-sm backdrop-blur-sm">
+                        <span className="font-mono text-[10px] text-[#f5e642] bg-black/80 border border-[#f5e642]/30 px-2 py-0.5 backdrop-blur-sm">
                           {charity.rating}
                         </span>
                       </div>
@@ -204,7 +204,7 @@ export default function CausesDirectoryPage() {
                     <div>
                       <div className="flex items-start justify-between gap-4 mb-3">
                         <div className="flex items-center gap-3">
-                          <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-neutral-900 border border-neutral-800 text-teal-400 flex-shrink-0">
+                          <div className="flex h-9 w-9 items-center justify-center bg-[#181818] border border-white/10 text-[#f5e642] flex-shrink-0">
                             <IconComp className="h-4 w-4" />
                           </div>
                           <div>
@@ -224,7 +224,7 @@ export default function CausesDirectoryPage() {
                             href={charity.websiteUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-1.5 rounded-sm border border-neutral-800 bg-neutral-900 text-neutral-400 hover:text-white hover:border-neutral-700 transition"
+                            className="p-1.5 border border-white/10 bg-[#181818] text-neutral-400 hover:text-white hover:border-white/20 transition"
                             title="Visit official website"
                           >
                             <ExternalLink className="h-3.5 w-3.5" />
@@ -232,10 +232,10 @@ export default function CausesDirectoryPage() {
                           <button
                             onClick={() => toggleCharityBookmark(charity.id)}
                             title={bookmarked ? "Remove bookmark" : "Save cause"}
-                            className={`p-1.5 rounded-sm border transition ${
+                            className={`p-1.5 border transition ${
                               bookmarked
                                 ? "bg-amber-400/10 border-amber-400/40 text-amber-300"
-                                : "border-neutral-800 bg-neutral-900 text-neutral-400 hover:text-white hover:border-neutral-700"
+                                : "border-white/10 bg-[#181818] text-neutral-400 hover:text-white hover:border-white/20"
                             }`}
                           >
                             <Bookmark className={`h-3.5 w-3.5 ${bookmarked ? "fill-amber-400 text-amber-400" : ""}`} />
@@ -252,7 +252,7 @@ export default function CausesDirectoryPage() {
                       </p>
 
                       {/* Impact Ledger Callout */}
-                      <div className="rounded-sm border border-neutral-800/80 bg-neutral-900/40 p-3 mb-4 font-mono text-xs">
+                      <div className="border border-white/10 bg-[#181818]/60 p-3 mb-4 font-mono text-xs">
                         <span className="text-neutral-500 uppercase tracking-wider text-[10px] block mb-1">
                           VERIFIED IMPACT LEDGER
                         </span>
@@ -268,7 +268,7 @@ export default function CausesDirectoryPage() {
                         {charity.tags.map((t) => (
                           <span
                             key={t}
-                            className="font-mono text-[10px] rounded-sm border border-neutral-800 bg-neutral-900/60 px-2 py-0.5 text-neutral-400"
+                            className="font-mono text-[10px] border border-white/10 bg-[#181818]/60 px-2 py-0.5 text-neutral-400"
                           >
                             #{t}
                           </span>
@@ -281,7 +281,7 @@ export default function CausesDirectoryPage() {
                             href={charity.volunteerUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 rounded-sm border border-neutral-800 bg-neutral-900 px-3 py-1.5 text-neutral-300 hover:bg-neutral-800 hover:text-white transition"
+                            className="inline-flex items-center gap-1 border border-white/10 bg-[#181818] px-3 py-1.5 text-neutral-300 hover:bg-[#222] hover:text-white transition"
                           >
                             Volunteer
                             <ArrowUpRight className="h-3 w-3" />
@@ -291,7 +291,7 @@ export default function CausesDirectoryPage() {
                           href={charity.donateUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 rounded-sm bg-neutral-100 px-3 py-1.5 font-semibold text-neutral-950 hover:bg-white transition"
+                          className="inline-flex items-center gap-1 bg-[#f5e642] px-3 py-1.5 font-bold text-[#0a0a0a] hover:bg-[#faf080] transition"
                         >
                           Direct Support
                           <ArrowUpRight className="h-3 w-3 text-neutral-950" />
@@ -306,9 +306,9 @@ export default function CausesDirectoryPage() {
         )}
 
         {/* Bottom Matcher CTA Banner */}
-        <div className="mt-12 rounded-sm border border-teal-800/40 bg-teal-950/20 p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+        <div className="mt-12 border border-[#f5e642]/20 bg-[#f5e642]/5 p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
           <div>
-            <div className="font-mono text-xs text-teal-400 font-semibold uppercase tracking-wider mb-1">
+            <div className="font-mono text-xs text-[#f5e642] font-semibold uppercase tracking-wider mb-1">
               DECISION ENGINE // PERSONALIZED ALIGNMENT
             </div>
             <h3 className="font-serif text-xl sm:text-2xl font-normal text-neutral-100">
@@ -321,7 +321,7 @@ export default function CausesDirectoryPage() {
 
           <Link
             href="/match"
-            className="inline-flex items-center gap-1.5 rounded-sm bg-teal-400 px-4 py-2 font-mono text-xs font-semibold text-neutral-950 hover:bg-teal-300 transition flex-shrink-0"
+            className="inline-flex items-center gap-1.5 bg-[#f5e642] px-4 py-2 font-mono text-xs font-bold text-[#0a0a0a] hover:bg-[#faf080] transition flex-shrink-0"
           >
             <span>Launch Matcher</span>
             <ArrowRight className="h-3.5 w-3.5" />

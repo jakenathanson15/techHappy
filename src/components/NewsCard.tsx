@@ -71,18 +71,18 @@ export function NewsCard({
   };
 
   return (
-    <article className="wire-card rounded-md overflow-hidden flex flex-col mb-4">
+    <article className="wire-card overflow-hidden flex flex-col mb-4">
       {/* 1. Header: Monospaced Source Telemetry Bar */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-neutral-800/80 bg-[#0a0e14]">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/10 bg-[#111]">
         <div className="flex items-center gap-2.5">
           <a
             href={news.sourceUrl || news.url}
             target="_blank"
             rel="noopener noreferrer"
             title={`Visit ${news.source} website`}
-            className="flex items-center gap-1.5 text-xs font-semibold text-neutral-200 hover:text-emerald-400 transition"
+            className="flex items-center gap-1.5 text-xs font-semibold text-neutral-200 hover:text-[#f5e642] transition"
           >
-            <CategoryIcon className="h-3.5 w-3.5 text-emerald-400" />
+            <CategoryIcon className="h-3.5 w-3.5 text-[#f5e642]" />
             <span>{news.source}</span>
             <ArrowUpRight className="h-3 w-3 text-neutral-400" />
           </a>
@@ -129,7 +129,7 @@ export function NewsCard({
             rel="noopener noreferrer"
             className="group/title block mb-2.5"
           >
-            <h2 className="font-serif text-xl sm:text-2xl font-normal text-neutral-100 group-hover/title:text-emerald-300 transition duration-150 leading-snug">
+            <h2 className="font-serif text-xl sm:text-2xl font-normal text-neutral-100 group-hover/title:text-[#f5e642] transition duration-150 leading-snug">
               {news.title}
             </h2>
           </a>
@@ -139,8 +139,8 @@ export function NewsCard({
           </p>
 
           {/* Why It Matters: Architectural Ledger Callout */}
-          <div className="border-l-2 border-emerald-500 bg-neutral-900/70 pl-3.5 py-2 pr-3 rounded-r-sm">
-            <div className="text-[11px] font-mono text-emerald-400 font-medium uppercase tracking-wider mb-0.5">
+          <div className="border-l-2 border-[#f5e642] bg-[#181818]/70 pl-3.5 py-2 pr-3">
+            <div className="text-[11px] font-mono text-[#f5e642] font-medium uppercase tracking-wider mb-0.5">
               Significance & Impact
             </div>
             <p className="text-xs text-neutral-300 leading-relaxed font-sans">
@@ -154,13 +154,13 @@ export function NewsCard({
           <div className="flex items-center gap-2">
             <button
               onClick={handleShare}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm border border-neutral-800 bg-neutral-900/60 text-neutral-400 hover:text-white hover:border-neutral-700 transition text-[11px] font-medium"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-white/10 bg-[#181818]/60 text-neutral-400 hover:text-white hover:border-white/20 transition text-[11px] font-medium"
               title="Copy article link"
             >
               {copied ? (
                 <>
-                  <Check className="h-3 w-3 text-emerald-400" />
-                  <span className="text-emerald-300">Copied</span>
+                  <Check className="h-3 w-3 text-[#f5e642]" />
+                  <span className="text-[#f5e642]">Copied</span>
                 </>
               ) : (
                 <>
@@ -172,10 +172,10 @@ export function NewsCard({
 
             <button
               onClick={() => onToggleBookmark && onToggleBookmark(news.id)}
-              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm border text-[11px] font-medium transition ${
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1 border text-[11px] font-medium transition ${
                 isBookmarked
                   ? "bg-amber-500/15 border-amber-500/40 text-amber-300"
-                  : "border-neutral-800 bg-neutral-900/60 text-neutral-400 hover:text-white hover:border-neutral-700"
+                  : "border-white/10 bg-[#181818]/60 text-neutral-400 hover:text-white hover:border-white/20"
               }`}
               title={isBookmarked ? "Remove bookmark" : "Save story"}
             >
@@ -188,7 +188,7 @@ export function NewsCard({
             href={news.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 font-semibold text-xs text-neutral-950 bg-emerald-500 hover:bg-emerald-400 transition px-3 py-1 rounded-sm"
+            className="inline-flex items-center gap-1.5 font-bold text-xs text-[#0a0a0a] bg-[#f5e642] hover:bg-[#faf080] transition px-3 py-1"
           >
             <span>Read Publication</span>
             <ArrowUpRight className="h-3 w-3" />
