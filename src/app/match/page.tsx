@@ -407,7 +407,7 @@ export default function MatcherPage() {
                             <button
                               key={opt.id}
                               onClick={() => setAnswers({ ...answers, primaryCause: opt.id })}
-                              style={{ animationDelay: `${idx * 60 + 100}ms` }}
+                              style={{ animationDelay: `${idx * 110 + 380}ms` }}
                               className={`animate-matcher-choice w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition duration-150 active:scale-[0.99] ${
                                 isSelected
                                   ? "border-teal-500/80 bg-teal-950/20 shadow-sm ring-1 ring-teal-500/30"
@@ -470,7 +470,7 @@ export default function MatcherPage() {
                             <button
                               key={opt.id}
                               onClick={() => setAnswers({ ...answers, givingPreference: opt.id })}
-                              style={{ animationDelay: `${idx * 60 + 100}ms` }}
+                              style={{ animationDelay: `${idx * 110 + 380}ms` }}
                               className={`animate-matcher-choice w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition duration-150 active:scale-[0.99] ${
                                 isSelected
                                   ? "border-teal-500/80 bg-teal-950/20 shadow-sm ring-1 ring-teal-500/30"
@@ -533,7 +533,7 @@ export default function MatcherPage() {
                             <button
                               key={opt.id}
                               onClick={() => setAnswers({ ...answers, impactScope: opt.id })}
-                              style={{ animationDelay: `${idx * 60 + 100}ms` }}
+                              style={{ animationDelay: `${idx * 110 + 380}ms` }}
                               className={`animate-matcher-choice w-full flex items-start gap-3.5 p-4 rounded-sm border text-left transition duration-150 active:scale-[0.99] ${
                                 isSelected
                                   ? "border-teal-500/80 bg-teal-950/20 shadow-sm ring-1 ring-teal-500/30"
@@ -649,11 +649,11 @@ export default function MatcherPage() {
                       {(viewSavedOnly ? savedCharitiesList : results || []).map((charity, idx) => {
                         const bookmarked = isCharityBookmarked(charity.id);
                         const IconComp = IconMap[charity.iconName] || Shield;
-
+    
                         return (
                           <div
                             key={charity.id}
-                            style={{ animationDelay: `${idx * 80 + 120}ms` }}
+                            style={{ animationDelay: `${idx * 120 + 380}ms` }}
                             className="animate-matcher-choice rounded-sm border border-neutral-800 bg-[#080c12] p-5 sm:p-6 transition hover:border-neutral-700"
                           >
                             <div className="flex items-start justify-between gap-4 mb-3">
