@@ -90,7 +90,7 @@ export default async function HomePage() {
                 <span className="ml-auto text-neutral-700">01</span>
               </div>
               <h2 className="font-serif text-3xl font-normal text-neutral-100 mb-3 leading-tight group-hover:text-[#f5e642] transition">
-                The good news<br />you didn&apos;t hear today.
+                Your good<br />news feed.
               </h2>
               <p className="font-sans text-xs text-neutral-500 leading-relaxed mb-5">
                 ~225 verified dispatches, hourly. Climate breakthroughs, open-source releases, biotech milestones.
@@ -124,7 +124,7 @@ export default async function HomePage() {
                 <span className="ml-auto text-neutral-700">02</span>
               </div>
               <h2 className="font-serif text-3xl font-normal text-neutral-100 mb-3 leading-tight group-hover:text-[#f5e642] transition">
-                Put your skills<br />where it counts.
+                Find the<br />right cause.
               </h2>
               <p className="font-sans text-xs text-neutral-500 leading-relaxed mb-5">
                 3 questions. Matched to vetted 501(c)(3) non-profits by domain, contribution type, and your capacity.
