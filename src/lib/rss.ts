@@ -761,10 +761,32 @@ export async function fetchUpliftNews(bypassCache: boolean = false): Promise<New
     }
   }
 
+  // Verify all article URLs in parallel — fall back to sourceUrl on 404/error/timeout
+  const verified = await Promise.all(
+    interleaved.map(async (item) => {
+      if (!item.url || item.url === "#") return { ...item, url: item.sourceUrl };
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2000);
+        const res = await fetch(item.url, {
+          method: "HEAD",
+          signal: controller.signal,
+          redirect: "follow",
+          headers: { "User-Agent": "techHappy-Bot/1.0 (+https://techhappynews.com)" },
+        });
+        clearTimeout(timeoutId);
+        if (!res.ok) return { ...item, url: item.sourceUrl };
+      } catch {
+        return { ...item, url: item.sourceUrl };
+      }
+      return item;
+    })
+  );
+
   cachedFeed = {
-    data: interleaved,
+    data: verified,
     timestamp: now,
   };
 
-  return interleaved;
+  return verified;
 }
