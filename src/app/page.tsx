@@ -77,36 +77,41 @@ export default async function HomePage() {
         </p>
 
         {/* The Two Clear Doorways */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto mt-10 text-left">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto mt-10 text-left">
           {/* Doorway 1: The Feed */}
           <Link
             href="/feed"
-            className="group wire-card p-6 flex flex-col justify-between transition duration-100"
+            className="group relative wire-card p-8 flex flex-col justify-between transition-colors duration-300 overflow-hidden"
           >
-            <div>
+            {/* Yellow top border line — grows in on hover */}
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-[#f5e642] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left pointer-events-none" />
+            {/* Subtle yellow glow wash on hover */}
+            <div className="absolute inset-0 bg-[#f5e642]/0 group-hover:bg-[#f5e642]/[0.03] transition-colors duration-300 pointer-events-none" />
+
+            <div className="relative">
               <div className="flex items-center gap-2 mb-4 font-mono text-[11px] text-neutral-500 font-semibold tracking-widest uppercase">
                 <span className="h-1.5 w-1.5 bg-[#f5e642] animate-pulse" />
-                <span>Live Wire</span>
+                <span className="group-hover:text-[#f5e642] transition-colors duration-300">Live Wire</span>
                 <span className="ml-auto text-neutral-700">01</span>
               </div>
-              <h2 className="font-serif text-3xl font-normal text-neutral-100 mb-3 leading-tight group-hover:text-[#f5e642] transition">
+              <h2 className="font-serif text-4xl font-normal text-neutral-100 mb-3 leading-tight group-hover:text-[#f5e642] transition-colors duration-300">
                 Your good<br />news feed.
               </h2>
-              <p className="font-sans text-xs text-neutral-500 leading-relaxed mb-5">
+              <p className="font-sans text-xs text-neutral-500 leading-relaxed mb-5 group-hover:text-neutral-400 transition-colors duration-300">
                 ~225 verified dispatches, hourly. Climate breakthroughs, open-source releases, biotech milestones.
               </p>
               <div className="flex flex-wrap gap-1.5">
                 {["Climate Tech", "AI for Good", "Open Access", "Healthcare"].map((tag) => (
-                  <span key={tag} className="font-mono text-[10px] px-2 py-0.5 border border-neutral-800 text-neutral-600 group-hover:border-neutral-700 group-hover:text-neutral-500 transition">
+                  <span key={tag} className="font-mono text-[10px] px-2 py-0.5 border border-neutral-800 text-neutral-600 group-hover:border-[#f5e642]/40 group-hover:text-[#f5e642]/70 group-hover:bg-[#f5e642]/5 transition-all duration-300">
                     {tag}
                   </span>
                 ))}
               </div>
             </div>
 
-            <div className="pt-5 mt-5 border-t border-neutral-800/80 flex items-center justify-between">
+            <div className="relative pt-5 mt-5 border-t border-neutral-800/80 flex items-center justify-between">
               <span className="font-mono text-[11px] text-neutral-600">13 research desks</span>
-              <span className="font-mono text-xs font-semibold text-[#f5e642] inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+              <span className="font-mono text-xs font-semibold text-[#f5e642] inline-flex items-center gap-1 group-hover:gap-2.5 transition-all duration-200">
                 Read the Wire <ArrowRight className="h-3 w-3" />
               </span>
             </div>
@@ -115,33 +120,36 @@ export default async function HomePage() {
           {/* Doorway 2: Find a Cause */}
           <Link
             href="/match"
-            className="group wire-card p-6 flex flex-col justify-between transition duration-100 border-l-2 border-l-neutral-800 group-hover:border-l-[#f5e642]"
+            className="group relative wire-card p-8 flex flex-col justify-between transition-colors duration-300 overflow-hidden hover:bg-[#161410]"
           >
-            <div>
+            {/* Yellow bottom line — grows in on hover */}
+            <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#f5e642] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-right pointer-events-none" />
+
+            <div className="relative">
               <div className="flex items-center gap-2 mb-4 font-mono text-[11px] text-neutral-500 font-semibold tracking-widest uppercase">
-                <HeartHandshake className="h-3 w-3" />
-                <span>Impact Matcher</span>
+                <HeartHandshake className="h-3 w-3 group-hover:text-[#f5e642] transition-colors duration-300" />
+                <span className="group-hover:text-[#f5e642] transition-colors duration-300">Impact Matcher</span>
                 <span className="ml-auto text-neutral-700">02</span>
               </div>
-              <h2 className="font-serif text-3xl font-normal text-neutral-100 mb-3 leading-tight group-hover:text-[#f5e642] transition">
+              <h2 className="font-serif text-4xl font-normal text-neutral-100 mb-3 leading-tight group-hover:text-white transition-colors duration-300">
                 Find the<br />right cause.
               </h2>
-              <p className="font-sans text-xs text-neutral-500 leading-relaxed mb-5">
+              <p className="font-sans text-xs text-neutral-500 leading-relaxed mb-5 group-hover:text-neutral-400 transition-colors duration-300">
                 3 questions. Matched to vetted 501(c)(3) non-profits by domain, contribution type, and your capacity.
               </p>
               <div className="flex flex-wrap gap-1.5">
                 {["Code", "Donate", "Mentor", "Advocate"].map((tag) => (
-                  <span key={tag} className="font-mono text-[10px] px-2 py-0.5 border border-neutral-800 text-neutral-600 group-hover:border-neutral-700 group-hover:text-neutral-500 transition">
+                  <span key={tag} className="font-mono text-[10px] px-2 py-0.5 border border-neutral-800 text-neutral-600 group-hover:border-neutral-700 group-hover:text-neutral-400 transition-all duration-300">
                     {tag}
                   </span>
                 ))}
               </div>
             </div>
 
-            <div className="pt-5 mt-5 border-t border-neutral-800/80 flex items-center justify-between">
+            <div className="relative pt-5 mt-5 border-t border-neutral-800/80 flex items-center justify-between">
               <span className="font-mono text-[11px] text-neutral-600">4-star rated orgs only</span>
-              <span className="inline-flex items-center gap-1.5 bg-[#f5e642] px-3 py-1 font-mono text-[11px] font-bold text-[#0a0a0a] group-hover:bg-[#faf080] transition">
-                Start Matcher <ArrowRight className="h-3 w-3" />
+              <span className="inline-flex items-center gap-1.5 bg-[#f5e642] px-3 py-1 font-mono text-[11px] font-bold text-[#0a0a0a] group-hover:bg-[#faf080] transition-colors duration-200">
+                Start Matcher <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform duration-200" />
               </span>
             </div>
           </Link>
