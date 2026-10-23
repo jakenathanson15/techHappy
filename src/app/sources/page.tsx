@@ -1,21 +1,25 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
-import { RSS_SOURCES } from "@/lib/rss";
+import { RSS_SOURCES, SourceType } from "@/lib/rss";
 import {
   ArrowRight,
-  ArrowUpRight,
   ShieldCheck,
   Radio,
   ExternalLink,
-  Cpu,
-  Layers,
-  Sparkles,
   CheckCircle2,
+  Search,
+  X,
 } from "lucide-react";
 
-export const metadata = {
-  title: "Sources & Standards",
-  description: "Exhaustive index of peer-reviewed scientific journals, research desks, and open web feeds ingested by techHappy.",
-};
+const SOURCE_TYPES: { id: "all" | SourceType; label: string }[] = [
+  { id: "all",               label: "All" },
+  { id: "university-lab",    label: "University & Lab" },
+  { id: "scientific-journal",label: "Scientific Journal" },
+  { id: "news-editorial",    label: "News & Editorial" },
+  { id: "digital-rights",    label: "Digital Rights & Open Web" },
+];
 
 const EDITORIAL_STANDARDS = [
   {
@@ -33,6 +37,19 @@ const EDITORIAL_STANDARDS = [
 ];
 
 export default function SourcesPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedType, setSelectedType] = useState<"all" | SourceType>("all");
+
+  const filteredSources = RSS_SOURCES
+    .filter((source) => {
+      const matchesType = selectedType === "all" || source.sourceType === selectedType;
+      const matchesSearch =
+        !searchQuery.trim() ||
+        source.name.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesType && matchesSearch;
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
+
   return (
     <div className="relative min-h-screen pb-24">
       {/* Background wire grid */}
@@ -102,15 +119,64 @@ export default function SourcesPage() {
           </div>
         </div>
 
+        {/* Search + Type Filter */}
+        <div className="space-y-3 mb-8">
+          <div className="relative">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-neutral-500" />
+            <input
+              type="text"
+              placeholder="Search sources by name..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full border border-white/10 bg-[#111] pl-9 pr-8 py-2 font-sans text-xs text-neutral-200 placeholder:text-neutral-500 focus:border-[#f5e642]/50 focus:outline-none"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            )}
+          </div>
+
+          <div className="flex flex-wrap items-center gap-1.5">
+            {SOURCE_TYPES.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => setSelectedType(t.id)}
+                className={`px-2.5 py-1 font-mono text-[11px] border transition ${
+                  selectedType === t.id
+                    ? "border-[#f5e642]/60 bg-[#f5e642]/10 text-[#f5e642]"
+                    : "border-white/10 bg-[#111] text-neutral-400 hover:border-white/20 hover:text-neutral-200"
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Sources Ruled Ledger */}
         <div className="space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-neutral-800 font-mono text-xs text-neutral-500">
-            <span>CONNECTED SCIENTIFIC FEEDS ({RSS_SOURCES.length})</span>
+            <span>CONNECTED SCIENTIFIC FEEDS ({filteredSources.length}{filteredSources.length < RSS_SOURCES.length ? ` of ${RSS_SOURCES.length}` : ""})</span>
             <span>STATUS: ACTIVE & SYNDICATED</span>
           </div>
 
+          {filteredSources.length === 0 ? (
+            <div className="p-12 text-center border border-dashed border-neutral-800">
+              <p className="font-mono text-xs text-neutral-400">No sources match your filters.</p>
+              <button
+                onClick={() => { setSearchQuery(""); setSelectedType("all"); }}
+                className="mt-4 inline-flex items-center gap-1.5 bg-neutral-100 px-3 py-1.5 font-mono text-xs font-semibold text-neutral-950 hover:bg-white transition"
+              >
+                Reset Filters
+              </button>
+            </div>
+          ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {RSS_SOURCES.map((source, idx) => (
+            {filteredSources.map((source, idx) => (
               <div
                 key={source.name}
                 className="wire-card overflow-hidden flex flex-col justify-between group transition"
@@ -167,6 +233,7 @@ export default function SourcesPage() {
               </div>
             ))}
           </div>
+          )}
         </div>
 
         {/* Bottom Feed Link */}

@@ -20,6 +20,8 @@ interface RawFeedEntry {
   enclosure?: { "@_url"?: string };
 }
 
+export type SourceType = "university-lab" | "scientific-journal" | "news-editorial" | "digital-rights";
+
 export interface RSSSourceConfig {
   name: string;
   url: string;
@@ -27,6 +29,7 @@ export interface RSSSourceConfig {
   defaultCategory: NewsItem["category"];
   description?: string;
   imageUrl?: string;
+  sourceType: SourceType;
 }
 
 export const RSS_SOURCES: RSSSourceConfig[] = [
@@ -37,6 +40,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     defaultCategory: "Healthcare & Bio",
     description: "Cutting-edge breakthroughs in medicine, robotics, materials, and sustainable engineering.",
     imageUrl: "/images/mit-news.jpg",
+    sourceType: "university-lab",
   },
   {
     name: "Our World in Data",
@@ -45,6 +49,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     defaultCategory: "Social Impact",
     description: "Empirical research and data showing global progress against disease, poverty, and energy transitions.",
     imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
+    sourceType: "news-editorial",
   },
   {
     name: "Nature Research",
@@ -53,6 +58,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     defaultCategory: "Healthcare & Bio",
     description: "Peer-reviewed scientific discoveries across biotechnology, physics, and ecology.",
     imageUrl: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=600&q=80",
+    sourceType: "scientific-journal",
   },
   {
     name: "CleanTechnica",
@@ -61,6 +67,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     defaultCategory: "Climate Tech",
     description: "Global advances in solar power, grid batteries, electric mobility, and clean technology.",
     imageUrl: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=600&q=80",
+    sourceType: "news-editorial",
   },
   {
     name: "ScienceDaily Clean Energy",
@@ -69,6 +76,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     defaultCategory: "Climate Tech",
     description: "Laboratory research on next-generation photovoltaics, fusion, and hydrogen power.",
     imageUrl: "/images/sciencedaily.jpg",
+    sourceType: "scientific-journal",
   },
   {
     name: "ScienceDaily AI & Tech",
@@ -77,6 +85,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     defaultCategory: "AI for Good",
     description: "Breakthrough machine intelligence and computational science applications.",
     imageUrl: "/images/sciencedaily.jpg",
+    sourceType: "scientific-journal",
   },
   {
     name: "Positive News",
@@ -85,6 +94,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     defaultCategory: "Climate Tech",
     description: "Rigorous solutions journalism focused on environmental progress and human innovation.",
     imageUrl: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=600&q=80",
+    sourceType: "news-editorial",
   },
   {
     name: "Good News Network",
@@ -93,6 +103,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     defaultCategory: "Social Impact",
     description: "Uplifting science and technological progress advancing humanity.",
     imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80",
+    sourceType: "news-editorial",
   },
   {
     name: "NASA Science & Tech",
@@ -101,6 +112,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     defaultCategory: "Climate Tech",
     description: "Space exploration, planetary climate monitoring, and advanced aeronautics.",
     imageUrl: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=600&q=80",
+    sourceType: "university-lab",
   },
   {
     name: "Phys.org Technology",
@@ -109,6 +121,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     defaultCategory: "AI for Good",
     description: "Emerging engineering innovations, smart materials, and computing advancements.",
     imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80",
+    sourceType: "scientific-journal",
   },
   {
     name: "UC Berkeley Research",
@@ -117,6 +130,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     defaultCategory: "AI for Good",
     description: "Pioneering academic discoveries from world-class university labs.",
     imageUrl: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=600&q=80",
+    sourceType: "university-lab",
   },
   {
     name: "Mozilla Blog",
@@ -125,6 +139,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     defaultCategory: "Open Access & Web",
     description: "Championing open web standards, privacy-preserving tools, and responsible technology.",
     imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80",
+    sourceType: "digital-rights",
   },
   {
     name: "Electronic Frontier Foundation",
@@ -133,6 +148,7 @@ export const RSS_SOURCES: RSSSourceConfig[] = [
     defaultCategory: "Open Access & Web",
     description: "Defending digital rights, cryptography, privacy, and public-interest innovation.",
     imageUrl: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80",
+    sourceType: "digital-rights",
   },
 ];
 
