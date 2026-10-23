@@ -5,9 +5,6 @@ import {
   Calendar,
   ExternalLink,
   HeartHandshake,
-  Shield,
-  Layers,
-  Sparkles,
 } from "lucide-react";
 import charitiesData from "@/data/charities.json";
 import { fetchUpliftNews, RSS_SOURCES } from "@/lib/rss";
@@ -87,22 +84,30 @@ export default async function HomePage() {
             className="group wire-card p-6 flex flex-col justify-between transition duration-100"
           >
             <div>
-              <div className="flex items-center justify-between mb-3 font-mono text-xs text-[#f5e642] font-semibold">
-                <span>01 // YOUR GOOD NEWS FEED</span>
-                <ArrowRight className="h-4 w-4 transform group-hover:translate-x-1 transition" />
+              <div className="flex items-center gap-2 mb-4 font-mono text-[11px] text-neutral-500 font-semibold tracking-widest uppercase">
+                <span className="h-1.5 w-1.5 bg-[#f5e642] animate-pulse" />
+                <span>Live Wire</span>
+                <span className="ml-auto text-neutral-700">01</span>
               </div>
-              <h2 className="font-serif text-2xl font-normal text-neutral-100 mb-2 group-hover:text-[#f5e642] transition">
-                Explore the Feed
+              <h2 className="font-serif text-3xl font-normal text-neutral-100 mb-3 leading-tight group-hover:text-[#f5e642] transition">
+                The good news<br />you didn&apos;t hear today.
               </h2>
-              <p className="font-sans text-xs sm:text-sm text-neutral-400 leading-relaxed">
-                Real-time, positive breakthroughs across clean energy, biotech, AI for good, and the open web.
+              <p className="font-sans text-xs text-neutral-500 leading-relaxed mb-5">
+                ~225 verified dispatches, hourly. Climate breakthroughs, open-source releases, biotech milestones.
               </p>
+              <div className="flex flex-wrap gap-1.5">
+                {["Climate Tech", "AI for Good", "Open Access", "Healthcare"].map((tag) => (
+                  <span key={tag} className="font-mono text-[10px] px-2 py-0.5 border border-neutral-800 text-neutral-600 group-hover:border-neutral-700 group-hover:text-neutral-500 transition">
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
 
-            <div className="pt-4 mt-4 border-t border-neutral-800/80 flex items-center justify-between font-mono text-xs text-neutral-300">
-              <span className="text-neutral-500">Updated Hourly</span>
-              <span className="font-semibold text-[#f5e642] group-hover:underline inline-flex items-center gap-1">
-                Browse the Feed <ArrowRight className="h-3 w-3" />
+            <div className="pt-5 mt-5 border-t border-neutral-800/80 flex items-center justify-between">
+              <span className="font-mono text-[11px] text-neutral-600">13 research desks</span>
+              <span className="font-mono text-xs font-semibold text-[#f5e642] inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                Read the Wire <ArrowRight className="h-3 w-3" />
               </span>
             </div>
           </Link>
@@ -110,25 +115,33 @@ export default async function HomePage() {
           {/* Doorway 2: Find a Cause */}
           <Link
             href="/match"
-            className="group wire-card p-6 flex flex-col justify-between transition duration-100"
+            className="group wire-card p-6 flex flex-col justify-between transition duration-100 border-l-2 border-l-neutral-800 group-hover:border-l-[#f5e642]"
           >
             <div>
-              <div className="flex items-center justify-between mb-3 font-mono text-xs text-[#f5e642] font-semibold">
-                <span>02 // FIND A CAUSE</span>
-                <HeartHandshake className="h-4 w-4 transform group-hover:scale-110 transition" />
+              <div className="flex items-center gap-2 mb-4 font-mono text-[11px] text-neutral-500 font-semibold tracking-widest uppercase">
+                <HeartHandshake className="h-3 w-3" />
+                <span>Impact Matcher</span>
+                <span className="ml-auto text-neutral-700">02</span>
               </div>
-              <h2 className="font-serif text-2xl font-normal text-neutral-100 mb-2 group-hover:text-[#f5e642] transition">
-                Take the Matcher
+              <h2 className="font-serif text-3xl font-normal text-neutral-100 mb-3 leading-tight group-hover:text-[#f5e642] transition">
+                Put your skills<br />where it counts.
               </h2>
-              <p className="font-sans text-xs sm:text-sm text-neutral-400 leading-relaxed">
-                A quick 3-step guide to connect your skills, time, or donations with vetted non-profits making a real difference.
+              <p className="font-sans text-xs text-neutral-500 leading-relaxed mb-5">
+                3 questions. Matched to vetted 501(c)(3) non-profits by domain, contribution type, and your capacity.
               </p>
+              <div className="flex flex-wrap gap-1.5">
+                {["Code", "Donate", "Mentor", "Advocate"].map((tag) => (
+                  <span key={tag} className="font-mono text-[10px] px-2 py-0.5 border border-neutral-800 text-neutral-600 group-hover:border-neutral-700 group-hover:text-neutral-500 transition">
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
 
-            <div className="pt-4 mt-4 border-t border-neutral-800/80 flex items-center justify-between font-mono text-xs text-neutral-300">
-              <span className="text-neutral-500">100% Vetted Non-Profits</span>
-              <span className="font-semibold text-[#f5e642] group-hover:underline inline-flex items-center gap-1">
-                Find Your Cause <ArrowRight className="h-3 w-3" />
+            <div className="pt-5 mt-5 border-t border-neutral-800/80 flex items-center justify-between">
+              <span className="font-mono text-[11px] text-neutral-600">4-star rated orgs only</span>
+              <span className="inline-flex items-center gap-1.5 bg-[#f5e642] px-3 py-1 font-mono text-[11px] font-bold text-[#0a0a0a] group-hover:bg-[#faf080] transition">
+                Start Matcher <ArrowRight className="h-3 w-3" />
               </span>
             </div>
           </Link>
