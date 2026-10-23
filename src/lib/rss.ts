@@ -761,25 +761,43 @@ export async function fetchUpliftNews(bypassCache: boolean = false): Promise<New
     }
   }
 
-  // Verify all article URLs in parallel — fall back to sourceUrl on 404/error/timeout
+  // For each article: fetch the page, verify URL is live, and extract og:image for the card
   const verified = await Promise.all(
     interleaved.map(async (item) => {
       if (!item.url || item.url === "#") return { ...item, url: item.sourceUrl };
       try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 2000);
+        const timeoutId = setTimeout(() => controller.abort(), 3000);
         const res = await fetch(item.url, {
-          method: "HEAD",
+          method: "GET",
           signal: controller.signal,
           redirect: "follow",
-          headers: { "User-Agent": "techHappy-Bot/1.0 (+https://techhappynews.com)" },
+          headers: {
+            "User-Agent": "techHappy-Bot/1.0 (+https://techhappynews.com)",
+            // Only fetch enough to get the <head> — stops download after ~50KB
+            Range: "bytes=0-51200",
+          },
         });
         clearTimeout(timeoutId);
+
         if (!res.ok) return { ...item, url: item.sourceUrl };
+
+        const html = await res.text();
+
+        // Extract og:image or twitter:image from the <head>
+        const ogMatch =
+          html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i) ||
+          html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i) ||
+          html.match(/<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i) ||
+          html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+name=["']twitter:image["']/i);
+
+        const ogImage = ogMatch?.[1]?.trim();
+        const finalImage = ogImage && ogImage.startsWith("http") ? ogImage : item.imageUrl;
+
+        return { ...item, imageUrl: finalImage };
       } catch {
         return { ...item, url: item.sourceUrl };
       }
-      return item;
     })
   );
 
